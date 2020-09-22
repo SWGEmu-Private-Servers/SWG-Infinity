@@ -15,7 +15,6 @@
 #include "server/zone/managers/skill/SkillManager.h"
 #include "server/zone/Zone.h"
 #include "server/zone/objects/region/CityRegion.h"
-#include "server/zone/objects/player/sessions/SlicingSession.h"
 
 const char LuaPlayerObject::className[] = "LuaPlayerObject";
 
@@ -58,6 +57,7 @@ Luna<LuaPlayerObject>::RegType LuaPlayerObject::Register[] = {
 		{ "clearCompletedQuestsBit", &LuaPlayerObject::clearCompletedQuestsBit },
 		{ "hasAbility", &LuaPlayerObject::hasAbility},
 		{ "addAbility", &LuaPlayerObject::addAbility},
+		{ "removeAbility", &LuaPlayerObject::removeAbility},
 		{ "getExperience", &LuaPlayerObject::getExperience },
 		{ "addEventPerk", &LuaPlayerObject::addEventPerk},
 		{ "getEventPerkCount", &LuaPlayerObject::getEventPerkCount},
@@ -79,9 +79,6 @@ Luna<LuaPlayerObject>::RegType LuaPlayerObject::Register[] = {
 		{ "setFrsRank", &LuaPlayerObject::setFrsRank },
 		{ "getFrsRank", &LuaPlayerObject::getFrsRank },
 		{ "getFrsCouncil", &LuaPlayerObject::getFrsCouncil },
-		{ "startSlicingSession", &LuaPlayerObject::startSlicingSession },
-		{ "setVisibility", &LuaPlayerObject::setVisibility },
-		{ "getPlayedTimeString", &LuaPlayerObject::getPlayedTimeString },
 		{ 0, 0 }
 };
 
@@ -90,7 +87,7 @@ LuaPlayerObject::LuaPlayerObject(lua_State *L) : LuaIntangibleObject(L) {
 #ifdef DYNAMIC_CAST_LUAOBJECTS
 	realObject = dynamic_cast<PlayerObject*>(_getRealSceneObject());
 
-	E3_ASSERT(!_getRealSceneObject() || realObject != nullptr);
+	assert(!_getRealSceneObject() || realObject != NULL);
 #else
 	realObject = reinterpret_cast<PlayerObject*>(lua_touserdata(L, 1));
 #endif
@@ -105,7 +102,7 @@ int LuaPlayerObject::_setObject(lua_State* L) {
 #ifdef DYNAMIC_CAST_LUAOBJECTS
 	realObject = dynamic_cast<PlayerObject*>(_getRealSceneObject());
 
-	E3_ASSERT(!_getRealSceneObject() || realObject != nullptr);
+	assert(!_getRealSceneObject() || realObject != NULL);
 #else
 	realObject = (PlayerObject*)lua_touserdata(L, -1);
 #endif
@@ -231,7 +228,7 @@ int LuaPlayerObject::getWaypointAt(lua_State* L) {
 
 	WaypointObject* waypoint = realObject->getWaypointAt(x, y, planet);
 
-	if (waypoint != nullptr)
+	if (waypoint != NULL)
 		lua_pushlightuserdata(L, waypoint);
 	else
 		lua_pushnil(L);
@@ -255,7 +252,7 @@ int LuaPlayerObject::addRewardedSchematic(lua_State* L){
 
 	DraftSchematic* schematic = SchematicMap::instance()->get(templateString.hashCode());
 
-	if (schematic == nullptr) {
+	if (schematic == NULL) {
 		lua_pushboolean(L, false);
 		return 1;
 	}
@@ -282,7 +279,7 @@ int LuaPlayerObject::removeRewardedSchematic(lua_State* L){
 
 	DraftSchematic* schematic = SchematicMap::instance()->get(templateString.hashCode());
 
-	if (schematic != nullptr)
+	if (schematic != NULL)
 		realObject->removeRewardedSchematic(schematic, notifyClient);
 
 	return 0;
@@ -339,7 +336,7 @@ int LuaPlayerObject::addHologrindProfession(lua_State* L){
 }
 
 int LuaPlayerObject::getHologrindProfessions(lua_State* L) {
-	const Vector<byte>* professions = realObject->getHologrindProfessions();
+	Vector<byte>* professions = realObject->getHologrindProfessions();
 
 	lua_newtable(L);
 
@@ -500,6 +497,18 @@ int LuaPlayerObject::addAbility(lua_State* L) {
 
 }
 
+int LuaPlayerObject::removeAbility(lua_State* L) {
+	String value = lua_tostring(L, -1);
+
+	SkillManager* skillManager = SkillManager::instance();
+
+	if (realObject->hasAbility(value))
+		skillManager->removeAbility(realObject, value);
+
+	return 1;
+
+}
+
 int LuaPlayerObject::getExperience(lua_State* L) {
 	String type = lua_tostring(L, -1);
 
@@ -525,7 +534,7 @@ int LuaPlayerObject::hasEventPerk(lua_State* L) {
 int LuaPlayerObject::addEventPerk(lua_State* L) {
 	SceneObject* item = (SceneObject*) lua_touserdata(L, -1);
 
-	if (item == nullptr) {
+	if (item == NULL) {
 		return 0;
 	}
 
@@ -533,7 +542,7 @@ int LuaPlayerObject::addEventPerk(lua_State* L) {
 
 	ManagedReference<CreatureObject*> creature = dynamic_cast<CreatureObject*>(realObject->getParent().get().get());
 
-	if (creature != nullptr) {
+	if (creature != NULL) {
 		if (item->isEventPerkDeed()) {
 			EventPerkDeed* deed = cast<EventPerkDeed*>(item);
 			deed->setOwner(creature);
@@ -541,12 +550,12 @@ int LuaPlayerObject::addEventPerk(lua_State* L) {
 			if (item->getServerObjectCRC() == 0x46BD798B) { // Jukebox
 				Jukebox* jbox = cast<Jukebox*>(item);
 
-				if (jbox != nullptr)
+				if (jbox != NULL)
 					jbox->setOwner(creature);
 			} else if (item->getServerObjectCRC() == 0x255F612C) { // Shuttle Beacon
 				ShuttleBeacon* beacon = cast<ShuttleBeacon*>(item);
 
-				if (beacon != nullptr)
+				if (beacon != NULL)
 					beacon->setOwner(creature);
 			}
 		}
@@ -585,7 +594,7 @@ int LuaPlayerObject::closeSuiWindowType(lua_State* L) {
 }
 
 int LuaPlayerObject::getExperienceList(lua_State* L) {
-	const DeltaVectorMap<String, int>* expList = realObject->getExperienceList();
+	DeltaVectorMap<String, int>* expList = realObject->getExperienceList();
 
 	lua_newtable(L);
 
@@ -610,7 +619,7 @@ int LuaPlayerObject::getSuiBox(lua_State* L) {
 	uint32 pageId = lua_tointeger(L, -1);
 	Reference<SuiBox*> object = realObject->getSuiBox(pageId);
 
-	if (object == nullptr) {
+	if (object == NULL) {
 		lua_pushnil(L);
 	} else {
 		lua_pushlightuserdata(L, object.get());
@@ -623,7 +632,7 @@ int LuaPlayerObject::getSuiBox(lua_State* L) {
 int LuaPlayerObject::addSuiBox(lua_State* L) {
 	Reference<SuiBox*> box = (SuiBox*) lua_touserdata(L, -1);
 
-	if (box == nullptr)
+	if (box == NULL)
 		return 0;
 
 	realObject->addSuiBox(box);
@@ -669,15 +678,6 @@ int LuaPlayerObject::setFrsCouncil(lua_State* L) {
 	return 0;
 }
 
-int LuaPlayerObject::setVisibility(lua_State* L) {
-	int visValue = lua_tointeger(L, -1);
-
-	realObject->setVisibility(visValue);
-
-	return 0;
-}
-
-
 int LuaPlayerObject::setFrsRank(lua_State* L) {
 	int rank = lua_tointeger(L, -1);
 
@@ -685,8 +685,9 @@ int LuaPlayerObject::setFrsRank(lua_State* L) {
 
 	ManagedReference<CreatureObject*> player = realObject->getParentRecursively(SceneObjectType::PLAYERCREATURE).castTo<CreatureObject*>();
 
-	if (frsManager != nullptr && player != nullptr) {
-		Locker locker(player);
+	if (frsManager != NULL && player != NULL) {
+		Locker locker(frsManager);
+		Locker plocker(player);
 
 		frsManager->setPlayerRank(player, rank);
 	}
@@ -706,47 +707,6 @@ int LuaPlayerObject::getFrsCouncil(lua_State* L) {
 	FrsData* frsData = realObject->getFrsData();
 
 	lua_pushinteger(L, frsData->getCouncilType());
-
-	return 1;
-}
-
-int LuaPlayerObject::startSlicingSession(lua_State* L) {
-	TangibleObject* objToSlice = (TangibleObject*) lua_touserdata(L, -2);
-	bool isKeypadSlice = lua_toboolean(L, -1);
-
-	if (objToSlice == nullptr)
-		return 0;
-
-	ManagedReference<CreatureObject*> player = realObject->getParentRecursively(SceneObjectType::PLAYERCREATURE).castTo<CreatureObject*>();
-
-	if (player == nullptr)
-		return 0;
-
-	if (player->containsActiveSession(SessionFacadeType::SLICING)) {
-		player->sendSystemMessage("@slicing/slicing:already_slicing");
-		return 0;
-	}
-
-	//Create Session
-	ManagedReference<SlicingSession*> session = new SlicingSession(player);
-	session->setKeypadSlice(isKeypadSlice);
-	session->initalizeSlicingMenu(player, objToSlice);
-
-	return 0;
-}
-
-int LuaPlayerObject::getPlayedTimeString(lua_State* L) {
-	int argc = lua_gettop(L) - 1;
-
-	bool verbose = false;
-
-	if (argc == 1) {
-		verbose = lua_toboolean(L, -1);
-	}
-
-	Locker locker(realObject);
-
-	lua_pushstring(L, realObject->getPlayedTimeString(verbose).toCharArray());
 
 	return 1;
 }

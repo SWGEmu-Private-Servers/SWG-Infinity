@@ -99,7 +99,7 @@ public:
 
 		Zone* zone = creature->getZone();
 
-		if (zone == nullptr)
+		if (zone == NULL)
 			return;
 
 
@@ -107,7 +107,7 @@ public:
 		try {
 			SortedVector<QuadTreeEntry*> closeObjects;
 			CloseObjectsVector* vec = (CloseObjectsVector*) areaCenter->getCloseObjects();
-			vec->safeCopyReceiversTo(closeObjects, CloseObjectsVector::CREOTYPE);
+			vec->safeCopyTo(closeObjects);
 
 			for (int i = 0; i < closeObjects.size(); i++) {
 				SceneObject* object = static_cast<SceneObject*>( closeObjects.get(i));
@@ -120,30 +120,6 @@ public:
 
 				if (areaCenter->getWorldPosition().distanceTo(object->getWorldPosition()) - object->getTemplateRadius() > range)
 					continue;
-
-				if (creature->isPlayerCreature() && object->getParentID() != 0 && creature->getParentID() != object->getParentID()) {
-					Reference<CellObject*> targetCell = object->getParent().get().castTo<CellObject*>();
-
-					if (targetCell != nullptr) {
-						if (object->isPlayerCreature()) {
-							auto perms = targetCell->getContainerPermissions();
-
-							if (!perms->hasInheritPermissionsFromParent()) {
-								if (!targetCell->checkContainerPermission(creature, ContainerPermissions::WALKIN))
-									continue;
-							}
-						}
-
-						ManagedReference<SceneObject*> parentSceneObject = targetCell->getParent().get();
-
-						if (parentSceneObject != nullptr) {
-							BuildingObject* buildingObject = parentSceneObject->asBuildingObject();
-
-							if (buildingObject != nullptr && !buildingObject->isAllowedEntry(creature))
-								continue;
-						}
-					}
-				}
 
 				CreatureObject* creatureTarget = cast<CreatureObject*>( object);
 
@@ -250,21 +226,21 @@ public:
 			return INSUFFICIENTHAM;
 
 		ManagedReference<SceneObject*> object = server->getZoneServer()->getObject(target);
-		if (object == nullptr || !object->isCreatureObject() || creature == object)
+		if (object == NULL || !object->isCreatureObject() || creature == object)
 			return INVALIDTARGET;
 
 		uint64 objectId = 0;
 
 		parseModifier(arguments.toString(), objectId);
-		ManagedReference<DotPack*> dotPack = nullptr;
+		ManagedReference<DotPack*> dotPack = NULL;
 
 		SceneObject* inventory = creature->getSlottedObject("inventory");
 
-		if (inventory != nullptr) {
+		if (inventory != NULL) {
 			dotPack = inventory->getContainerObject(objectId).castTo<DotPack*>();
 		}
 
-		if (dotPack == nullptr)
+		if (dotPack == NULL)
 			return GENERALERROR;
 
 		PlayerManager* playerManager = server->getPlayerManager();
@@ -284,7 +260,7 @@ public:
 
 			if (targetCell != nullptr) {
 				if (!targetObject->isPlayerCreature()) {
-					auto perms = targetCell->getContainerPermissions();
+					ContainerPermissions* perms = targetCell->getContainerPermissions();
 
 					if (!perms->hasInheritPermissionsFromParent()) {
 						if (!targetCell->checkContainerPermission(creature, ContainerPermissions::WALKIN)) {
@@ -323,7 +299,7 @@ public:
 			if (creature->hasBuff(BuffCRC::FOOD_HEAL_RECOVERY)) {
 				DelayedBuff* buff = cast<DelayedBuff*>( creature->getBuff(BuffCRC::FOOD_HEAL_RECOVERY));
 
-				if (buff != nullptr) {
+				if (buff != NULL) {
 					float percent = buff->getSkillModifierValue("heal_recovery");
 
 					delay = round(delay * (100.0f - percent) / 100.0f);
@@ -400,7 +376,7 @@ public:
 			handleArea(creature, creatureTarget, dotPack, dotPack->getArea());
 		}
 
-		if (dotPack != nullptr) {
+		if (dotPack != NULL) {
 			if (creatureTarget != creature)
 				clocker.release();
 

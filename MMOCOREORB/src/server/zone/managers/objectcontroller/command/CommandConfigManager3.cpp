@@ -195,39 +195,39 @@
 #include "server/zone/objects/creature/commands/RolePlayCommand.h"
 #include "server/zone/objects/creature/commands/RollShotCommand.h"
 #include "server/zone/objects/creature/commands/RotateFurnitureCommand.h"
-#include "server/zone/objects/creature/commands/Saber1hComboHit1Command.h"
-#include "server/zone/objects/creature/commands/Saber1hComboHit2Command.h"
-#include "server/zone/objects/creature/commands/Saber1hComboHit3Command.h"
+#include "server/zone/objects/creature/commands/SaberComboHit1Command.h"   // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberComboHit2Command.h"   // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberComboHit3Command.h"   // Infinity Custom
 #include "server/zone/objects/creature/commands/Saber1hFlurryCommand.h"
 #include "server/zone/objects/creature/commands/Saber1hFlurry2Command.h"
-#include "server/zone/objects/creature/commands/Saber1hHeadHit1Command.h"
-#include "server/zone/objects/creature/commands/Saber1hHeadHit2Command.h"
-#include "server/zone/objects/creature/commands/Saber1hHeadHit3Command.h"
+#include "server/zone/objects/creature/commands/SaberHeadHit1Command.h"    // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberHeadHit2Command.h"    // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberHeadHit3Command.h"    // Infinity Custom
 #include "server/zone/objects/creature/commands/Saber1hHit1Command.h"
 #include "server/zone/objects/creature/commands/Saber1hHit2Command.h"
 #include "server/zone/objects/creature/commands/Saber1hHit3Command.h"
-#include "server/zone/objects/creature/commands/Saber2hBodyHit1Command.h"
-#include "server/zone/objects/creature/commands/Saber2hBodyHit2Command.h"
-#include "server/zone/objects/creature/commands/Saber2hBodyHit3Command.h"
+#include "server/zone/objects/creature/commands/SaberBodyHit1Command.h"    // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberBodyHit2Command.h"    // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberBodyHit3Command.h"    // Infinity Custom
 #include "server/zone/objects/creature/commands/Saber2hFrenzyCommand.h"
 #include "server/zone/objects/creature/commands/Saber2hHit1Command.h"
 #include "server/zone/objects/creature/commands/Saber2hHit2Command.h"
 #include "server/zone/objects/creature/commands/Saber2hHit3Command.h"
 #include "server/zone/objects/creature/commands/Saber2hPhantomCommand.h"
-#include "server/zone/objects/creature/commands/Saber2hSweep1Command.h"
-#include "server/zone/objects/creature/commands/Saber2hSweep2Command.h"
-#include "server/zone/objects/creature/commands/Saber2hSweep3Command.h"
+#include "server/zone/objects/creature/commands/SaberSweep1Command.h"      // Infinity Custom 
+#include "server/zone/objects/creature/commands/SaberSweep2Command.h"      // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberSweep3Command.h"      // Infinity Custom
 #include "server/zone/objects/creature/commands/SaberPolearmDervishCommand.h"
 #include "server/zone/objects/creature/commands/SaberPolearmDervish2Command.h"
 #include "server/zone/objects/creature/commands/SaberPolearmHit1Command.h"
 #include "server/zone/objects/creature/commands/SaberPolearmHit2Command.h"
 #include "server/zone/objects/creature/commands/SaberPolearmHit3Command.h"
-#include "server/zone/objects/creature/commands/SaberPolearmLegHit1Command.h"
-#include "server/zone/objects/creature/commands/SaberPolearmLegHit2Command.h"
-#include "server/zone/objects/creature/commands/SaberPolearmLegHit3Command.h"
-#include "server/zone/objects/creature/commands/SaberPolearmSpinAttack1Command.h"
-#include "server/zone/objects/creature/commands/SaberPolearmSpinAttack2Command.h"
-#include "server/zone/objects/creature/commands/SaberPolearmSpinAttack3Command.h"
+#include "server/zone/objects/creature/commands/SaberLegHit1Command.h"      // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberLegHit2Command.h"      // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberLegHit3Command.h"      // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberSpinAttack1Command.h"  // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberSpinAttack2Command.h"  // Infinity Custom
+#include "server/zone/objects/creature/commands/SaberSpinAttack3Command.h"  // Infinity Custom
 #include "server/zone/objects/creature/commands/SaberSlash1Command.h"
 #include "server/zone/objects/creature/commands/SaberSlash2Command.h"
 #include "server/zone/objects/creature/commands/SaberThrow1Command.h"
@@ -495,39 +495,39 @@ void CommandConfigManager::registerCommands3() {
 	commandFactory.registerCommand<RolePlayCommand>(String("rolePlay").toLowerCase());
 	commandFactory.registerCommand<RollShotCommand>(String("rollShot").toLowerCase());
 	commandFactory.registerCommand<RotateFurnitureCommand>(String("rotateFurniture").toLowerCase());
-	commandFactory.registerCommand<Saber1hComboHit1Command>(String("saber1hComboHit1").toLowerCase());
-	commandFactory.registerCommand<Saber1hComboHit2Command>(String("saber1hComboHit2").toLowerCase());
-	commandFactory.registerCommand<Saber1hComboHit3Command>(String("saber1hComboHit3").toLowerCase());
+	commandFactory.registerCommand<SaberComboHit1Command>(String("saberComboHit1").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberComboHit2Command>(String("saberComboHit2").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberComboHit3Command>(String("saberComboHit3").toLowerCase());      // Infinity Custom
 	commandFactory.registerCommand<Saber1hFlurryCommand>(String("saber1hFlurry").toLowerCase());
 	commandFactory.registerCommand<Saber1hFlurry2Command>(String("saber1hFlurry2").toLowerCase());
-	commandFactory.registerCommand<Saber1hHeadHit1Command>(String("saber1hHeadHit1").toLowerCase());
-	commandFactory.registerCommand<Saber1hHeadHit2Command>(String("saber1hHeadHit2").toLowerCase());
-	commandFactory.registerCommand<Saber1hHeadHit3Command>(String("saber1hHeadHit3").toLowerCase());
+	commandFactory.registerCommand<SaberHeadHit1Command>(String("saberHeadHit1").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberHeadHit2Command>(String("saberHeadHit2").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberHeadHit3Command>(String("saberHeadHit3").toLowerCase());      // Infinity Custom
 	commandFactory.registerCommand<Saber1hHit1Command>(String("saber1hHit1").toLowerCase());
 	commandFactory.registerCommand<Saber1hHit2Command>(String("saber1hHit2").toLowerCase());
 	commandFactory.registerCommand<Saber1hHit3Command>(String("saber1hHit3").toLowerCase());
-	commandFactory.registerCommand<Saber2hBodyHit1Command>(String("saber2hBodyHit1").toLowerCase());
-	commandFactory.registerCommand<Saber2hBodyHit2Command>(String("saber2hBodyHit2").toLowerCase());
-	commandFactory.registerCommand<Saber2hBodyHit3Command>(String("saber2hBodyHit3").toLowerCase());
+	commandFactory.registerCommand<SaberBodyHit1Command>(String("saberBodyHit1").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberBodyHit2Command>(String("saberBodyHit2").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberBodyHit3Command>(String("saberBodyHit3").toLowerCase());      // Infinity Custom
 	commandFactory.registerCommand<Saber2hFrenzyCommand>(String("saber2hFrenzy").toLowerCase());
 	commandFactory.registerCommand<Saber2hHit1Command>(String("saber2hHit1").toLowerCase());
 	commandFactory.registerCommand<Saber2hHit2Command>(String("saber2hHit2").toLowerCase());
 	commandFactory.registerCommand<Saber2hHit3Command>(String("saber2hHit3").toLowerCase());
 	commandFactory.registerCommand<Saber2hPhantomCommand>(String("saber2hPhantom").toLowerCase());
-	commandFactory.registerCommand<Saber2hSweep1Command>(String("saber2hSweep1").toLowerCase());
-	commandFactory.registerCommand<Saber2hSweep2Command>(String("saber2hSweep2").toLowerCase());
-	commandFactory.registerCommand<Saber2hSweep3Command>(String("saber2hSweep3").toLowerCase());
+	commandFactory.registerCommand<SaberSweep1Command>(String("saberSweep1").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberSweep2Command>(String("saberSweep2").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberSweep3Command>(String("saberSweep3").toLowerCase());      // Infinity Custom
 	commandFactory.registerCommand<SaberPolearmDervishCommand>(String("saberPolearmDervish").toLowerCase());
 	commandFactory.registerCommand<SaberPolearmDervish2Command>(String("saberPolearmDervish2").toLowerCase());
 	commandFactory.registerCommand<SaberPolearmHit1Command>(String("saberPolearmHit1").toLowerCase());
 	commandFactory.registerCommand<SaberPolearmHit2Command>(String("saberPolearmHit2").toLowerCase());
 	commandFactory.registerCommand<SaberPolearmHit3Command>(String("saberPolearmHit3").toLowerCase());
-	commandFactory.registerCommand<SaberPolearmLegHit1Command>(String("saberPolearmLegHit1").toLowerCase());
-	commandFactory.registerCommand<SaberPolearmLegHit2Command>(String("saberPolearmLegHit2").toLowerCase());
-	commandFactory.registerCommand<SaberPolearmLegHit3Command>(String("saberPolearmLegHit3").toLowerCase());
-	commandFactory.registerCommand<SaberPolearmSpinAttack1Command>(String("saberPolearmSpinAttack1").toLowerCase());
-	commandFactory.registerCommand<SaberPolearmSpinAttack2Command>(String("saberPolearmSpinAttack2").toLowerCase());
-	commandFactory.registerCommand<SaberPolearmSpinAttack3Command>(String("saberPolearmSpinAttack3").toLowerCase());
+	commandFactory.registerCommand<SaberLegHit1Command>(String("saberLegHit1").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberLegHit2Command>(String("saberLegHit2").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberLegHit3Command>(String("saberLegHit3").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberSpinAttack1Command>(String("saberSpinAttack1").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberSpinAttack2Command>(String("saberSpinAttack2").toLowerCase());      // Infinity Custom
+	commandFactory.registerCommand<SaberSpinAttack3Command>(String("saberSpinAttack3").toLowerCase());      // Infinity Custom
 	commandFactory.registerCommand<SaberSlash1Command>(String("saberSlash1").toLowerCase());
 	commandFactory.registerCommand<SaberSlash2Command>(String("saberSlash2").toLowerCase());
 	commandFactory.registerCommand<SaberThrow1Command>(String("saberThrow1").toLowerCase());

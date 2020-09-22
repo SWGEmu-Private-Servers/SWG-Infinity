@@ -27,11 +27,11 @@ public:
 		String str = "Server will shutdown in " + String::valueOf(minutesRemaining) + " minutes";
 
 		if (minutesRemaining <= 0)
-			str = "SHUTTING DOWN NOW!";
+			str = "Infinity is now restarting, please check Discord for updates.";
 
 		Logger::console.info(str, true);
 
-		zoneServer->getChatManager()->broadcastGalaxy(nullptr, str);
+		zoneServer->getChatManager()->broadcastGalaxy(NULL, str);
 
 		if (minutesRemaining <= 0) {
 			ServerCore::getInstance()->signalShutdown();

@@ -27,7 +27,20 @@ public:
 			return NOJEDIARMOR;
 		}
 
-		return doCombatAction(creature, target);
+			if (!creature->checkCooldownRecovery("force_lightning")){
+			   creature->sendSystemMessage("You are still recovering from your last force lightning.");
+			   return GENERALERROR;
+			}
+
+		int res;
+		res = doCombatAction(creature, target);
+		if (res == SUCCESS){
+                        float cop = 0.f;
+                        cop = creature->getSkillMod("cloakofpain");
+                        float lightningCD = 3750/(1+(cop/50));
+                        creature->updateCooldownTimer("force_lightning", lightningCD); // 4.5 second, scales down to 3 with master powers
+		}
+		return res;
 	}
 
 };

@@ -9,6 +9,12 @@
 #include "FactionMap.h"
 #include "server/zone/objects/player/PlayerObject.h"
 #include "templates/manager/TemplateManager.h"
+#include "server/zone/packets/player/PlayMusicMessage.h"
+#include "server/chat/ChatManager.h"
+#include "server/zone/managers/frs/FrsManager.h"
+#include "server/zone/objects/group/GroupObject.h"
+#include "server/zone/managers/player/PlayerManager.h"
+
 
 FactionManager::FactionManager() {
 	setLoggingName("FactionManager");
@@ -24,7 +30,7 @@ void FactionManager::loadData() {
 void FactionManager::loadFactionRanks() {
 	IffStream* iffStream = TemplateManager::instance()->openIffFile("datatables/faction/rank.iff");
 
-	if (iffStream == nullptr) {
+	if (iffStream == NULL) {
 		warning("Faction ranks could not be found.");
 		return;
 	}
@@ -79,7 +85,7 @@ void FactionManager::loadLuaConfig() {
 	luaObject.pop();
 
 	delete lua;
-	lua = nullptr;
+	lua = NULL;
 }
 
 FactionMap* FactionManager::getFactionMap() {
@@ -87,7 +93,7 @@ FactionMap* FactionManager::getFactionMap() {
 }
 
 void FactionManager::awardFactionStanding(CreatureObject* player, const String& factionName, int level) {
-	if (player == nullptr)
+	if (player == NULL)
 		return;
 
 	ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
@@ -152,7 +158,7 @@ void FactionManager::awardFactionStanding(CreatureObject* player, const String& 
 }
 
 
-void FactionManager::awardPvpFactionPoints(TangibleObject* killer, CreatureObject* destructedObject) {
+void FactionManager::awardPvpFactionPoints(TangibleObject* killer, CreatureObject* destructedObject, int numberCombatants = 1) {
 	if (killer->isPlayerCreature() && destructedObject->isPlayerCreature()) {
 		CreatureObject* killerCreature = cast<CreatureObject*>(killer);
 		ManagedReference<PlayerObject*> ghost = killerCreature->getPlayerObject();

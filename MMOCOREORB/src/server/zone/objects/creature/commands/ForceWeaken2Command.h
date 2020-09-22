@@ -7,7 +7,6 @@
 
 #include "server/zone/objects/scene/SceneObject.h"
 #include "ForcePowersQueueCommand.h"
-#include "server/zone/objects/creature/buffs/ForceWeakenDebuff.h"
 
 class ForceWeaken2Command : public ForcePowersQueueCommand {
 public:
@@ -31,28 +30,67 @@ public:
 
 		ManagedReference<SceneObject*> targetObject = server->getZoneServer()->getObject(target);
 
-		if (targetObject == nullptr || !targetObject->isCreatureObject()) {
+		if (targetObject == NULL || !targetObject->isCreatureObject()) {
 			return INVALIDTARGET;
 		}
 
-		CreatureObject* creatureTarget = targetObject.castTo<CreatureObject*>();
+		ManagedReference<CreatureObject*> creatureTarget = targetObject.castTo<CreatureObject*>();
+		if (creatureTarget == NULL){
+			return INVALIDTARGET;
+		}
 
-		if (creatureTarget->hasBuff(STRING_HASHCODE("forceweaken1")) || creatureTarget->hasBuff(STRING_HASHCODE("forceweaken2"))) {
-			return ALREADYAFFECTEDJEDIPOWER;
+		String name = "forceweaken2";
+		uint32 crc = name.hashCode();
+
+		if (creatureTarget->hasBuff(crc)){
+			creature->sendSystemMessage("They have already been weakened");
+			return INVALIDTARGET;
+		}
+
+		String name3 = "forceweaken3";
+		uint32 crc3 = name3.hashCode();
+
+		if (creatureTarget->hasBuff(crc3)){
+			creature->sendSystemMessage("They have already been weakened by a stronger force");
+			return INVALIDTARGET;
 		}
 
 		int res = doCombatAction(creature, target);
 
 		if (res == SUCCESS) {
-			Locker clocker(creatureTarget, creature);
 
-			ManagedReference<Buff*> buff = new ForceWeakenDebuff(creatureTarget, getNameCRC(), 400, 600, 120);
+			// Setup debuff.
 
-			Locker locker(buff);
+			if (creatureTarget != NULL) {
+				Locker clocker(creatureTarget, creature);
 
-			creatureTarget->addBuff(buff);
+				float frsBonus = creature->getFrsMod("power");
+				ManagedReference<Buff*> buff = NULL;
 
-			CombatManager::instance()->broadcastCombatSpam(creature, creatureTarget, nullptr, 0, "cbt_spam", combatSpam + "_hit", 1);
+				if (creature->isPlayerCreature())
+					buff = new Buff(creatureTarget, getNameCRC(), 30, BuffType::JEDI);
+				else
+					buff = new Buff(creatureTarget, getNameCRC(), 15, BuffType::JEDI);
+
+
+				if (buff == NULL)
+					return GENERALERROR;
+
+				Locker locker(buff);
+				int hamStrength =  -1 * creatureTarget->getMaxHAM(CreatureAttribute::HEALTH) * .15 * frsBonus;
+				buff->setAttributeModifier(CreatureAttribute::HEALTH, hamStrength);
+				hamStrength =  -1 * creatureTarget->getMaxHAM(CreatureAttribute::ACTION) * .15 * frsBonus;
+				buff->setAttributeModifier(CreatureAttribute::ACTION, hamStrength);
+				hamStrength =  -1 * creatureTarget->getMaxHAM(CreatureAttribute::MIND) * .15 * frsBonus;
+				buff->setAttributeModifier(CreatureAttribute::MIND, hamStrength);
+
+				buff->setSkillModifier("weaken_delay", 10);
+
+				creatureTarget->addBuff(buff);
+
+				CombatManager::instance()->broadcastCombatSpam(creature, creatureTarget, NULL, 0, "cbt_spam", combatSpam + "_hit", 1);
+			}
+
 		}
 
 		return res;

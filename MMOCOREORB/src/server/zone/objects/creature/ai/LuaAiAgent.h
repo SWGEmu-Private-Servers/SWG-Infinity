@@ -12,6 +12,7 @@
 #include "engine/engine.h"
 
 #include "server/zone/objects/creature/LuaCreatureObject.h"
+#include "server/zone/objects/creature/ai/AiAgent.h"
 
 namespace server {
 namespace zone {
@@ -145,6 +146,5 @@ namespace ai {
 }
 }
 
-using namespace server::zone::objects::creature::ai;
-
+using namespace server::zone::objects::creature;
 #endif /* LUAAIAGENT_H_ */

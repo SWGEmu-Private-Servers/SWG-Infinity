@@ -9,10 +9,12 @@
 #include "server/zone/managers/skill/SkillModManager.h"
 
 class VolleyFireCommand : public SquadLeaderCommand {
+		float range;
 public:
 
 	VolleyFireCommand(const String& name, ZoneProcessServer* server)
 		: SquadLeaderCommand(name, server) {
+			range = 256;
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
@@ -51,14 +53,14 @@ public:
 	}
 
 	bool attemptVolleyFire(CreatureObject* player, uint64* target, int skillMod) const {
-		if (player == nullptr)
+		if (player == NULL)
 			return false;
 
 		ManagedReference<WeaponObject*> weapon = player->getWeapon();
 
 		String skillCRC;
 
-		if (weapon != nullptr) {
+		if (weapon != NULL) {
 			if (!weapon->getCreatureAccuracyModifiers()->isEmpty()) {
 				skillCRC = weapon->getCreatureAccuracyModifiers()->get(0);
 
@@ -75,7 +77,7 @@ public:
 	}
 
 	bool doVolleyFire(CreatureObject* leader, GroupObject* group, uint64* target) const {
-		if (leader == nullptr || group == nullptr)
+		if (leader == NULL || group == NULL)
 			return false;
 
 		for (int i = 0; i < group->getGroupSize(); i++) {
@@ -91,6 +93,11 @@ public:
 				continue;
 
 			Locker clocker(member, leader);
+
+			if(!checkDistance(member, leader, range)) {
+					member->sendSystemMessage("You are too far from your Squad Leader");
+				return TOOFAR;
+			}
 
 			String queueAction = "volleyfireattack";
 			uint64 queueActionCRC = queueAction.hashCode();

@@ -11,6 +11,7 @@
 #include "server/zone/objects/scene/components/DataObjectComponentReference.h"
 #include "server/zone/objects/tangible/components/vendor/VendorDataComponent.h"
 #include "server/zone/packets/object/ObjectMenuResponse.h"
+#include "templates/building/SharedBuildingObjectTemplate.h"
 #include "server/zone/objects/player/sessions/vendor/VendorAdBarkingSession.h"
 #include "server/zone/managers/vendor/VendorManager.h"
 #include "server/zone/ZoneProcessServer.h"
@@ -28,16 +29,16 @@ void VendorMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject,
 
 	PlayerObject* playerObject = player->getPlayerObject();
 
-	if (playerObject == nullptr)
+	if (playerObject == NULL)
 		return;
 
 	DataObjectComponentReference* data = sceneObject->getDataObjectComponent();
-	if(data == nullptr || data->get() == nullptr || !data->get()->isVendorData()) {
+	if(data == NULL || data->get() == NULL || !data->get()->isVendorData()) {
 		return;
 	}
 
 	VendorDataComponent* vendorData = cast<VendorDataComponent*>(data->get());
-	if(vendorData == nullptr) {
+	if(vendorData == NULL) {
 		return;
 	}
 
@@ -45,6 +46,12 @@ void VendorMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject,
 
 	if(!owner && !playerObject->isPrivileged())
 		return;
+
+	ManagedReference<BuildingObject*> building = cast<BuildingObject*>(sceneObject->getRootParent());
+
+	if (building == NULL){
+		error("Building is returning null on Vendor Menu component, this should not happen.");
+	}
 
 	menuResponse->addRadialMenuItem(70, 3, "@player_structure:vendor_control");
 
@@ -76,7 +83,7 @@ void VendorMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject,
 
 		if (vendorData->isVendorSearchEnabled())
 			menuResponse->addRadialMenuItemToRadialID(70, 75, 3, "@player_structure:disable_vendor_search");
-		else if (!vendorData->isOnStrike())
+		else if (!vendorData->isOnStrike() && !building->isPrivateStructure())
 			menuResponse->addRadialMenuItemToRadialID(70, 75, 3, "@player_structure:enable_vendor_search");
 
 		if (player->hasSkill("crafting_merchant_advertising_03")) {
@@ -104,17 +111,17 @@ int VendorMenuComponent::handleObjectMenuSelect(SceneObject* sceneObject,
 		return 0;
 
 	DataObjectComponentReference* data = sceneObject->getDataObjectComponent();
-	if(data == nullptr || data->get() == nullptr || !data->get()->isVendorData()) {
+	if(data == NULL || data->get() == NULL || !data->get()->isVendorData()) {
 		return 0;
 	}
 
 	VendorDataComponent* vendorData = cast<VendorDataComponent*>(data->get());
-	if(vendorData == nullptr) {
+	if(vendorData == NULL) {
 		return 0;
 	}
 
 	ManagedReference<TangibleObject*> vendor = cast<TangibleObject*>(sceneObject);
-	if(vendor == nullptr)
+	if(vendor == NULL)
 		return 0;
 
 	bool owner = vendorData->getOwnerId() == player->getObjectID();

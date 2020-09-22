@@ -18,7 +18,7 @@
 int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject* object, int containmentType, String& errorDescription) const {
 	CreatureObject* creo = dynamic_cast<CreatureObject*>(sceneObject);
 
-	if (creo == nullptr) {
+	if (creo == NULL) {
 		return TransferErrorCode::PLAYERUSEMASKERROR;
 	}
 
@@ -27,8 +27,8 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 
 		SharedTangibleObjectTemplate* tanoData = dynamic_cast<SharedTangibleObjectTemplate*>(wearable->getObjectTemplate());
 
-		if (tanoData != nullptr) {
-			const auto races = tanoData->getPlayerRaces();
+		if (tanoData != NULL) {
+			Vector<uint32>* races = tanoData->getPlayerRaces();
 			String race = creo->getObjectTemplate()->getFullTemplateString();
 
 			if (!races->contains(race.hashCode())) {
@@ -65,7 +65,7 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 		}
 
 		if (object->isWearableObject()) {
-			if (tanoData != nullptr) {
+			if (tanoData != NULL) {
 				const Vector<String>& skillsRequired = tanoData->getCertificationsRequired();
 
 				if (skillsRequired.size() > 0) {
@@ -82,10 +82,14 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 
 					if (!hasSkill) {
 						errorDescription = "@error_message:insufficient_skill"; // You lack the skill to use this item.
-
 						return TransferErrorCode::PLAYERUSEMASKERROR;
 					}
 				}
+				if ((wearable->getMaxCondition() - wearable->getConditionDamage()) <= 0) {
+					errorDescription = "This object has been damaged to the point of uselessness.";
+						return TransferErrorCode::PLAYERUSEMASKERROR;
+				}
+				
 			}
 		}
 
@@ -118,7 +122,7 @@ int PlayerContainerComponent::canAddObject(SceneObject* sceneObject, SceneObject
 int PlayerContainerComponent::notifyObjectInserted(SceneObject* sceneObject, SceneObject* object) const {
 	CreatureObject* creo = dynamic_cast<CreatureObject*>(sceneObject);
 
-	if (creo == nullptr) {
+	if (creo == NULL) {
 		return 0;
 	}
 
@@ -158,8 +162,10 @@ int PlayerContainerComponent::notifyObjectInserted(SceneObject* sceneObject, Sce
 
 	if (ghost && ghost->isJedi()) {
 
+		//increase visibility for equipping a robe or saber near other players
 		if (object->isRobeObject()) {
-			ghost->recalculateForcePower();
+			ghost->setForcePowerMax(creo->getSkillMod("jedi_force_power_max"));
+			VisibilityManager::instance()->increaseVisibility(creo, VisibilityManager::SABERVISMOD);
 		} else if (object->isWeaponObject()) {
 			WeaponObject* weaponObject = cast<WeaponObject*>(object);
 			if (weaponObject->isJediWeapon()) {
@@ -178,7 +184,7 @@ int PlayerContainerComponent::notifyObjectInserted(SceneObject* sceneObject, Sce
 int PlayerContainerComponent::notifyObjectRemoved(SceneObject* sceneObject, SceneObject* object, SceneObject* destination) const {
 	CreatureObject* creo = dynamic_cast<CreatureObject*>(sceneObject);
 
-	if (creo == nullptr) {
+	if (creo == NULL) {
 		return 0;
 	}
 
@@ -220,7 +226,7 @@ int PlayerContainerComponent::notifyObjectRemoved(SceneObject* sceneObject, Scen
 
 	if (ghost && ghost->isJedi()) {
 		if (object->isRobeObject()) {
-			ghost->recalculateForcePower();
+			ghost->setForcePowerMax(creo->getSkillMod("jedi_force_power_max"));
 		}
 	}
 

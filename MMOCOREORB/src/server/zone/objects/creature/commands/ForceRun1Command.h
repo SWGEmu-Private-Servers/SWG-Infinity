@@ -6,6 +6,8 @@
 #define FORCERUN1COMMAND_H_
 
 #include "JediQueueCommand.h"
+#include "server/zone/objects/scene/SceneObject.h"
+#include "server/zone/objects/group/GroupObject.h"
 
 class ForceRun1Command : public JediQueueCommand {
 public:
@@ -26,12 +28,21 @@ public:
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
-		int res = creature->hasBuff(buffCRC) ? NOSTACKJEDIBUFF : doJediSelfBuffCommand(creature);
+		ManagedReference<GroupObject*> group = creature->getGroup();
 
-		if (res == NOSTACKJEDIBUFF) {
-			creature->sendSystemMessage("@jedi_spam:already_force_running"); // You are already force running.
-			return GENERALERROR;
+		if (0) {  // creature->hasSkill("force_discipline_enhancements_master") && group != NULL && group->getGroupSize() > 1){
+			creature->sendSystemMessage("Your mastery of the enhancement discipline allows you to extend this power to others near you");
+			int res = doJediGroupBuffCommand(creature);
 		}
+
+		if (creature->hasBuff(buffCRC)) {
+			creature->removeBuff(buffCRC);
+			return SUCCESS;
+		}
+
+
+                int res = doJediSelfBuffCommand(creature);
+
 		// Return if something is in error.
 		if (res != SUCCESS) {
 			return res;

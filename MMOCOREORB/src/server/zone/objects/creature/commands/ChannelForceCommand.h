@@ -31,12 +31,13 @@ public:
 			return NOJEDIARMOR;
 		}
 
-		// Bonus is in between 250-350.
-		int forceRandom = System::random(100);
-		int forceBonus = 250 + (forceRandom);
+		// Bonus is in between 200-300.
+		int rand = System::random(10);
+		int forceBonus = 200 + (rand * 10); // Needs to be divisible by amount of ticks.
 
 		ManagedReference<PlayerObject*> playerObject = creature->getPlayerObject();
-		if (playerObject == nullptr)
+
+		if (playerObject == NULL)
 			return GENERALERROR;
 
 		// Do not execute if the player's force bar is full.
@@ -47,10 +48,11 @@ public:
 		if ((playerObject->getForcePowerMax() - playerObject->getForcePower()) < forceBonus)
 			forceBonus = ((playerObject->getForcePowerMax() - playerObject->getForcePower()) / 10) * 10;
 
+		int tmp = 0;
 		int health = creature->getHAM(CreatureAttribute::HEALTH);
 		int action = creature->getHAM(CreatureAttribute::ACTION);
 		int mind = creature->getHAM(CreatureAttribute::MIND);
-
+			
 		if ((health <= forceBonus) || (action <= forceBonus) || (mind <= forceBonus)) {
 			creature->sendSystemMessage("@jedi_spam:channel_ham_too_low"); // Your body is too weakened to perform that action.
 			return GENERALERROR;
@@ -64,6 +66,8 @@ public:
 			creature->sendSystemMessage("@jedi_spam:channel_ham_too_low"); // Your body is too weakened to perform that action.
 			return GENERALERROR;
 		}
+		
+		
 
 		// Give Force, and subtract HAM.
 		playerObject->setForcePower(playerObject->getForcePower() + forceBonus);
@@ -72,7 +76,7 @@ public:
 		uint32 buffCRC = STRING_HASHCODE("channelforcebuff");
 		Reference<Buff*> buff = creature->getBuff(buffCRC);
 		int duration = ChannelForceBuff::FORCE_CHANNEL_DURATION_SECONDS;
-		if (buff == nullptr) {
+		if (buff == NULL) {
 			buff = new ChannelForceBuff(creature, buffCRC, duration);
 			
 			Locker locker(buff);
@@ -98,7 +102,7 @@ public:
 			
 			creature->renewBuff(buffCRC, duration);
 			Reference<ChannelForceBuff*> channelBuff = buff.castTo<ChannelForceBuff*>();
-			if (channelBuff != nullptr)
+			if (channelBuff != NULL)
 				channelBuff->activateRegenTick();
 		}
 

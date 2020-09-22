@@ -29,11 +29,14 @@ public:
 
 		ManagedReference<SceneObject*> targetObject = server->getZoneServer()->getObject(target);
 
-		if (targetObject == nullptr || !targetObject->isCreatureObject()) {
+		if (targetObject == NULL || !targetObject->isCreatureObject()) {
 			return INVALIDTARGET;
 		}
 
 		return doCombatAction(creature, target);
+	}
+	float getCommandDuration(CreatureObject* object, const UnicodeString& arguments) const {
+		return defaultTime;
 	}
 
 };

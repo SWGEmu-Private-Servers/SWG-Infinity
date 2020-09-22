@@ -8,10 +8,12 @@
 #include "SquadLeaderCommand.h"
 
 class SteadyaimCommand : public SquadLeaderCommand {
+		float range;
 public:
 
 	SteadyaimCommand(const String& name, ZoneProcessServer* server)
 		: SquadLeaderCommand(name, server) {
+			range = 256;
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
@@ -27,12 +29,12 @@ public:
 
 		ManagedReference<CreatureObject*> player = cast<CreatureObject*>(creature);
 
-		if (player == nullptr)
+		if (player == NULL)
 			return GENERALERROR;
 
 		ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
 
-		if (ghost == nullptr)
+		if (ghost == NULL)
 			return GENERALERROR;
 
 		ManagedReference<GroupObject*> group = player->getGroup();
@@ -67,19 +69,24 @@ public:
 	}
 
 	bool doSteadyAim(CreatureObject* leader, GroupObject* group, int amount) const {
-		if (leader == nullptr || group == nullptr)
+		if (leader == NULL || group == NULL)
 			return false;
 
 		for (int i = 0; i < group->getGroupSize(); i++) {
 			ManagedReference<CreatureObject*> member = group->getGroupMember(i);
 
-			if (member == nullptr || !member->isPlayerCreature())
+			if (member == NULL || !member->isPlayerCreature())
 				continue;
 
 			if (!isValidGroupAbilityTarget(leader, member, false))
 				continue;
 
 			Locker clocker(member, leader);
+
+			if(!checkDistance(member, leader, range)) {
+					member->sendSystemMessage("You are too far from your Squad Leader");
+				return TOOFAR;
+			}
 
 			sendCombatSpam(member);
 

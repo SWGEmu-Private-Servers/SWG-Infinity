@@ -12,7 +12,6 @@ import server.zone.packets.object.ObjectMenuResponse;
 include templates.SharedObjectTemplate;
 import server.zone.objects.scene.variables.ContainerPermissions;
 
-@json
 class FactoryCrate extends TangibleObject {
 
 	protected int maxCapacity;
@@ -20,7 +19,7 @@ class FactoryCrate extends TangibleObject {
 	public FactoryCrate() {
 		Logger.setLoggingName("FactoryCrate");
 
-		maxCapacity = 100;
+		maxCapacity = 2500;
 
 		super.setContainerInheritPermissionsFromParent(false);
 		super.setContainerDefaultDenyPermission(ContainerPermissions.OPEN);
@@ -73,8 +72,6 @@ class FactoryCrate extends TangibleObject {
 	public abstract boolean isFactoryCrate() {
 		return true;
 	}
-
-	public native boolean isValidFactoryCrate();
 
 	@read
 	public int getMaxCapacity() {

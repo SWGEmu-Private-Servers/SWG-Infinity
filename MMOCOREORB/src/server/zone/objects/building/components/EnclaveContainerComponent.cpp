@@ -1,7 +1,6 @@
 #include "EnclaveContainerComponent.h"
 #include "server/zone/objects/creature/CreatureObject.h"
 #include "server/zone/objects/player/PlayerObject.h"
-#include "server/zone/objects/creature/ai/AiAgent.h"
 #include "server/zone/objects/player/variables/FrsData.h"
 #include "server/zone/objects/intangible/PetControlDevice.h"
 #include "server/zone/objects/intangible/tasks/PetControlDeviceStoreObjectTask.h"
@@ -20,31 +19,30 @@ bool EnclaveContainerComponent::checkBuildingPermission(SceneObject* sceneObject
 	if (permission != ContainerPermissions::WALKIN)
 		return StructureContainerComponent::checkContainerPermission(sceneObject, creature, permission);
 
-	PlayerObject* ghost = creature->getPlayerObject();
+	if (!creature->isPlayerCreature()) {
+		if (creature->isPet()) {
+			ManagedReference<CreatureObject*> owner = creature->getLinkedCreature().get();
 
-	if (ghost == nullptr)
-		return false;
+			if (owner != NULL) {
+				ManagedReference<PetControlDevice*> petControlDevice = creature->getControlDevice().get().castTo<PetControlDevice*>();
 
-	bool storedPet = false;
+				if (petControlDevice == NULL)
+					return false;
 
-	for (int i = 0; i < ghost->getActivePetsSize(); ++i) {
-		ManagedReference<AiAgent*> object = ghost->getActivePet(i);
+				Reference<PetControlDeviceStoreObjectTask*> task = new PetControlDeviceStoreObjectTask(petControlDevice, owner, true);
+				task->execute();
 
-		if (object != nullptr) {
-			ManagedReference<PetControlDevice*> pcd = object->getControlDevice().get().castTo<PetControlDevice*>();
-
-			if (pcd == nullptr)
-				continue;
-
-			Reference<PetControlDeviceStoreObjectTask*> task = new PetControlDeviceStoreObjectTask(pcd, creature, true);
-			task->execute();
-
-			storedPet = true;
+				owner->sendSystemMessage("@pvp_rating:enclave_deny_pet_entry"); // As you are not permitted to bring any pets or hirelings into the enclave. They have been returned to your data pad for you.
+			}
 		}
+
+		return false;
 	}
 
-	if (storedPet)
-		creature->sendSystemMessage("@pvp_rating:enclave_deny_pet_entry"); // As you are not permitted to bring any pets or hirelings into the enclave. They have been returned to your data pad for you.
+	PlayerObject* ghost = creature->getPlayerObject();
+
+	if (ghost == NULL)
+		return false;
 
 	if (ghost->hasGodMode())
 		return true;
@@ -60,7 +58,7 @@ bool EnclaveContainerComponent::checkBuildingPermission(SceneObject* sceneObject
 
 	FrsData* frsData = ghost->getFrsData();
 
-	if (frsData == nullptr)
+	if (frsData == NULL)
 		return false;
 
 	if (frsData->getCouncilType() == enclaveType)
@@ -81,7 +79,7 @@ bool EnclaveContainerComponent::checkCellPermission(SceneObject* sceneObject, Cr
 
 	PlayerObject* ghost = creature->getPlayerObject();
 
-	if (ghost == nullptr)
+	if (ghost == NULL)
 		return false;
 
 	if (ghost->hasGodMode())
@@ -91,7 +89,7 @@ bool EnclaveContainerComponent::checkCellPermission(SceneObject* sceneObject, Cr
 
 	ManagedReference<SceneObject*> enclave = sceneObject->getParent().get();
 
-	if (enclave == nullptr)
+	if (enclave == NULL)
 		return false;
 
 	if (enclave->getServerObjectCRC() == STRING_HASHCODE("object/building/yavin/light_enclave.iff"))
@@ -103,14 +101,14 @@ bool EnclaveContainerComponent::checkCellPermission(SceneObject* sceneObject, Cr
 
 	FrsData* frsData = ghost->getFrsData();
 
-	if (frsData == nullptr)
+	if (frsData == NULL)
 		return false;
 
 	if (frsData->getCouncilType() != enclaveType)
 		return false;
 
 	SortedVector<String>* groups = ghost->getPermissionGroups();
-	auto permissions = sceneObject->getContainerPermissions();
+	ContainerPermissions* permissions = sceneObject->getContainerPermissions();
 
 	uint16 allowPermissions = 0;
 
@@ -123,19 +121,4 @@ bool EnclaveContainerComponent::checkCellPermission(SceneObject* sceneObject, Cr
 	}
 
 	return permission & allowPermissions;
-}
-
-int EnclaveContainerComponent::notifyObjectRemoved(SceneObject* sceneObject, SceneObject* object, SceneObject* destination) const {
-	CreatureObject* creo = object->asCreatureObject();
-
-	if (creo == nullptr || sceneObject->getObjectID() != FrsManager::ARENA_CELL)
-		return ContainerComponent::notifyObjectRemoved(sceneObject, object, destination);
-
-	FrsManager* frsMan = creo->getZoneServer()->getFrsManager();
-
-	if (frsMan->isPlayerFightingInArena(creo->getObjectID())) {
-		frsMan->handleLeftArena(creo);
-	}
-
-	return ContainerComponent::notifyObjectRemoved(sceneObject, object, destination);
 }

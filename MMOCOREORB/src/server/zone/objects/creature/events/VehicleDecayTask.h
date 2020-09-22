@@ -21,12 +21,12 @@ public:
 	void run() {
 		ManagedReference<TangibleObject*> vehicle = vehicleObj.get();
 
-		if (vehicle == nullptr)
+		if (vehicle == NULL)
 			return;
 
 		Reference<VehicleObjectTemplate*> vehicleTemplate = cast<VehicleObjectTemplate*>(vehicle->getObjectTemplate());
 
-		if (vehicleTemplate == nullptr)
+		if (vehicleTemplate == NULL)
 			return;
 
 		Locker locker(vehicle);
@@ -44,7 +44,7 @@ public:
 			decayRate = 15;
 
 		if (initialDecay) {
-			vehicle->inflictDamage(vehicle, 0, decayRate / 2, true);
+			vehicle->inflictDamage(vehicle, 0, decayRate / 4, true);
 			initialDecay = false;
 		} else {
 			vehicle->inflictDamage(vehicle, 0, decayRate, true);

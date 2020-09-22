@@ -10,42 +10,46 @@
 class ForceArmor2Command : public JediQueueCommand {
 public:
 
-	ForceArmor2Command(const String& name, ZoneProcessServer* server) : JediQueueCommand(name, server) {
+	ForceArmor2Command(const String& name, ZoneProcessServer* server)
+		: JediQueueCommand(name, server) {
+
 		buffCRC = BuffCRC::JEDI_FORCE_ARMOR_2;
+
 		overrideableCRCs.add(BuffCRC::JEDI_FORCE_ARMOR_1);
-		singleUseEventTypes.add(ObserverEventType::FORCEARMOR);
+
+		singleUseEventTypes.add(ObserverEventType::FORCEBUFFHIT);
+
 		skillMods.put("force_armor", 45);
 	}
 
-	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const override {
+	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 		return doJediSelfBuffCommand(creature);
 	}
 
-	void handleBuff(SceneObject* sceneObject, ManagedObject* object, int64 param) const override {
-		ManagedReference<CreatureObject*> player = sceneObject->asCreatureObject();
+	void handleBuff(SceneObject* creature, ManagedObject* object, int64 param) {
 
-		if (player == nullptr)
-			return;
-
-		ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
-
-		if (ghost == nullptr)
+		ManagedReference<CreatureObject*> creo = cast<CreatureObject*>( creature);
+		if (creo == NULL)
 			return;
 
 		// Client Effect upon hit (needed)
-		player->playEffect("clienteffect/pl_force_armor_hit.cef", "");
+		creo->playEffect("clienteffect/pl_force_armor_hit.cef", "");
 
-		int fCost = param * getFrsModifiedExtraForceCost(player, 0.3f);
-		if (ghost->getForcePower() <= fCost) { // Remove buff if not enough force.
-			Buff* buff = player->getBuff(BuffCRC::JEDI_FORCE_ARMOR_2);
-			if (buff != nullptr) {
+		ManagedReference<PlayerObject*> playerObject = creo->getPlayerObject();
+		if (playerObject == NULL)
+			return;
+
+		// TODO: Force Rank modifiers.
+		// From 30% -> 3%
+		int forceCost = param * 0.03;
+		if (playerObject->getForcePower() <= forceCost) { // Remove buff if not enough force.
+			Buff* buff = creo->getBuff(BuffCRC::JEDI_FORCE_ARMOR_2);
+			if (buff != NULL) {
 				Locker locker(buff);
-
-				player->removeBuff(buff);
+				creo->removeBuff(buff);
 			}
-		} else {
-			ghost->setForcePower(ghost->getForcePower() - fCost);
-		}
+		} else
+			playerObject->setForcePower(playerObject->getForcePower() - forceCost);
 	}
 
 };

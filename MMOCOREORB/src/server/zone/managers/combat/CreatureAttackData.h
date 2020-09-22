@@ -20,7 +20,6 @@ protected:
 	float minDamage;
 	float maxDamage;
 	int damageType;
-	int forceCost;
 	float damageMultiplier;
 	float healthDamageMultiplier;
 	float actionDamageMultiplier;
@@ -33,23 +32,19 @@ protected:
 	float actionCostMultiplier;
 	float mindCostMultiplier;
 	float forceCostMultiplier;
-	float frsLightMinDamageModifier;
-	float frsLightMaxDamageModifier;
-	float frsDarkMinDamageModifier;
-	float frsDarkMaxDamageModifier;
 
-	int range;
-	int coneRange;
-	int coneAngle;
-	int areaRange;
+    int range;
+    int coneRange;
+    int coneAngle;
+    int areaRange;
 
-	bool splashDamage;
-	bool hitIncapTarget;
+    bool splashDamage;
+    bool hitIncapTarget;
 
-	uint64 targetID;
+    uint64 targetID;
 
-	const VectorMap<uint8, StateEffect>* stateEffects;
-	const Vector<DotEffect>* dotEffects;
+    VectorMap<uint64, StateEffect>* stateEffects;
+    Vector<DotEffect>* dotEffects;
 
 	bool forceAttack;
 	uint8 trails;
@@ -59,15 +54,15 @@ protected:
 	int stateAccuracyBonus;
 
 public:
-	CreatureAttackData(const UnicodeString & dataString, const CombatQueueCommand *base, uint64 target);
-	CreatureAttackData(const CreatureAttackData& data);
-	virtual ~CreatureAttackData() {}
+    CreatureAttackData(const UnicodeString & dataString, const CombatQueueCommand *base, uint64 target);
+    CreatureAttackData(const CreatureAttackData& data);
+    virtual ~CreatureAttackData() {}
 
-	void fillFromBase();
-	void setVariable(const String& var, const String& val);
+    void fillFromBase();
+    void setVariable(const String& var, const String& val);
 
-	const String& getCommandName() const;
-	uint32 getCommandCRC() const;
+    String getCommandName() const;
+    uint32 getCommandCRC() const;
 
 	float getActionDamageMultiplier() const {
 		return actionDamageMultiplier;
@@ -93,29 +88,30 @@ public:
 		this->mindDamageMultiplier = mindDamageMultiplier;
 	}
 
-	const CombatQueueCommand* getCommand() const {
-		return baseCommand;
-	}
+    const CombatQueueCommand* getCommand() const {
+    	return baseCommand;
+    }
 
-	float getMinDamage() const {
-		return minDamage;
-	}
+    float getMinDamage() const {
+    	return minDamage;
+    }
 
-	float getMaxDamage() const {
-		return maxDamage;
-	}
+    float getMaxDamage() const {
+    	return maxDamage;
+    }
 
-	int getDamageType() const {
-		return damageType;
-	}
+    int getDamageType() const {
+    	return damageType;
+    }
 
-	int getAccuracyBonus() const {
-		return accuracyBonus;
-	}
+    int getAccuracyBonus() const {
+    	return accuracyBonus;
+    }
 
-	float getActionCostMultiplier() const {
+    float getActionCostMultiplier() const {
 		return actionCostMultiplier;
 	}
+
 
 	void setSplashDamage(bool b) {
 		splashDamage = b;
@@ -169,36 +165,16 @@ public:
 		return speedMultiplier;
 	}
 
-	const VectorMap<uint8, StateEffect>* getStateEffects() const {
+	VectorMap<uint64, StateEffect>* getStateEffects() const {
 		return stateEffects;
 	}
 
-	const Vector<DotEffect>* getDotEffects() const {
+	Vector<DotEffect>* getDotEffects() const {
 		return dotEffects;
 	}
 
 	bool isForceAttack() const {
 		return forceAttack;
-	}
-
-	int getForceCost() const {
-		return forceCost;
-	}
-
-	float getFrsLightMinDamageModifier() const {
-		return frsLightMinDamageModifier;
-	}
-
-	float getFrsLightMaxDamageModifier() const {
-		return frsLightMaxDamageModifier;
-	}
-
-	float getFrsDarkMinDamageModifier() const {
-		return frsDarkMinDamageModifier;
-	}
-
-	float getFrsDarkMaxDamageModifier() const {
-		return frsDarkMaxDamageModifier;
 	}
 
 	void setForceAttack(bool forceAttack) {
@@ -238,6 +214,7 @@ public:
 	}
 
 	bool changesDefenderPosture() const;
+
 	bool changesAttackerPosture() const;
 };
 

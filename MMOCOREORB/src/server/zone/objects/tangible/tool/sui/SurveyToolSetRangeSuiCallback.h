@@ -29,10 +29,17 @@ public:
 
 		ManagedReference<SurveyTool*> surveyTool = cast<SurveyTool*>(suiBox->getUsingObject().get().get());
 
-		if(surveyTool == nullptr)
+		if(surveyTool == NULL)
 			return;
 
 		int range = 64 * Integer::valueOf(args->get(0).toString()) + 64;
+		
+		if (range == 576) {
+				range=768;
+	} else if (range >= 640) {
+				range=1024;
+	}
+		
 
 		Locker _lock(surveyTool);
 		surveyTool->setRange(range);

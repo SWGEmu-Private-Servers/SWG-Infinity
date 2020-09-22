@@ -37,7 +37,7 @@ public:
 			return GENERALERROR;
 		}
 
-		if (parent == nullptr || !parent->isBuildingObject()) {
+		if (parent == NULL || !parent->isBuildingObject()) {
 			player->sendSystemMessage("@player_structure:must_be_in_building");
 			return GENERALERROR;
 		}
@@ -50,11 +50,11 @@ public:
 			return GENERALERROR;
 		}
 
-		if (!building->isPublicStructure()) {
+/*		if (!building->isPublicStructure()) {
 			player->sendSystemMessage("@player_structure:vendor_public_only");
 			return GENERALERROR;
 		}
-
+*/
 		//Create Session
 		ManagedReference<CreateVendorSession*> session = new CreateVendorSession(player);
 		session->initializeSession();
@@ -65,4 +65,3 @@ public:
 };
 
 #endif //CREATEVENDORCOMMAND_H_
-

@@ -11,7 +11,6 @@
 #include "server/zone/objects/player/FactionStatus.h"
 #include "server/zone/objects/tangible/weapon/WeaponObject.h"
 #include "server/zone/managers/combat/CombatManager.h"
-#include "server/zone/managers/frs/FrsManager.h"
 
 QueueCommand::QueueCommand(const String& skillname, ZoneProcessServer* serv) : Logger() {
 	server = serv;
@@ -33,7 +32,7 @@ QueueCommand::QueueCommand(const String& skillname, ZoneProcessServer* serv) : L
 	cooldown = 0;
 	defaultPriority = NORMAL;
 
-	setLogging(false);
+	setLogging(true);
 	setGlobalLogging(true);
 	setLoggingName("QueueCommand " + skillname);
 }
@@ -122,7 +121,7 @@ void QueueCommand::onFail(uint32 actioncntr, CreatureObject* creature, uint32 er
 		ManagedReference<WeaponObject*> weapon = creature->getWeapon();
 		int attackType = -1;
 
-		if (weapon != nullptr) {
+		if (weapon != NULL) {
 			attackType = weapon->getAttackType();
 		}
 
@@ -160,13 +159,6 @@ void QueueCommand::onFail(uint32 actioncntr, CreatureObject* creature, uint32 er
 			creature->clearQueueAction(actioncntr);
 
 		break;
-
-	case ALREADYAFFECTEDJEDIPOWER:
-			creature->sendSystemMessage("@jedi_spam:power_already_active"); // This target is already affected by that power.
-			if (addToQueue)
-				creature->clearQueueAction(actioncntr);
-
-			break;
 
 	case NOPRONE:
 		if (addToQueue)
@@ -210,8 +202,16 @@ void QueueCommand::onComplete(uint32 actioncntr, CreatureObject* player, float c
 	if (!player->isPlayerCreature())
 		return;
 
+	int weakness = player->getSkillMod("weaken_delay");
+	if (System::random(100) < weakness && player->checkCooldownRecovery("weaken_delay")){ //apply delay
+		player->setNextAttackDelay(100,2);
+		player->updateCooldownTimer("weaken_delay", 7000); //random weaken delay can only happen once every 7 seconds.
+		player->updateCooldownTimer("delay_protection", 2000);
+		}
+
 	if (addToQueue)
 		player->clearQueueAction(actioncntr, commandDuration);
+
 }
 
 int QueueCommand::doCommonMedicalCommandChecks(CreatureObject* creature) const {
@@ -237,41 +237,29 @@ int QueueCommand::doCommonMedicalCommandChecks(CreatureObject* creature) const {
 	return SUCCESS;
 }
 
-bool QueueCommand::checkForArenaDuel(CreatureObject* target) const {
-	FrsManager* frsManager = server->getZoneServer()->getFrsManager();
-
-	if (frsManager == nullptr)
-		return false;
-
-	if (!frsManager->isFrsEnabled())
-		return false;
-
-	return frsManager->isPlayerFightingInArena(target->getObjectID());
-}
-
 void QueueCommand::checkForTef(CreatureObject* creature, CreatureObject* target) const {
 	if (!creature->isPlayerCreature() || creature == target)
 		return;
 
 	PlayerObject* ghost = creature->getPlayerObject().get();
-	if (ghost == nullptr)
+	if (ghost == NULL)
 		return;
 
 	if (target->isPlayerCreature()) {
 		PlayerObject* targetGhost = target->getPlayerObject().get();
 
 		if (!CombatManager::instance()->areInDuel(creature, target)
-				&& targetGhost != nullptr && target->getFactionStatus() == FactionStatus::OVERT && targetGhost->hasPvpTef()) {
+				&& targetGhost != NULL && target->getFactionStatus() == FactionStatus::OVERT && targetGhost->hasPvpTef()) {
 			ghost->updateLastGcwPvpCombatActionTimestamp();
 		}
 	} else if (target->isPet()) {
 		ManagedReference<CreatureObject*> owner = target->getLinkedCreature().get();
 
-		if (owner != nullptr && owner->isPlayerCreature()) {
+		if (owner != NULL && owner->isPlayerCreature()) {
 			PlayerObject* ownerGhost = owner->getPlayerObject().get();
 
 			if (!CombatManager::instance()->areInDuel(creature, owner)
-					&& ownerGhost != nullptr && owner->getFactionStatus() == FactionStatus::OVERT && ownerGhost->hasPvpTef()) {
+					&& ownerGhost != NULL && owner->getFactionStatus() == FactionStatus::OVERT && ownerGhost->hasPvpTef()) {
 				ghost->updateLastGcwPvpCombatActionTimestamp();
 			}
 		}

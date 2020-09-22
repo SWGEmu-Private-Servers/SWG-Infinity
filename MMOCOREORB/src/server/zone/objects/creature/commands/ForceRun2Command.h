@@ -17,20 +17,29 @@ public:
 		buffCRC = BuffCRC::JEDI_FORCE_RUN_2;
 
         // If these are active they will block buff use
-		blockingCRCs.add(BuffCRC::JEDI_FORCE_RUN_1);
-		blockingCRCs.add(BuffCRC::JEDI_FORCE_RUN_3);
         
 		skillMods.put("force_run", 2);
 		skillMods.put("slope_move", 66);
 	}
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
-		int res = creature->hasBuff(buffCRC) ? NOSTACKJEDIBUFF : doJediSelfBuffCommand(creature);
 
-		if (res == NOSTACKJEDIBUFF) {
-			creature->sendSystemMessage("@jedi_spam:already_force_running"); // You are already force running.
-			return GENERALERROR;
+
+   		if (!creature->checkCooldownRecovery("forcerun")) {
+                    creature->sendSystemMessage("You cannot Force Run yet.");
+                    return GENERALERROR;
+                }
+
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_3)) {
+			creature->removeBuff(BuffCRC::JEDI_FORCE_RUN_3);
 		}
+
+		if (creature->hasBuff(BuffCRC::JEDI_FORCE_RUN_1)) {
+			creature->removeBuff(BuffCRC::JEDI_FORCE_RUN_1);
+		}
+
+                int res = doJediSelfBuffCommand(creature);
 
 		if (res != SUCCESS) {
 			return res;
@@ -38,22 +47,21 @@ public:
 
 		// need to apply the damage reduction in a separate buff so that the multiplication and division applies right
 		Buff* buff = creature->getBuff(BuffCRC::JEDI_FORCE_RUN_2);
-		if (buff == nullptr)
+		if (buff == NULL)
 			return GENERALERROR;
 
-		ManagedReference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(creature, name.hashCode(), duration, BuffType::JEDI);
-
-		Locker locker(multBuff);
-
+/*		ManagedReference<PrivateSkillMultiplierBuff*> multBuff = new PrivateSkillMultiplierBuff(creature, name.hashCode(), duration, BuffType::JEDI);
+		Locker locker(multBuff);  //damage reduction
 		multBuff->setSkillModifier("private_damage_divisor", 20);
-
 		creature->addBuff(multBuff);
-
 		locker.release();
+*/
 
 		Locker blocker(buff);
 
-		buff->addSecondaryBuffCRC(multBuff->getBuffCRC());
+		creature->updateCooldownTimer("forcerun", 150000);
+
+		//buff->addSecondaryBuffCRC(multBuff->getBuffCRC());
 
 		if (creature->hasBuff(STRING_HASHCODE("burstrun")) || creature->hasBuff(STRING_HASHCODE("retreat"))) {
 			creature->removeBuff(STRING_HASHCODE("burstrun"));

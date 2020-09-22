@@ -15,7 +15,7 @@
 #include "server/zone/managers/visibility/VisibilityManager.h"
 #include "server/zone/objects/creature/buffs/SingleUseBuff.h"
 #include "server/zone/objects/player/PlayerObject.h"
-#include "server/zone/managers/frs/FrsManager.h"
+#include "server/zone/objects/group/GroupObject.h"
 
 class JediQueueCommand : public QueueCommand {
 
@@ -27,14 +27,6 @@ protected:
 	float speedMod;
 	int visMod;
 	int buffClass;
-	float frsLightForceCostModifier;
-	float frsDarkForceCostModifier;
-	float frsDarkExtraForceCostModifier;
-	float frsLightExtraForceCostModifier;
-	float frsLightBuffModifier;
-	float frsDarkBuffModifier;
-	float frsLightForcePowerModifier;
-	float frsDarkForcePowerModifier;
 
 	uint32 buffCRC;
 	Vector<uint32> overrideableCRCs;
@@ -54,28 +46,80 @@ public:
 		speedMod = 0;
 		visMod = 10;
 		buffCRC = 0;
-		frsLightForceCostModifier = 0;
-		frsDarkExtraForceCostModifier = 0;
-		frsLightExtraForceCostModifier = 0;
-		frsDarkForceCostModifier = 0;
-		frsLightBuffModifier = 0;
-		frsDarkBuffModifier = 0;
-		frsLightForcePowerModifier = 0;
-		frsDarkForcePowerModifier = 0;
+
 	}
+
+
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 		return SUCCESS;
 	}
 
-	bool isJediQueueCommand() const {
+	bool isJediQueueCommand() {
 		return true;
 	}
+
+
+	int doJediGroupBuffCommand(CreatureObject* creature) const {
+		ManagedReference<GroupObject*> group = creature->getGroup();
+		ManagedReference<CreatureObject*> groupMember = NULL;
+		ManagedReference<CreatureObject*> player = NULL;
+		ManagedReference<PlayerObject*> ghost = NULL;
+
+		if (group == NULL || group->getGroupSize() < 1)
+			return SUCCESS;
+
+		// first and foremost, we need to toggle this buff off if we already have it
+
+		for (int i = 0; i < group->getGroupSize(); i++){
+			groupMember = group->getGroupMember(i);
+			if (groupMember == NULL)
+				continue;
+
+			if (groupMember == creature)
+				continue;
+
+			player = groupMember.get();
+
+			if (player == NULL)
+				continue;
+
+			ghost = player->getPlayerObject().get();
+
+			if (ghost == NULL)
+				continue;
+
+			if (ghost->hasBhTef())
+				continue;
+
+			if (!creature->isInRange(groupMember, 256)) //must be within 256ms to get the buff
+				continue;
+
+			// Do checks first.
+			int res = doCommonJediGroupChecks(groupMember);
+
+			if (res != SUCCESS)
+				continue;
+
+			if (groupMember->hasBuff(buffCRC)) {
+				Locker glock(groupMember);
+				groupMember->removeBuff(buffCRC);
+			}
+
+			doDelayedBuff(groupMember);
+		}
+	 return SUCCESS;
+	}
+
 
 	int doJediSelfBuffCommand(CreatureObject* creature) const {
 		// first and foremost, we need to toggle this buff off if we already have it
 		if (creature->hasBuff(buffCRC)) {
+			if (buffCRC == BuffCRC::JEDI_FORCE_RUN_2)
+				return SUCCESS;
+			Locker clocker(creature);
 			creature->removeBuff(buffCRC);
+			if (buffCRC != BuffCRC::JEDI_RESIST_STATES && buffCRC != BuffCRC::JEDI_FORCE_SPEED_1 && buffCRC != BuffCRC::JEDI_FORTIFY && buffCRC != BuffCRC::JEDI_FORCE_SPEED_2 && buffCRC != BuffCRC::JEDI_RESIST_DISEASE && buffCRC != BuffCRC::JEDI_RESIST_POISON && buffCRC != BuffCRC::JEDI_RESIST_BLEEDING ) //some buffs we want to toggle, others we want to refresh.
 			return SUCCESS;
 		}
 
@@ -86,37 +130,45 @@ public:
 			return res;
 
         return doBuff(creature);
+
 	}
 
 	int doBuff(CreatureObject* creature) const {
 		ManagedReference<Buff*> buff = createJediSelfBuff(creature);
 
-		// Return if buff is NOT valid.
-		if (buff == nullptr)
+		if (buff == NULL)
 			return GENERALERROR;
 
 		Locker locker(buff);
-
-		// Add buff.
-		creature->addBuff(buff);
-
-		// Force Cost.
-		doForceCost(creature);
-
-		// Client Effect.
+ 		creature->addBuff(buff);
+ 		doForceCost(creature);
 		if (!clientEffect.isEmpty()) {
 			creature->playEffect(clientEffect, "");
 		}
-
-		// Return.
 		return SUCCESS;
+	}
+
+	void doDelayedBuff(CreatureObject* creature) const {
+
+		ManagedReference<Buff*> buff = createJediSelfBuff(creature);
+		if (!clientEffect.isEmpty()) {
+			creature->playEffect(clientEffect, "");
+		}
+			Locker lock(creature);
+
+			if (buff != NULL){
+				Locker blocker(buff);
+				creature->addBuff(buff);
+			}
+
+		return;
 	}
 
 	int doJediForceCostCheck(CreatureObject* creature) const {
 		//Check for Force Cost..
 		ManagedReference<PlayerObject*> playerObject = creature->getPlayerObject();
 
-		if (playerObject && playerObject->getForcePower() < getFrsModifiedForceCost(creature)) {
+		if (playerObject && playerObject->getForcePower() < forceCost) {
 			creature->sendSystemMessage("@jedi_spam:no_force_power"); //"You do not have enough Force Power to peform that action.
 			return GENERALERROR;
 		}
@@ -143,7 +195,19 @@ public:
 		return res;
 	}
 
+	int doCommonJediGroupChecks(CreatureObject* creature) const {
+
+		for (int i=0; i < blockingCRCs.size(); ++i) {
+			if (creature->hasBuff(blockingCRCs.get(i))) {
+				return NOSTACKJEDIBUFF;
+			}
+		}
+
+		return SUCCESS;
+	}
+
 	ManagedReference<Buff*> createJediSelfBuff(CreatureObject* creature) const {
+
 		for (int i=0; i < overrideableCRCs.size(); ++i) {
 			int buff = overrideableCRCs.get(i);
 			if (creature->hasBuff(buff)) {
@@ -152,11 +216,12 @@ public:
 		}
 
 		// Create buff object.
-		ManagedReference<Buff*> buff = nullptr;
+		ManagedReference<Buff*> buff = NULL;
 
 		if(buffClass == BASE_BUFF || singleUseEventTypes.size() == 0) {
 			buff = new Buff(creature, buffCRC, duration, BuffType::JEDI);
 		} else if(buffClass == SINGLE_USE_BUFF) {;
+
 			SingleUseBuff* suBuff = new SingleUseBuff(creature, buffCRC, duration, BuffType::JEDI, getNameCRC());
 
 			buff = suBuff;
@@ -169,7 +234,7 @@ public:
 
 		} else {
 			error("Unknown buff type");
-			return nullptr;
+			return NULL;
 		}
 
 		Locker locker(buff);
@@ -186,109 +251,18 @@ public:
 		buff->setEndMessage(end);
 
 		for (int i=0; i < skillMods.size(); ++i) {
-			int modValue = skillMods.elementAt(i).getValue();
-			int frsModifiedValue = getFrsModifiedBuffValue(creature, modValue);
-			buff->setSkillModifier(skillMods.elementAt(i).getKey(), frsModifiedValue);
+			buff->setSkillModifier(skillMods.elementAt(i).getKey(), skillMods.elementAt(i).getValue());
 		}
 
 		return buff;
 	}
 
-	int getFrsModifiedBuffValue(CreatureObject* player, int amount) const {
-		PlayerObject* ghost = player->getPlayerObject();
-
-		if (ghost == nullptr)
-			return amount;
-
-		Locker locker(player);
-
-		FrsData* playerData = ghost->getFrsData();
-		short councilType = playerData->getCouncilType();
-
-		locker.release();
-
-		float buffModifier = 0;
-		int controlModifier = 0;
-
-		if (councilType == FrsManager::COUNCIL_LIGHT) {
-			controlModifier = player->getSkillMod("force_control_light");
-			buffModifier = frsLightBuffModifier;
-		} else if (councilType == FrsManager::COUNCIL_DARK) {
-			controlModifier = player->getSkillMod("force_control_dark");
-			buffModifier = frsDarkBuffModifier;
-		}
-
-		if (controlModifier == 0 || buffModifier == 0)
-			return amount;
-
-		return amount + (int)((controlModifier * buffModifier) + 0.5f);
-	}
-
-
-	int getFrsModifiedForceCost(CreatureObject* creature) const {
-		ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
-
-		if (ghost == nullptr)
-			return forceCost;
-
-		Locker locker(creature);
-
-		FrsData* playerData = ghost->getFrsData();
-		int councilType = playerData->getCouncilType();
-
-		locker.release();
-
-		int manipulationMod = 0;
-		float frsModifier = 0;
-
-		if (councilType == FrsManager::COUNCIL_LIGHT) {
-			manipulationMod = creature->getSkillMod("force_manipulation_light");
-			frsModifier = frsLightForceCostModifier;
-		} else if (councilType == FrsManager::COUNCIL_DARK) {
-			manipulationMod = creature->getSkillMod("force_manipulation_dark");
-			frsModifier = frsDarkForceCostModifier;
-		}
-
-		if (manipulationMod == 0 || frsModifier == 0)
-			return forceCost;
-
-		return forceCost + (int)((manipulationMod * frsModifier) + .5);
-	}
-
-	float getFrsModifiedExtraForceCost(CreatureObject* creature, float val) const {
-		ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
-
-		if (ghost == nullptr)
-			return val;
-
-		Locker locker(creature);
-
-		FrsData* playerData = ghost->getFrsData();
-		int councilType = playerData->getCouncilType();
-
-		locker.release();
-
-		int manipulationMod = 0;
-		float frsModifier = 0;
-
-		if (councilType == FrsManager::COUNCIL_LIGHT) {
-			manipulationMod = creature->getSkillMod("force_manipulation_light");
-			frsModifier = frsLightExtraForceCostModifier;
-		} else if (councilType == FrsManager::COUNCIL_DARK) {
-			manipulationMod = creature->getSkillMod("force_manipulation_dark");
-			frsModifier = frsDarkExtraForceCostModifier;
-		}
-
-		if (manipulationMod == 0 || frsModifier == 0)
-			return val;
-
-		return val + ((float)manipulationMod * frsModifier);
-	}
-
 	void doForceCost(CreatureObject* creature) const {
 		// Force Cost.
-		ManagedReference<PlayerObject*> playerObject = creature->getPlayerObject();
-		playerObject->setForcePower(playerObject->getForcePower() - getFrsModifiedForceCost(creature));
+		ManagedReference<PlayerObject*> playerObject =
+				creature->getPlayerObject();
+		playerObject->setForcePower(playerObject->getForcePower() - forceCost);
+
 		VisibilityManager::instance()->increaseVisibility(creature, visMod);
 	}
 
@@ -322,31 +296,6 @@ public:
 
 	int getVisMod() const {
 		return visMod;
-	}
-
-	void setFrsLightForceCostModifier(float val) {
-		frsLightForceCostModifier = val;
-	}
-	void setFrsDarkForceCostModifier(float val) {
-		frsDarkForceCostModifier = val;
-	}
-	void setFrsDarkExtraForceCostModifier(float val) {
-		frsDarkExtraForceCostModifier = val;
-	}
-	void setFrsLightExtraForceCostModifier(float val) {
-		frsLightExtraForceCostModifier = val;
-	}
-	void setFrsLightBuffModifier(float val) {
-		frsLightBuffModifier = val;
-	}
-	void setFrsDarkBuffModifier(float val) {
-		frsDarkBuffModifier = val;
-	}
-	void setFrsLightForcePowerModifier(float val) {
-		frsLightForcePowerModifier = val;
-	}
-	void setFrsDarkForcePowerModifier(float val) {
-		frsDarkForcePowerModifier = val;
 	}
 };
 

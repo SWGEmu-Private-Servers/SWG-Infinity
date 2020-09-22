@@ -3,36 +3,7 @@
 		See file COPYING for copying conditions. */
 
 #include "CommandConfigManager.h"
-
-#include "server/zone/ZoneProcessServer.h"
-#include "server/zone/ZoneServer.h"
-#include "server/zone/Zone.h"
-
-#include "server/zone/objects/intangible/PetControlDevice.h"
-
-#include "server/zone/objects/creature/CreatureObject.h"
-#include "server/zone/objects/creature/ai/Creature.h"
-
-#include "server/zone/objects/player/sessions/crafting/CraftingSession.h"
-
-#include "server/zone/managers/player/PlayerManager.h"
-#include "server/zone/managers/resource/ResourceManager.h"
-#include "server/zone/managers/creature/PetManager.h"
-#include "server/zone/managers/structure/StructureManager.h"
-#include "server/zone/managers/collision/CollisionManager.h"
-#include "server/zone/managers/combat/CombatManager.h"
-#include "server/zone/managers/group/GroupManager.h"
-
-#include "server/zone/objects/group/GroupObject.h"
-
-#include "server/zone/packets/object/CombatSpam.h"
-#include "server/zone/packets/object/CombatAction.h"
-
-#include "server/zone/objects/creature/commands/AdminCommand.h"
-#include "server/zone/objects/creature/commands/CombatQueueCommand.h"
-#include "server/zone/objects/creature/commands/SquadLeaderCommand.h"
-#include "server/zone/objects/creature/commands/ForceHealQueueCommand.h"
-#include "server/zone/objects/creature/commands/JediQueueCommand.h"
+#include "server/zone/objects/creature/commands/commands.h"
 #include "server/zone/objects/creature/commands/effect/StateEffect.h"
 #include "server/zone/objects/creature/commands/effect/DotEffect.h"
 #include "server/zone/objects/creature/commands/effect/CommandEffect.h"
@@ -60,14 +31,15 @@
 #include "server/zone/objects/creature/commands/pet/PetClearPatrolPointsCommand.h"
 #include "server/zone/objects/creature/commands/pet/PetGetPatrolPointCommand.h"
 
-#include "server/zone/objects/creature/commands/JediQueueCommand.h"
-
+#include "templates/params/creature/CreatureState.h"
+#include "templates/params/creature/CreatureLocomotion.h"
 #include "templates/datatables/DataTableIff.h"
 #include "templates/datatables/DataTableRow.h"
+#include "server/zone/ZoneProcessServer.h"
 #include "CommandList.h"
 
-CommandList* CommandConfigManager::slashCommands = nullptr;
-ZoneProcessServer* CommandConfigManager::server = nullptr;
+CommandList* CommandConfigManager::slashCommands = NULL;
+ZoneProcessServer* CommandConfigManager::server = NULL;
 int CommandConfigManager::ERROR_CODE = 0;
 
 CommandConfigManager::CommandConfigManager(ZoneProcessServer* serv) {
@@ -84,8 +56,8 @@ CommandConfigManager::CommandConfigManager(ZoneProcessServer* serv) {
 }
 
 CommandConfigManager::~CommandConfigManager() {
-	server = nullptr;
-	slashCommands = nullptr;
+	server = NULL;
+	slashCommands = NULL;
 
 	ERROR_CODE = 0;
 }
@@ -95,7 +67,7 @@ void CommandConfigManager::loadCommandData(const String& filename) {
 
 	IffStream* metatable = TemplateManager::instance()->openIffFile(filename);
 
-	if (metatable == nullptr) {
+	if (metatable == NULL) {
 		error("Could not load command table " + filename + ".");
 		return;
 	}
@@ -113,7 +85,7 @@ void CommandConfigManager::loadCommandData(const String& filename) {
 
 		IffStream* iffStream = TemplateManager::instance()->openIffFile(tableName);
 
-		if (iffStream == nullptr) {
+		if (iffStream == NULL) {
 			error("Could not load commands from " + tableName + ".");
 			return;
 		} else
@@ -144,7 +116,7 @@ void CommandConfigManager::loadCommandData(const String& filename) {
 			row->getValue(CommandConfigManager::COMMANDNAME, name);
 			slashCommand = createCommand(name.trim().toLowerCase());
 
-			if (slashCommand == nullptr) {
+			if (slashCommand == NULL) {
 				error("Could not create command " + name);
 				continue;
 			}
@@ -300,16 +272,16 @@ void CommandConfigManager::loadCommandData(const String& filename) {
 }
 
 QueueCommand* CommandConfigManager::createCommand(const String& name) {
-	QueueCommand* command = nullptr;
+	QueueCommand* command = NULL;
 
 	command = commandFactory.createCommand(name, name, server);
 
-	if (command == nullptr)
+	if (command == NULL)
 		return command;
 
 	slashCommands->put(command);
 
-	debug() << "created command " << name;
+	info("created command " + name);
 
 	return command;
 }
@@ -323,7 +295,7 @@ void CommandConfigManager::registerSpecialCommands(CommandList* sCommands) {
 	// Meanwhile the client sends this to the server as part of the /logout command sequence
 	QueueCommand* slashCommand = createCommand(String("logout").toLowerCase());
 
-	if (slashCommand == nullptr) {
+	if (slashCommand == NULL) {
 		error("Could not create command /logout");
 	}
 
@@ -367,9 +339,9 @@ void CommandConfigManager::registerSpecialCommands(CommandList* sCommands) {
 
 void CommandConfigManager::registerFunctions() {
 	//lua generic
-	registerFunction("RunSlashCommandsFile", runSlashCommandsFile);
-	registerFunction("AddCommand", addCommand);
-	registerFunction("hashCode", hashCode);
+	lua_register(getLuaState(), "RunSlashCommandsFile", runSlashCommandsFile);
+	lua_register(getLuaState(), "AddCommand", addCommand);
+	lua_register(getLuaState(), "hashCode", hashCode);
 }
 
 void CommandConfigManager::registerGlobals() {
@@ -622,18 +594,6 @@ void CommandConfigManager::parseVariableData(String varName, LuaObject &command,
 			combatCommand->setForceCostMultiplier(Lua::getFloatParameter(L));
 		else if (varName == "forceCost")
 			combatCommand->setForceCost(Lua::getFloatParameter(L));
-		else if (varName == "frsLightForceCostModifier")
-			combatCommand->setFrsLightForceCostModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsDarkForceCostModifier")
-			combatCommand->setFrsDarkForceCostModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsLightMinDamageModifier")
-			combatCommand->setFrsLightMinDamageModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsLightMaxDamageModifier")
-			combatCommand->setFrsLightMaxDamageModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsDarkMinDamageModifier")
-			combatCommand->setFrsDarkMinDamageModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsDarkMaxDamageModifier")
-			combatCommand->setFrsDarkMaxDamageModifier(Lua::getFloatParameter(L));
 		else if (varName == "visMod")
 			combatCommand->setVisMod(Lua::getIntParameter(L));
 		else if (varName == "coneRange")
@@ -716,22 +676,6 @@ void CommandConfigManager::parseVariableData(String varName, LuaObject &command,
 			jediCommand->setClientEffect(Lua::getStringParameter(L));
 		else if (varName == "speedMod")
 			jediCommand->setSpeedMod(Lua::getFloatParameter(L));
-		else if (varName == "frsLightForceCostModifier")
-			jediCommand->setFrsLightForceCostModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsDarkForceCostModifier")
-			jediCommand->setFrsDarkForceCostModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsDarkExtraForceCostModifier")
-			jediCommand->setFrsDarkExtraForceCostModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsLightExtraForceCostModifier")
-			jediCommand->setFrsLightExtraForceCostModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsLightBuffModifier")
-			jediCommand->setFrsLightBuffModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsDarkBuffModifier")
-			jediCommand->setFrsDarkBuffModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsLightForcePowerModifier")
-			jediCommand->setFrsLightForcePowerModifier(Lua::getFloatParameter(L));
-		else if (varName == "frsDarkForcePowerModifier")
-			jediCommand->setFrsDarkForcePowerModifier(Lua::getFloatParameter(L));
 		else if (jediCommand->isForceHealCommand()) {
 			ForceHealQueueCommand* healCommand = cast<ForceHealQueueCommand*>(jediCommand);
 			if (varName == "healAmount")
@@ -814,7 +758,7 @@ int CommandConfigManager::addCommand(lua_State* L) {
 	// get object from map, then overwrite/fill in variables
 	String name = slashcommand.getStringField("name");
 	QueueCommand* command = slashCommands->getSlashCommand(name);
-	if (command == nullptr)
+	if (command == NULL)
 		return 0;
 
 	parseOptions(slashcommand, command);
@@ -827,27 +771,45 @@ void CommandConfigManager::registerCommands() {
 	registerCommands3();
 	registerCommands4();
 
-	//pet commands
+	/* Pet commands */
 	commandFactory.registerCommand<PetAttackCommand>(String("petAttack").toLowerCase());
+	commandFactory.registerCommand<PetClearPatrolPointsCommand>(String("petClearPatrolPoints").toLowerCase());
 	commandFactory.registerCommand<PetEmoteCommand>(String("petEmote").toLowerCase());
 	commandFactory.registerCommand<PetFeedCommand>(String("petFeed").toLowerCase());
 	commandFactory.registerCommand<PetFollowCommand>(String("petFollow").toLowerCase());
 	commandFactory.registerCommand<PetFriendCommand>(String("petFriend").toLowerCase());
+	commandFactory.registerCommand<PetGetPatrolPointCommand>(String("petGetPatrolPoint").toLowerCase());
 	commandFactory.registerCommand<PetGroupCommand>(String("petGroup").toLowerCase());
 	commandFactory.registerCommand<PetGuardCommand>(String("petGuard").toLowerCase());
+	commandFactory.registerCommand<PetHarvestCommand>(String("petHarvest").toLowerCase());
+	commandFactory.registerCommand<PetPatrolCommand>(String("petPatrol").toLowerCase());
 	commandFactory.registerCommand<PetRangedAttackCommand>(String("petRangedAttack").toLowerCase());
 	commandFactory.registerCommand<PetRechargeCommand>(String("petRecharge").toLowerCase());
 	commandFactory.registerCommand<PetRechargeOtherCommand>(String("petRechargeOther").toLowerCase());
 	commandFactory.registerCommand<PetRecoverCommand>(String("petRecover").toLowerCase());
+	commandFactory.registerCommand<PetRepairCommand>(String("petRepair").toLowerCase());
 	commandFactory.registerCommand<PetSpecialAttackCommand>(String("petSpecialAttack").toLowerCase());
 	commandFactory.registerCommand<PetStayCommand>(String("petStay").toLowerCase());
 	commandFactory.registerCommand<PetStoreCommand>(String("petStore").toLowerCase());
+	commandFactory.registerCommand<PetThrowCommand>(String("petThrow").toLowerCase());
 	commandFactory.registerCommand<PetTransferCommand>(String("petTransfer").toLowerCase());
 	commandFactory.registerCommand<PetTrickCommand>(String("petTrick").toLowerCase());
-	commandFactory.registerCommand<PetRepairCommand>(String("petRepair").toLowerCase());
-	commandFactory.registerCommand<PetThrowCommand>(String("petThrow").toLowerCase());
-	commandFactory.registerCommand<PetHarvestCommand>(String("petHarvest").toLowerCase());
-	commandFactory.registerCommand<PetPatrolCommand>(String("petPatrol").toLowerCase());
-	commandFactory.registerCommand<PetClearPatrolPointsCommand>(String("petClearPatrolPoints").toLowerCase());
-	commandFactory.registerCommand<PetGetPatrolPointCommand>(String("petGetPatrolPoint").toLowerCase());
+
+	/* Infinity Custom Commands */
+	commandFactory.registerCommand<AreaTauntCommand>(String("areataunt").toLowerCase());
+	commandFactory.registerCommand<CreateEffectCommand>(String("createEffect").toLowerCase());
+	commandFactory.registerCommand<DashCommand>(String("dash").toLowerCase());
+	commandFactory.registerCommand<ForceBreachCommand>(String("forceBreach").toLowerCase());
+	commandFactory.registerCommand<ForceIntimidateSingleCommand>(String("forceIntimidateSingle").toLowerCase());
+	commandFactory.registerCommand<ForceReviveCommand>(String("forceRevive").toLowerCase());
+	commandFactory.registerCommand<ForceWeaken3Command>(String("forceweaken3").toLowerCase());
+	commandFactory.registerCommand<FortifyCommand>(String("fortify").toLowerCase());
+	commandFactory.registerCommand<LocateStructureCommand>(String("locateStructure").toLowerCase());
+	commandFactory.registerCommand<RecalcForceCommand>(String("recalcForce").toLowerCase());
+	commandFactory.registerCommand<RegrantSkillsCommand>(String("regrantSkills").toLowerCase());
+	commandFactory.registerCommand<RocketBootsCommand>(String("rocketBoots").toLowerCase());
+	commandFactory.registerCommand<SetPvPCommand>(String("SetPvP").toLowerCase());
+	commandFactory.registerCommand<TeleportGroupCommand>(String("teleportGroup").toLowerCase());
+	commandFactory.registerCommand<VenomDartCommand>(String("venomDart").toLowerCase());
+
 }

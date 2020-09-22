@@ -25,22 +25,44 @@ public:
 
 		Reference<TangibleObject*> targetObject = server->getZoneServer()->getObject(target).castTo<TangibleObject*>();
 
-		if (targetObject == nullptr || !targetObject->isCreatureObject())
+		if (targetObject == NULL || !targetObject->isCreatureObject())
 			return INVALIDTARGET;
+
+        ManagedReference<CreatureObject*> creatureTarget = targetObject.castTo<CreatureObject*>();
+        if (creatureTarget == NULL){
+            return INVALIDTARGET;
+        }
+			
+		ManagedReference<WeaponObject*> weapon = NULL;
+
+		if(creature->getWeapon() == NULL) {
+						return GENERALERROR;
+		}				
+		else{
+		weapon = creature->getWeapon();
+		}
+
+		if (weapon->isJediWeapon()){
+			return INVALIDWEAPON;
+		}
+
 
 		int res = doCombatAction(creature, target);
 
 		if (res == TOOFAR)
-			CombatManager::instance()->broadcastCombatSpam(creature, targetObject, nullptr, 0, "cbt_spam", "warcry_out_of_range", 0);
+			CombatManager::instance()->broadcastCombatSpam(creature, targetObject, NULL, 0, "cbt_spam", "warcry_out_of_range", 0);
 
 		if (res == SUCCESS && creature->isPlayerCreature()) {
 			ManagedReference<PlayerObject*> ghost = creature->getPlayerObject();
 
-			if (ghost != nullptr && !ghost->getCommandMessageString(STRING_HASHCODE("warcry2")).isEmpty() && creature->checkCooldownRecovery("command_message")) {
+			if (ghost != NULL && !ghost->getCommandMessageString(STRING_HASHCODE("warcry2")).isEmpty() && creature->checkCooldownRecovery("command_message")) {
 					UnicodeString shout(ghost->getCommandMessageString(STRING_HASHCODE("warcry2")));
 					server->getChatManager()->broadcastChatMessage(creature, shout, 0, 80, creature->getMoodID(), 0, ghost->getLanguageID());
 					creature->updateCooldownTimer("command_message", 30 * 1000);
 			}
+			if (creatureTarget->checkCooldownRecovery("delay_protection")){
+				creatureTarget->updateCooldownTimer("delay_protection", 1000);
+			}		
 		}
 		return res;
 	}

@@ -12,7 +12,6 @@ import server.zone.objects.tangible.TangibleObject;
 
 include server.zone.objects.manufactureschematic.craftingvalues.CraftingValues;
 
-@json
 @lua
 class LightsaberCrystalComponent extends Component {
 	public final static int POOR = 0;
@@ -22,6 +21,7 @@ class LightsaberCrystalComponent extends Component {
 	public final static int SELECT = 4;
 	public final static int PREMIUM = 5;
 	public final static int FLAWLESS = 6;
+	protected float crystalExcMod;
 
 	protected int damage;
 	protected int color;
@@ -54,6 +54,9 @@ class LightsaberCrystalComponent extends Component {
 		quality = 0;
 		itemLevel = 0;
 		floatForceCost = 0.0;
+
+		// Allow crystals to be modified by ExceptionalMods
+		crystalExcMod = 1.0;
 
 		ownerID = 0;
 		ownerName = "";
@@ -99,6 +102,9 @@ class LightsaberCrystalComponent extends Component {
 	public native int inflictDamage(TangibleObject attacker, int damageType, float damage, boolean destroy, boolean notifyClient = true);
 
 	public native void generateCrystalStats();
+	public native int hardCapIntStatGeneration(int minVal, int maxVal, int givenValue);
+	public native float hardCapFloatStatGeneration(float minVal, float maxVal, float givenValue);
+
 	public native void validateCrystalStats();
 	public native int getRandomizedStat(int min, int max, int itemLevel);
 	public native float getRandomizedStat(float min, float max, int itemLevel);
@@ -154,6 +160,11 @@ class LightsaberCrystalComponent extends Component {
 	}
 
 	@read
+		public float getExcMod() {
+			return crystalExcMod;
+		}
+
+	@read
 	public int getColor() {
 		return color;
 	}
@@ -177,6 +188,10 @@ class LightsaberCrystalComponent extends Component {
 	public void setMaximumDamage(int value) {
 		maximumDamage = value;
 	}
+
+	public void setExcMod(float value) {
+	crystalExcMod = value;
+}
 
 	public void setForceCost(float value) {
 		floatForceCost = value;
@@ -207,4 +222,3 @@ class LightsaberCrystalComponent extends Component {
 		return true;
 	}
 }
-

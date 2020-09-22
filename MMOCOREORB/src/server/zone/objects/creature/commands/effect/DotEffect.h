@@ -10,9 +10,10 @@
 
 #include "engine/engine.h"
 
+
 class DotEffect : public Object {
 protected:
-	uint32 dotType;
+	uint64 dotType;
 	Vector<String> defenderStateDefenseModifers;
 	uint8 dotPool;
 	bool dotDamageofHit;
@@ -20,85 +21,86 @@ protected:
 	uint32 dotStrength;
 	int dotPotency;
 	uint32 dotChance;
-	float primaryPercent;
-	float secondaryPercent;
+    float primaryPercent;
+    float secondaryPercent;
 
 public:
-	DotEffect() : Object() {
-		dotType = 0;
-		dotPool = 0;
-		dotDamageofHit = 0;
-		dotDuration = 0;
-		dotStrength = 0;
-		dotPotency = 0;
-		dotChance = 0;
-		primaryPercent = 100;
-		secondaryPercent = 0;
-	}
+    DotEffect() : Object() {
+        dotType = 0;
+        dotPool = 0;
+        dotDamageofHit = 0;
+        dotDuration = 0;
+        dotStrength = 0;
+        dotPotency = 0;
+        dotChance = 0;
+        primaryPercent = 100;
+        secondaryPercent = 0;
+    }
 
-	DotEffect(LuaObject& dot) : Object() {
-		loadDot(dot);
-	}
+    DotEffect(LuaObject& dot) : Object() {
+        loadDot(dot);
+    }
 
-	DotEffect(const DotEffect & effect) : Object() {
-		dotType = effect.dotType;
-		defenderStateDefenseModifers = effect.defenderStateDefenseModifers;
-		dotPool = effect.dotPool;
-		dotDamageofHit = effect.dotDamageofHit;
-		dotDuration = effect.dotDuration;
-		dotStrength = effect.dotStrength;
-		dotPotency = effect.dotPotency;
-		dotChance = effect.dotChance;
-		primaryPercent = effect.primaryPercent;
-		secondaryPercent = effect.secondaryPercent;
-	}
+    DotEffect(const DotEffect & effect) : Object() {
+        dotType = effect.dotType;
+        defenderStateDefenseModifers = effect.defenderStateDefenseModifers;
+        dotPool = effect.dotPool;
+        dotDamageofHit = effect.dotDamageofHit;
+        dotDuration = effect.dotDuration;
+        dotStrength = effect.dotStrength;
+        dotPotency = effect.dotPotency;
+        dotChance = effect.dotChance;
+        primaryPercent = effect.primaryPercent;
+        secondaryPercent = effect.secondaryPercent;
+    }
 
-	virtual ~DotEffect() {
-	}
+    virtual ~DotEffect() {
+    }
 
-	DotEffect & operator =(const DotEffect & effect) {
-		if(this == &effect)
-			return *this;
+    DotEffect & operator =(const DotEffect & effect) {
+        if(this == &effect)
+            return *this;
 
-		dotType = effect.dotType;
-		defenderStateDefenseModifers = effect.defenderStateDefenseModifers;
-		dotPool = effect.dotPool;
-		dotDamageofHit = effect.dotDamageofHit;
-		dotDuration = effect.dotDuration;
-		dotStrength = effect.dotStrength;
-		dotPotency = effect.dotPotency;
-		dotChance = effect.dotChance;
-		primaryPercent = effect.primaryPercent;
-		secondaryPercent = effect.secondaryPercent;
+        dotType = effect.dotType;
+        defenderStateDefenseModifers = effect.defenderStateDefenseModifers;
+        dotPool = effect.dotPool;
+        dotDamageofHit = effect.dotDamageofHit;
+        dotDuration = effect.dotDuration;
+        dotStrength = effect.dotStrength;
+        dotPotency = effect.dotPotency;
+        dotChance = effect.dotChance;
+        primaryPercent = effect.primaryPercent;
+        secondaryPercent = effect.secondaryPercent;
 
-		return *this;
-	}
+        return *this;
+    }
 
-	inline int compareTo(const DotEffect & effect) {
-		return 0;
-	}
+    inline int compareTo(const DotEffect & effect) {
+        return 0;
+    }
 
-	void loadDot(LuaObject& dot) {
-		dotType = dot.getIntField("dotType");
-		dotPool = dot.getByteField("dotPool");
-		LuaObject dohBool = dot.getObjectField("dotDamageofHit");
-		lua_State *L = dohBool.getLuaState();
-		dotDamageofHit = (bool)((lua_toboolean(L, -1)));
-		dohBool.pop();
-		dotDuration = dot.getIntField("dotDuration");
-		dotStrength = dot.getIntField("dotStrength");
-		dotPotency = dot.getIntField("dotPotency");
-		dotChance = dot.getIntField("dotChance");
-		primaryPercent = dot.getFloatField("primaryPercent");
-		secondaryPercent = dot.getFloatField("secondaryPercent");
+    void loadDot(LuaObject& dot) {
+        dotType = dot.getLongField("dotType");
+        dotPool = dot.getByteField("dotPool");
+        LuaObject dohBool = dot.getObjectField("dotDamageofHit");
+        lua_State *L = dohBool.getLuaState();
+        dotDamageofHit = (bool)((lua_toboolean(L, -1)));
+        dohBool.pop();
+        dotDuration = dot.getIntField("dotDuration");
+        dotStrength = dot.getIntField("dotStrength");
+        dotPotency = dot.getIntField("dotPotency");
+        dotChance = dot.getIntField("dotChance");
+        primaryPercent = dot.getFloatField("primaryPercent");
+        secondaryPercent = dot.getFloatField("secondaryPercent");
 
-		LuaObject defMods = dot.getObjectField("defenderStateDefenseModifiers");
-		for(int i = 1;i <= defMods.getTableSize();++i){
-			defenderStateDefenseModifers.add(defMods.getStringAt(i));
-		}
+        LuaObject defMods = dot.getObjectField("defenderStateDefenseModifiers");
+        for(int i = 1;i <= defMods.getTableSize();++i){
+            defenderStateDefenseModifers.add(defMods.getStringAt(i));
+        }
 
-		defMods.pop();
-	}
+        defMods.pop();
+
+    }
 
 	const Vector<String>& getDefenderStateDefenseModifers() const {
 		return defenderStateDefenseModifers;
@@ -120,7 +122,7 @@ public:
 		return dotStrength;
 	}
 
-	uint32 getDotType() const {
+	uint64 getDotType() const {
 		return dotType;
 	}
 
@@ -129,7 +131,7 @@ public:
 	}
 
 	void setDefenderStateDefenseModifers(
-			const Vector<String>& defenderStateDefenseModifers) {
+			Vector<String> defenderStateDefenseModifers) {
 		this->defenderStateDefenseModifers = defenderStateDefenseModifers;
 	}
 
@@ -153,7 +155,7 @@ public:
 		this->dotStrength = dotStrength;
 	}
 
-	void setDotType(uint32 dotType) {
+	void setDotType(uint64 dotType) {
 		this->dotType = dotType;
 	}
 

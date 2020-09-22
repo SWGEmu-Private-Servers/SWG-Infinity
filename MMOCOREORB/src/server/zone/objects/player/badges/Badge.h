@@ -18,6 +18,7 @@ public:
 		MASTER,
 		EVENT,
 		CONTENT,
+		MASTERNOJEDI,
 		UNKNOWN
 	};
 

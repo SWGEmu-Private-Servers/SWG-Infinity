@@ -40,7 +40,7 @@ public:
 		UNKNOWN26      = 0x10000000,
 		UNKNOWN27      = 0x20000000,
 		UNKNOWN28      = 0x40000000,
-		UNKNOWN29      = 0x80000000
+		BOSS	       = 0x80000000
 	};
 };
 

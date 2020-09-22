@@ -58,8 +58,6 @@ void SharedBuildingObjectTemplate::parseVariableData(const String& varName, LuaO
 		ejectionPoint.setX(ejectPoint.getFloatAt(1));
 		ejectionPoint.setY(ejectPoint.getFloatAt(2));
 		ejectPoint.pop();
-	} else if (varName == "ejectDistance") {
-		ejectDistance = Lua::getFloatParameter(state);
 	} else if (varName == "factionBaseType") {
 		factionBaseType = Lua::getIntParameter(state);
 	} else if (varName == "shopSigns" ){
@@ -101,7 +99,7 @@ void SharedBuildingObjectTemplate::parseFileData(IffStream* iffStream) {
 	//while (iffStream->getRemainingSubChunksNumber() > 0) {
 		Chunk* chunk = iffStream->openChunk('XXXX');
 
-		if (chunk == nullptr)
+		if (chunk == NULL)
 			continue;
 
 		String varName;

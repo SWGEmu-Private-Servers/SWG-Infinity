@@ -25,25 +25,30 @@ public:
 
 		ManagedReference<SceneObject*> targetObject = creature->getZoneServer()->getObject(target);
 
-		if (targetObject == nullptr || !targetObject->isCreatureObject() || targetObject->isPlayerCreature())
+		if (targetObject == NULL || !targetObject->isCreatureObject() || targetObject->isPlayerCreature())
 			return INVALIDTARGET;
 
 		CreatureObject* targetCreature = cast<CreatureObject*>(targetObject.get());
 
-		if (targetCreature == nullptr)
+		if (targetCreature == NULL)
 			return INVALIDTARGET;
 
 		if (!targetCreature->isAttackableBy(creature))
 			return INVALIDTARGET;
+			
+		if (!creature->checkCooldownRecovery("taunt")){
+           creature->sendSystemMessage("It is too soon to area Taunt again..");
+           return GENERALERROR;
+		}
+		creature->updateCooldownTimer("taunt", 3000); // 3 seconds			
 
 		int res = doCombatAction(creature, target);
 
 		if (res == SUCCESS) {
 			Locker clocker(targetCreature, creature);
 
-			targetCreature->getThreatMap()->addAggro(creature, creature->getSkillMod("taunt") * 10, 0);
-			targetCreature->getThreatMap()->setThreatState(creature, ThreatStates::TAUNTED,(uint64)creature->getSkillMod("taunt") / 10, (uint64)creature->getSkillMod("taunt") / 10);
-			//creature->doCombatAnimation(creature,STRING_HASHCODE("taunt"),0,0xFF);
+			targetCreature->getThreatMap()->addAggro(creature, creature->getSkillMod("taunt") * 1000, 10000);
+			targetCreature->getThreatMap()->setThreatState(creature, ThreatStates::TAUNTED,(uint64)creature->getSkillMod("taunt") * 1000, (uint64)creature->getSkillMod("taunt") * 10000);
 			creature->doAnimation("taunt");
 
 			if (creature->isPlayerCreature())
@@ -59,11 +64,11 @@ public:
 	}
 
 	void sendAttackCombatSpam(TangibleObject* attacker, TangibleObject* defender, int attackResult, int damage, const CreatureAttackData& data) const {
-		if (attacker == nullptr)
+		if (attacker == NULL)
 			return;
 
 		Zone* zone = attacker->getZone();
-		if (zone == nullptr)
+		if (zone == NULL)
 			return;
 
 		String stringName = data.getCombatSpam();
@@ -85,7 +90,7 @@ public:
 			break;
 		}
 
-		CombatManager::instance()->broadcastCombatSpam(attacker, nullptr, nullptr, damage, "cbt_spam", stringName, color);
+		CombatManager::instance()->broadcastCombatSpam(attacker, NULL, NULL, damage, "cbt_spam", stringName, color);
 
 	}
 

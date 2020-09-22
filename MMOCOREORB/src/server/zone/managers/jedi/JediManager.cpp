@@ -57,19 +57,15 @@ void JediManager::loadConfiguration(Lua* luaEngine) {
 		luaEngine->runFile("scripts/managers/jedi/village_jedi_manager.lua");
 		break;
 	case CUSTOMJEDIPROGRESSION:
-		luaEngine->runFile(luaEngine->getGlobalString("customJediProgressionFile"));
+		luaEngine->runFile(luaEngine->getGlobalString(String("customJediProgressionFile")));
 		break;
 	default:
 		break;
 	}
 
-	if (loaded.compareAndSet(false, true)) {
-		auto managerName = luaEngine->getGlobalString(String("jediManagerName"));
+	setJediManagerName(luaEngine->getGlobalString(String("jediManagerName")));
 
-		setJediManagerName(managerName);
-	}
-
-	info() << Thread::getCurrentThread()->getName() <<  " loaded.";
+	info("Loaded.");
 }
 
 void JediManager::onPlayerCreated(CreatureObject* creature) {
@@ -78,15 +74,6 @@ void JediManager::onPlayerCreated(CreatureObject* creature) {
 	*luaOnPlayerCreated << creature;
 
 	luaOnPlayerCreated->callFunction();
-}
-
-void JediManager::onSkillRevoked(CreatureObject* creature, Skill* skill) {
-	Lua* lua = DirectorManager::instance()->getLuaInstance();
-	Reference<LuaFunction*> luaOnSkillRevoked = lua->createFunction(getJediManagerName(), "onSkillRevoked", 0);
-	*luaOnSkillRevoked << creature;
-	*luaOnSkillRevoked << skill;
-
-	luaOnSkillRevoked->callFunction();
 }
 
 void JediManager::onPlayerLoggedIn(CreatureObject* creature) {

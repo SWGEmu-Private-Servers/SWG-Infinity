@@ -24,7 +24,7 @@ public:
 	}
 
 	void run() {
-		if (deed == nullptr || player == nullptr)
+		if (deed == NULL || player == NULL)
 			return;
 
 		Locker locker(player);
@@ -76,9 +76,9 @@ public:
 				int sampleRoll = System::random(100);
 				sampleRoll += System::random(player->getSkillMod("luck") + player->getSkillMod("force_luck"));
 				// max samples 1/2 of real creatures
-				int maxSamples = (int) ceil((float)skillMod/25.f)/2.f;
+				int maxSamples = (int) ceil((float)skillMod/25.0*0.75);
 				deed->incrementSampleCount();
-				if ((30 + rollMod) < sampleRoll || cl > 75) {
+				if ((30 + rollMod) < sampleRoll || cl > 100) {
 					// failure but we increment the count
 					player->sendSystemMessage("@bio_engineer:harvest_dna_failed");
 				} else {
@@ -87,7 +87,7 @@ public:
 					if (count >= maxSamples ){
 						// nuke deed you killed it
 						ManagedReference<SceneObject*> deedContainer = deed->getParent().get();
-						if (deedContainer != nullptr) {
+						if (deedContainer != NULL) {
 							deed->destroyObjectFromWorld(true);
 						}
 						deed->destroyObjectFromDatabase(true);
@@ -101,7 +101,7 @@ public:
 	void award(int cl, float rollMod) {
 		int xp = DnaManager::instance()->generateXp(cl);
 		ManagedReference<PlayerManager*> playerManager = player->getZoneServer()->getPlayerManager();
-		if(playerManager != nullptr)
+		if(playerManager != NULL)
 			playerManager->awardExperience(player, "bio_engineer_dna_harvesting", xp, true);
 		int quality = deed->getQuality();
 		int newQuality = quality;

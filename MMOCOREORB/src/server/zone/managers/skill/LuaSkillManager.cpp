@@ -10,6 +10,7 @@ Luna<LuaSkillManager>::RegType LuaSkillManager::Register[] = {
 		{ "getSkill", &LuaSkillManager::getSkill },
 		{ "awardSkill", &LuaSkillManager::awardSkill },
 		{ "canLearnSkill", &LuaSkillManager::canLearnSkill },
+		{ "awardForceFromSkills", &LuaSkillManager::awardForceFromSkills },
 		{ 0, 0 }
 };
 
@@ -97,7 +98,22 @@ int LuaSkillManager::awardSkill(lua_State* L) {
 	String skillName = lua_tostring(L, -1);
 	CreatureObject* creo = (CreatureObject*) lua_touserdata(L, -2);
 
-	lua_pushboolean(L, realObject->awardSkill(skillName, creo, true, false, false));
+	lua_pushboolean(L, realObject->awardSkill(skillName, creo, true, false, false, false, true));
 
 	return 1;
+}
+
+int LuaSkillManager::awardForceFromSkills(lua_State* L) {
+	if (lua_gettop(L) - 1 != 1) {
+		Logger::console.error("incorrect number of arguments for LuaSkillManager::awardForceFromSkills.");
+		return 0;
+	}
+
+	CreatureObject* creo = (CreatureObject*) lua_touserdata(L, -1);
+
+	realObject->awardForceFromSkills(creo);
+
+	return 1;
+	
+
 }

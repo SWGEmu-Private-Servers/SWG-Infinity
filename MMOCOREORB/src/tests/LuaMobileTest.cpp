@@ -22,11 +22,6 @@
 #include "server/zone/managers/creature/SpawnAreaMap.h"
 #include "templates/string/StringFile.h"
 
-#include "templates/customization/AssetCustomizationManagerTemplate.h"
-#include "templates/customization/BasicRangedIntCustomizationVariable.h"
-#include "templates/params/PaletteColorCustomizationVariable.h"
-#include "templates/appearance/PaletteTemplate.h"
-
 class LuaMobileTest : public ::testing::Test {
 protected:
 	LootGroupMap* lootGroupMap;
@@ -43,13 +38,13 @@ public:
 		DataArchiveStore::instance()->loadTres(ConfigManager::instance()->getTrePath(), ConfigManager::instance()->getTreFiles());
 		lootGroupMap = LootGroupMap::instance();
 		templateManager = TemplateManager::instance();
-		commandConfigManager = new CommandConfigManager(nullptr);
+		commandConfigManager = new CommandConfigManager(NULL);
 		list = new CommandList();
 	}
 
 	~LuaMobileTest() {
-		lootGroupMap = nullptr;
-		templateManager = nullptr;
+		lootGroupMap = NULL;
+		templateManager = NULL;
 		delete commandConfigManager;
 		delete list;
 	}
@@ -58,7 +53,7 @@ public:
 		// Perform setup of common constructs here.
 		lootGroupMap->initialize();
 
-		ASSERT_TRUE( templateManager != nullptr );
+		ASSERT_TRUE( templateManager != NULL );
 		if( templateManager->loadedTemplatesCount == 0 ) {
 			templateManager->loadLuaTemplates();
 		}
@@ -83,18 +78,19 @@ public:
 
 		for (int i = 0; i < files.size(); i++) {
 			String file = files.get(i);
-			UniqueReference<ObjectInputStream*> stream(templateManager->openTreFile(file));
+			ObjectInputStream* stream = templateManager->openTreFile(file);
 
-			if (stream != nullptr) {
+			if (stream != NULL) {
+
 				if (stream->size() > 4) {
 					StringFile stringFile;
-
 					if (stringFile.load(stream)) {
 						file = file.replaceFirst("string/en/","");
 						file = file.replaceFirst(".stf","");
 
-						const auto& hashTable = stringFile.getStringMap();
-						auto iterator = hashTable.iterator();
+						HashTable<String, UnicodeString>* hashTable = stringFile.getStringMap();
+
+						HashTableIterator<String, UnicodeString> iterator = hashTable->iterator();
 
 						while (iterator.hasNext()) {
 							String name;
@@ -110,6 +106,9 @@ public:
 					}
 
 				}
+
+				delete stream;
+
 			}
 
 		}
@@ -137,7 +136,7 @@ public:
 
 		if (lootGroupMap->lootGroupExists(entryName)) {
 
-			const LootGroupTemplate* lootGroupTemplate = lootGroupMap->getLootGroupTemplate(entryName);
+			LootGroupTemplate* lootGroupTemplate = lootGroupMap->getLootGroupTemplate(entryName);
 
 			for (int j = 0; j < lootGroupTemplate->size(); j++) {
 
@@ -149,8 +148,8 @@ public:
 			}
 
 		} else {
-			Reference<const LootItemTemplate*> itemTemplate = lootGroupMap->getLootItemTemplate( entryName );
-			EXPECT_TRUE( itemTemplate != nullptr ) << "Item template " << std::string(entryName.toCharArray()) << " from " << std::string(parentGroups->get(parentGroups->size() - 1).toCharArray()) << " was not found in LootGroupMap";
+			Reference<LootItemTemplate*> itemTemplate = lootGroupMap->getLootItemTemplate( entryName );
+			EXPECT_TRUE( itemTemplate != NULL ) << "Item template " << std::string(entryName.toCharArray()) << " from " << std::string(parentGroups->get(parentGroups->size() - 1).toCharArray()) << " was not found in LootGroupMap";
 		}
 	}
 };
@@ -169,14 +168,14 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 	ASSERT_FALSE(FactionManager::instance()->getFactionMap()->isEmpty());
 
 	// Load Templates
-	ASSERT_TRUE( TemplateManager::instance() != nullptr );
+	ASSERT_TRUE( TemplateManager::instance() != NULL );
 	if( TemplateManager::instance()->loadedTemplatesCount == 0 ){
 		TemplateManager::instance()->loadLuaTemplates();
 		ASSERT_EQ(TemplateManager::ERROR_CODE, 0);
 	}
 	// verify DNA manager loads
 	DnaManager::instance()->loadSampleData();
-	ASSERT_TRUE( DnaManager::instance() != nullptr);
+	ASSERT_TRUE( DnaManager::instance() != NULL);
 
 
 	// Test Creature Templates
@@ -198,12 +197,12 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		for( int j=0; j< objTemps.size(); j++ ){
 			SharedObjectTemplate* templateData = templateManager->getTemplate(objTemps.get(j).hashCode());
 			std::string objName = objTemps.get(j).toCharArray();
-			EXPECT_TRUE( templateData != nullptr ) << "Mobile " << templateName << " has invalid template configured: " << objName;
+			EXPECT_TRUE( templateData != NULL ) << "Mobile " << templateName << " has invalid template configured: " << objName;
 
 			// Check Template Genetics math to find invalid mobs
-			if (templateData != nullptr) {
+			if (templateData != NULL) {
 				SharedCreatureObjectTemplate* creoData = dynamic_cast<SharedCreatureObjectTemplate*> (templateData);
-				if (creoData != nullptr) {
+				if (creoData != NULL) {
 				}
 			}
 
@@ -215,7 +214,7 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		String controlDeviceTemplate = creature->getControlDeviceTemplate();
 		if (!controlDeviceTemplate.isEmpty()) {
 			SharedObjectTemplate* controlDeviceTemplateData = templateManager->getTemplate(controlDeviceTemplate.hashCode());
-			EXPECT_TRUE( controlDeviceTemplateData != nullptr ) << "Control device template " << controlDeviceTemplate.toCharArray() << " from " << templateName << " does not exist.";
+			EXPECT_TRUE( controlDeviceTemplateData != NULL ) << "Control device template " << controlDeviceTemplate.toCharArray() << " from " << templateName << " does not exist.";
 			EXPECT_TRUE( controlDeviceTemplate.beginsWith("object/intangible/pet/") ) << "Control device template " << controlDeviceTemplate.toCharArray() << " from " << templateName << " is not a pet/droid control device template.";
 		}
 
@@ -364,48 +363,6 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		float scale = creature->getScale();
 		EXPECT_TRUE( scale > 0 ) << "Scale is not a positive value on mobile: " << templateName;
 
-		// Verify mobile template has palette variables if hue is set
-		int hueCount = creature->getHueCount();
-
-		if (hueCount > 0) {
-			Vector<String> objTemps = creature->getTemplates();
-			EXPECT_FALSE( objTemps.isEmpty() ) << "Mobile " << templateName << " has a hue set with no templates configured";
-
-			for (int j = 0; j < objTemps.size(); j++) {
-				bool hasPalette = false;
-				SharedObjectTemplate* templateData = templateManager->getTemplate(objTemps.get(j).hashCode());
-
-				if (templateData != nullptr) {
-					String appearanceFilename = templateData->getAppearanceFilename();
-					VectorMap<String, Reference<CustomizationVariable*> > variables;
-					AssetCustomizationManagerTemplate::instance()->getCustomizationVariables(appearanceFilename.hashCode(), variables, false);
-
-					for (int i = 0; i < variables.size(); ++i) {
-						String varName = variables.elementAt(i).getKey();
-						CustomizationVariable* customizationVariable = variables.elementAt(i).getValue().get();
-
-						if (customizationVariable == nullptr)
-							continue;
-
-						PaletteColorCustomizationVariable* palette = dynamic_cast<PaletteColorCustomizationVariable*>(customizationVariable);
-
-						if (palette == nullptr)
-							continue;
-
-						String paletteFileName = palette->getPaletteFileName();
-						PaletteTemplate* paletteTemplate = TemplateManager::instance()->getPaletteTemplate(paletteFileName);
-
-						if (paletteTemplate != nullptr)
-							hasPalette = true;
-
-						delete paletteTemplate;
-					}
-				}
-
-				EXPECT_TRUE( hasPalette ) << "Mobile " << templateName << " has " << hueCount << " hues set with a template that has no palette variables";
-			}
-		}
-
 		// Verify PACK mobs have a social group
 		uint32 creatureBitmask = creature->getCreatureBitmask();
 		String socialGroup = creature->getSocialGroup();
@@ -414,23 +371,26 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		}
 
 		// Verify loot group percentages
-		auto groupCollection = creature->getLootGroups();
+		LootGroupCollection* groupCollection = creature->getLootGroups();
 		if( groupCollection->count() > 0 ){
+
+
 			for( int i = 0; i < groupCollection->count(); i++ ){
-				auto collectionEntry = groupCollection->get(i);
-				auto groups = collectionEntry->getLootGroups();
+
+				LootGroupCollectionEntry* collectionEntry = groupCollection->get(i);
+				LootGroups* groups = collectionEntry->getLootGroups();
 				if( groups->count() > 0){
 
 					int totalChance = 0;
 					for( int j = 0; j < groups->count(); j++ ){
 
-						auto lootGroup = groups->get(j);
+						LootGroupEntry* lootGroup = groups->get(j);
 						totalChance += lootGroup->getLootChance();
 
 						// Verify loot group is configured correctly
-						const LootGroupTemplate* foundGroup = lootGroupMap->getLootGroupTemplate( lootGroup->getLootGroupName() );
+						LootGroupTemplate* foundGroup = lootGroupMap->getLootGroupTemplate( lootGroup->getLootGroupName() );
 						std::string groupName( lootGroup->getLootGroupName().toCharArray() );
-						EXPECT_TRUE( foundGroup != nullptr ) << "Loot group " << groupName << " from " << templateName << " was not found in LootGroupMap";
+						EXPECT_TRUE( foundGroup != NULL ) << "Loot group " << groupName << " from " << templateName << " was not found in LootGroupMap";
 
 					}
 
@@ -453,7 +413,7 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		uint32 optionsBitmask = creature->getOptionsBitmask();
 		if (convoTemplate != 0) {
 			ConversationTemplate* convoTemp = CreatureTemplateManager::instance()->getConversationTemplate(convoTemplate);
-			EXPECT_TRUE( convoTemp != nullptr ) << "Conversation template from " << templateName << " was not found.";
+			EXPECT_TRUE( convoTemp != NULL ) << "Conversation template from " << templateName << " was not found.";
 			EXPECT_TRUE( optionsBitmask & OptionBitmask::CONVERSE ) << templateName << " has a convo template but not the CONVERSE options bit.";
 		}
 		// Verify that mobs with converse option bit have a convo template
@@ -465,13 +425,13 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		String outfit = creature->getOutfit();
 		if (!outfit.isEmpty()) {
 			MobileOutfitGroup* outfitGroup = CreatureTemplateManager::instance()->getMobileOutfitGroup(outfit);
-			EXPECT_TRUE( outfitGroup != nullptr ) << "Outfit group " << outfit.toCharArray() << " from " << templateName << " was not found.";
+			EXPECT_TRUE( outfitGroup != NULL ) << "Outfit group " << outfit.toCharArray() << " from " << templateName << " was not found.";
 		}
 
 		// Verify attacks are valid commands
-		auto cam = creature->getAttacks();
+		CreatureAttackMap* cam = creature->getAttacks();
 		for (int i = 0; i < cam->size(); i++) {
-			const auto& commandName = cam->getCommand(i);
+			String commandName = cam->getCommand(i);
 
 			EXPECT_TRUE( commandName.isEmpty() || commandConfigManager->contains(commandName) ) << "Attack: " << commandName.toCharArray() << " is not a valid command in mobile template: " << templateName;
 		}
@@ -491,22 +451,22 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		std::string templateName( lair->getName().toCharArray() );
 
 		// Verify that mobiles exist and that their weighting is positive
-		const VectorMap<String, int>* mobiles = lair->getMobiles();
+		VectorMap<String, int>* mobiles = lair->getMobiles();
 		for (int i = 0; i < mobiles->size(); i++) {
 			int weighting = mobiles->elementAt(i).getValue();
 			String mobile = mobiles->elementAt(i).getKey();
 			std::string mobName = mobile.toCharArray();
-			EXPECT_TRUE( CreatureTemplateManager::instance()->getTemplate(mobile) != nullptr ) << "Mobile " << mobName << " in lair template " << templateName << " does not exist";
+			EXPECT_TRUE( CreatureTemplateManager::instance()->getTemplate(mobile) != NULL ) << "Mobile " << mobName << " in lair template " << templateName << " does not exist";
 			EXPECT_TRUE( weighting > 0 ) << "Mobile " << mobName << " in lair template " << templateName << " has a non positive weighting";
 		}
 
 		// Verify that boss mobiles exist and that their count is positive
-		const VectorMap<String, int>* bossMobiles = lair->getBossMobiles();
+		VectorMap<String, int>* bossMobiles = lair->getBossMobiles();
 		for (int i = 0; i < bossMobiles->size(); i++) {
 			int count = bossMobiles->elementAt(i).getValue();
 			String bossMob = bossMobiles->elementAt(i).getKey();
 			std::string bossName = bossMob.toCharArray();
-			EXPECT_TRUE( CreatureTemplateManager::instance()->getTemplate(bossMob) != nullptr ) << "Boss mobile " << bossName << " in lair template " << templateName << " does not exist";
+			EXPECT_TRUE( CreatureTemplateManager::instance()->getTemplate(bossMob) != NULL ) << "Boss mobile " << bossName << " in lair template " << templateName << " does not exist";
 			EXPECT_TRUE( count > 0 ) << "Boss mobile " << bossName << " in lair template " << templateName << " has a non positive spawn count";
 		}
 
@@ -516,10 +476,10 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 
 		// Verify any configured buildings exist
 		int buildingCount = 0;
-
 		for(int i=0; i<=4; i++){
-			const Vector<String>* buildings = lair->getBuildings( i );
-			if( buildings == nullptr )
+
+			Vector<String>* buildings = lair->getBuildings( i );
+			if( buildings == NULL )
 				continue;
 
 			buildingCount += buildings->size();
@@ -528,7 +488,7 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 				String buildingTemplate = buildings->get(j);
 				std::string buildingStr = buildingTemplate.toCharArray();
 				SharedObjectTemplate* templateObject = templateManager->getTemplate(buildingTemplate.hashCode());
-				EXPECT_TRUE( templateObject != nullptr && templateObject->isSharedTangibleObjectTemplate() ) << "Building template " << buildingStr << " in lair template " << templateName << " does not exist";
+				EXPECT_TRUE( templateObject != NULL && templateObject->isSharedTangibleObjectTemplate() ) << "Building template " << buildingStr << " in lair template " << templateName << " does not exist";
 				if( lair->getBuildingType() == LairTemplate::LAIR ){
 					EXPECT_TRUE( buildingTemplate.beginsWith( "object/tangible/lair/") ) << "Building template " << buildingStr << " in lair template " << templateName << " is not a child of object/tangible/lair/";
 				}
@@ -543,7 +503,7 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		if (!missionBuilding.isEmpty()) {
 			std::string buildingStr = missionBuilding.toCharArray();
 			SharedObjectTemplate* templateObject = templateManager->getTemplate(missionBuilding.hashCode());
-			EXPECT_TRUE( templateObject != nullptr && templateObject->isSharedTangibleObjectTemplate() ) << "Mission building template " << buildingStr << " in lair template " << templateName << " does not exist";
+			EXPECT_TRUE( templateObject != NULL && templateObject->isSharedTangibleObjectTemplate() ) << "Mission building template " << buildingStr << " in lair template " << templateName << " does not exist";
 			EXPECT_TRUE( missionBuilding.beginsWith( "object/tangible/lair/") ) << "Mission building template " << buildingStr << " in lair template " << templateName << " is not a child of object/tangible/lair/";
 		}
 
@@ -568,15 +528,15 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		Vector<String> lairTemplates;
 
 		// Verify spawn list
-		const auto& spawnList = group->getSpawnList();
-		for (int i = 0; i < spawnList.size(); i++) {
-			LairSpawn* spawn = spawnList.get(i);
+		Vector<Reference<LairSpawn*> >* spawnList = group->getSpawnList();
+		for (int i = 0; i < spawnList->size(); i++) {
+			LairSpawn* spawn = spawnList->get(i);
 			std::string lairName( spawn->getLairTemplateName().toCharArray() );
 
 			// Verify lair template exists and isn't duplicated in the group
 			String lairTemplateName = spawn->getLairTemplateName();
 			Reference<LairTemplate*> lairTemplate = CreatureTemplateManager::instance()->getLairTemplate(lairTemplateName.hashCode());
-			EXPECT_TRUE( lairTemplate != nullptr ) << "Lair template " << lairName << " in spawn group " << templateName << " does not exist.";
+			EXPECT_TRUE( lairTemplate != NULL ) << "Lair template " << lairName << " in spawn group " << templateName << " does not exist.";
 			EXPECT_FALSE( lairTemplates.contains(lairTemplateName) ) << "Lair template " << lairName << " is duplicated in spawn group " << templateName;
 			lairTemplates.add(lairTemplateName);
 
@@ -613,25 +573,25 @@ TEST_F(LuaMobileTest, LuaMobileTemplatesTest) {
 		Vector<String> lairTemplates;
 
 		// Verify spawn list
-		const auto& spawnList = group->getSpawnList();
-		for (int i = 0; i < spawnList.size(); i++) {
-			LairSpawn* spawn = spawnList.get(i);
+		Vector<Reference<LairSpawn*> >* spawnList = group->getSpawnList();
+		for (int i = 0; i < spawnList->size(); i++) {
+			LairSpawn* spawn = spawnList->get(i);
 			std::string lairName( spawn->getLairTemplateName().toCharArray() );
 
 			// Verify lair template exists
 			String lairTemplateName = spawn->getLairTemplateName();
 			Reference<LairTemplate*> lairTemplate = CreatureTemplateManager::instance()->getLairTemplate(lairTemplateName.hashCode());
-			EXPECT_TRUE( lairTemplate != nullptr ) << "Lair template " << lairName << " in destroy mission spawn group " << templateName << " does not exist.";
+			EXPECT_TRUE( lairTemplate != NULL ) << "Lair template " << lairName << " in destroy mission spawn group " << templateName << " does not exist.";
 			EXPECT_FALSE( lairTemplates.contains(lairTemplateName) ) << "Lair template " << lairName << " is duplicated in destroy mission spawn group " << templateName;
 			lairTemplates.add(lairTemplateName);
 
-			if (lairTemplate != nullptr) {
+			if (lairTemplate != NULL) {
 				// Verify that lair template has a valid mission building or is of type LAIR
 				String missionBuilding = lairTemplate->getMissionBuilding(10);
 				if (!missionBuilding.isEmpty()) {
 					std::string buildingStr = missionBuilding.toCharArray();
 					SharedObjectTemplate* templateObject = templateManager->getTemplate(missionBuilding.hashCode());
-					EXPECT_TRUE( templateObject != nullptr && templateObject->isSharedTangibleObjectTemplate() ) << "Mission building template " << buildingStr << " in lair template " << lairName << ", part of destroy mission group " << templateName << " does not exist";
+					EXPECT_TRUE( templateObject != NULL && templateObject->isSharedTangibleObjectTemplate() ) << "Mission building template " << buildingStr << " in lair template " << lairName << ", part of destroy mission group " << templateName << " does not exist";
 					EXPECT_TRUE( missionBuilding.beginsWith( "object/tangible/lair/") ) << "Mission building template " << buildingStr << " in lair template " << lairName << ", part of destroy mission group " << templateName << " is not a child of object/tangible/lair/";
 				} else {
 					EXPECT_TRUE( lairTemplate->getBuildingType() == LairTemplate::LAIR ) << "Lair template " << lairName << ", part of destroy mission group " << templateName << " is not of type LAIR";
@@ -669,7 +629,7 @@ TEST_F(LuaMobileTest, LuaLootGroupsTest) {
 		// Verify that directObjectTemplate is valid
 		String directObjectTemplate = lootItemTemplate->getDirectObjectTemplate();
 		SharedObjectTemplate* templateObject = templateManager->getTemplate(directObjectTemplate.hashCode());
-		EXPECT_TRUE( templateObject != nullptr && templateObject->isSharedTangibleObjectTemplate() ) << "directObjectTemplate is invalid in loot item " << std::string(itemTemplateName.toCharArray());
+		EXPECT_TRUE( templateObject != NULL && templateObject->isSharedTangibleObjectTemplate() ) << "directObjectTemplate is invalid in loot item " << std::string(itemTemplateName.toCharArray());
 	}
 
 	// Test Loot Groups
@@ -746,7 +706,7 @@ TEST_F(LuaMobileTest, LuaSpawnManagerTest) {
 				for (int k = 1; k <= spawnGroups.getTableSize(); k++) {
 					String group = spawnGroups.getStringAt(k);
 
-					EXPECT_TRUE( CreatureTemplateManager::instance()->getSpawnGroup(group.hashCode()) != nullptr ) << "Spawn group " << std::string(group.toCharArray()) << " for spawn area " << std::string(area.toCharArray()) << " on planet " << std::string(zoneNames.get(i).toCharArray()) << " does not exist.";
+					EXPECT_TRUE( CreatureTemplateManager::instance()->getSpawnGroup(group.hashCode()) != NULL ) << "Spawn group " << std::string(group.toCharArray()) << " for spawn area " << std::string(area.toCharArray()) << " on planet " << std::string(zoneNames.get(i).toCharArray()) << " does not exist.";
 				}
 
 				spawnGroups.pop();

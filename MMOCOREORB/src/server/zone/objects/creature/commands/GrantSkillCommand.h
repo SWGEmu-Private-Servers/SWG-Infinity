@@ -25,7 +25,7 @@ public:
 
 		ManagedReference<SceneObject*> object = server->getZoneServer()->getObject(target);
 
-		if (object == nullptr || !object->isCreatureObject())
+		if (object == NULL || !object->isCreatureObject())
 			return INVALIDTARGET;
 
 		CreatureObject* targetCreature = cast<CreatureObject*>( object.get());
@@ -34,7 +34,7 @@ public:
 
 		SkillManager* skillManager = SkillManager::instance();
 		skillManager->surrenderSkill(arguments.toString(), targetCreature, true);
-		bool skillGranted = skillManager->awardSkill(arguments.toString(), targetCreature, true, true, true);
+		bool skillGranted = skillManager->awardSkill(arguments.toString(), targetCreature, true, true, true, false, true);
 
 		if (skillGranted) {
 			StringIdChatParameter params;

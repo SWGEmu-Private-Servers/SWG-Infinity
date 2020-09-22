@@ -12,16 +12,12 @@
 bool StructureContainerComponent::checkContainerPermission(SceneObject* sceneObject, CreatureObject* creature, uint16 permission) const {
 	StructureObject* building = dynamic_cast<StructureObject*>(sceneObject);
 
-	if (building != nullptr) {
+	if (building != NULL) {
 		if (permission == ContainerPermissions::MOVEVENDOR) {
-			if (building->isPublicStructure() && (building->isOnPermissionList("VENDOR", creature) || building->isOnAdminList(creature)))
+			if (building->isOnPermissionList("VENDOR", creature) || building->isOnAdminList(creature))
 				return true;
 			else {
-				if (building->isPrivateStructure())
-					creature->sendSystemMessage("@player_structure:vendor_public_only"); //
-				else
 					creature->sendSystemMessage("@player_structure:drop_npc_vendor_perm"); // You do not have vendor permission in this building
-
 				return false;
 			}
 		}

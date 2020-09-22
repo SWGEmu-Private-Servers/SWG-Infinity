@@ -19,7 +19,9 @@ void AttachmentImplementation::initializeTransientMembers() {
 
 }
 
-void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool firstUpdate) {
+// Overloading the updateCraftingValues method for Attachments to allow for idenfitication of type of lootTemplate being used.
+// This allows for custom lootTemplates to be created and split out from the massive larger lootables.
+void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool firstUpdate, const String& lootTemplateName) {
 	int level = values->getMaxValue("creatureLevel");
 	int roll = System::random(100);
 	int modCount = 1;
@@ -40,11 +42,16 @@ void AttachmentImplementation::updateCraftingValues(CraftingValues* values, bool
 		if(mod == 0)
 			mod = 1;
 
-		String modName = server->getZoneServer()->getLootManager()->getRandomLootableMod(gameObjectType);
+		String modName = server->getZoneServer()->getLootManager()->getRandomLootableMod(gameObjectType, lootTemplateName);
 
 		skillModMap.put(modName, mod);
 	}
 }
+
+void AttachmentImplementation::updateAttachmentValues(const String& modName, int value) {
+		skillModMap.put(modName, value);
+}
+
 
 void AttachmentImplementation::initializeMembers() {
 	if (gameObjectType == SceneObjectType::CLOTHINGATTACHMENT) {

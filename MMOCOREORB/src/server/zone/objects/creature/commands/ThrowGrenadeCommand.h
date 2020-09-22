@@ -17,6 +17,8 @@ public:
 
 	int doQueueCommand(CreatureObject* creature, const uint64& target, const UnicodeString& arguments) const {
 
+		ManagedReference<CreatureObject*> targetCreo = NULL;
+		
 		if (!checkStateMask(creature))
 			return INVALIDSTATE;
 
@@ -31,7 +33,7 @@ public:
 
 			uint64 weaponID = tokenizer.getLongToken();
 			Reference<WeaponObject*> grenade = server->getZoneServer()->getObject(weaponID).castTo<WeaponObject*>();
-			if (grenade == nullptr)
+			if (grenade == NULL)
 				return INVALIDPARAMETERS;
 
 			if (!grenade->isThrownWeapon())
@@ -41,7 +43,7 @@ public:
 				return GENERALERROR;
 
 			ManagedReference<TangibleObject*> targetObject = server->getZoneServer()->getObject(target).castTo<TangibleObject*>();
-			if (targetObject == nullptr)
+			if (targetObject == NULL)
 				return GENERALERROR;
 
 			if (!(targetObject->isAttackableBy(creature)))
@@ -49,13 +51,17 @@ public:
 
 			SharedObjectTemplate* templateData = TemplateManager::instance()->getTemplate(grenade->getServerObjectCRC());
 
-			if (templateData == nullptr)
+			if (templateData == NULL)
 				return GENERALERROR;
 
 			SharedWeaponObjectTemplate* grenadeData = cast<SharedWeaponObjectTemplate*>(templateData);
 
-			if (grenadeData == nullptr)
+			if (grenadeData == NULL)
 				return GENERALERROR;
+				
+			if (targetObject->isCreatureObject())
+				targetCreo = targetObject.castTo<CreatureObject*>();
+
 
 			UnicodeString args = "combatSpam=" + grenadeData->getCombatSpam() + ";";
 
@@ -69,6 +75,30 @@ public:
 					Locker lock(grenade);
 					grenade->decreaseUseCount();
 				}, "ThrowGrenadeTanoDecrementTask", 100);
+				
+				
+				bool isCortosis = false;
+				if (grenadeData->getCombatSpam() == "throw_cortosis")
+					isCortosis = true;
+				ManagedReference<CreatureObject*> targetCreature = targetObject.castTo<CreatureObject*>();
+				uint32 buffCRC = BuffCRC::JEDI_CORTOSIS;
+
+						if ((isCortosis == true) && targetCreature != NULL && !targetCreature->hasBuff(buffCRC)){
+							if (targetCreature->isPlayerCreature() && targetCreature->getPlayerObject()->isJedi()){
+
+								Core::getTaskManager()->scheduleTask([targetCreature] {
+									Locker lock(targetCreature);
+									uint32 buffCRC = BuffCRC::JEDI_CORTOSIS;
+									ManagedReference<Buff*> buff = NULL;
+									buff = new Buff(targetCreature, buffCRC, 60, BuffType::JEDI);	
+									Locker blocker(buff);
+									buff->setSkillModifier("jedi_force_power_regen", -10);
+									targetCreature->addBuff(buff);
+
+								}, "CortosisEffectApply", 1000);								
+							}
+						}
+				
 			}
 
 			return result;
@@ -83,7 +113,7 @@ public:
 	String getAnimation(TangibleObject* attacker, TangibleObject* defender, WeaponObject* weapon, uint8 hitLocation, int damage) const {
 		SharedWeaponObjectTemplate* weaponData = cast<SharedWeaponObjectTemplate*>(weapon->getObjectTemplate());
 
-		if (weaponData == nullptr) {
+		if (weaponData == NULL) {
 			warning("Null weaponData in ThrowGrenadeCommand::getAnimation");
 			return "";
 		}
@@ -112,7 +142,7 @@ public:
 
 		Reference<WeaponObject*> grenade = server->getZoneServer()->getObject(weaponID).castTo<WeaponObject*>();
 
-		if (grenade != nullptr)
+		if (grenade != NULL)
 			return CombatManager::instance()->calculateWeaponAttackSpeed(object, grenade, speedMultiplier);
 		else
 			return defaultTime * speedMultiplier;

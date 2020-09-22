@@ -30,11 +30,28 @@ public:
 
 		ManagedReference<SceneObject*> targetObject = server->getZoneServer()->getObject(target);
 
-		if (targetObject == nullptr || !targetObject->isCreatureObject()) {
+		if (targetObject == NULL || !targetObject->isCreatureObject()) {
 			return INVALIDTARGET;
 		}
 
-		return doCombatAction(creature, target);
+       ManagedReference<CreatureObject*> creatureTarget = targetObject.castTo<CreatureObject*>();
+        if (creatureTarget == NULL){
+            return INVALIDTARGET;
+        }
+
+		if (!creature->checkCooldownRecovery("mindblast")){
+           creature->sendSystemMessage("You cannot mindblast again yet.");
+           return GENERALERROR;
+		}
+		int res;
+		res = doCombatAction(creature, target);
+		if (res == SUCCESS){
+			creature->updateCooldownTimer("mindblast", 3000); 
+			if (creatureTarget->checkCooldownRecovery("delay_protection")){
+				creatureTarget->updateCooldownTimer("delay_protection", 1000);
+			}			
+		}
+		return res;
 	}
 
 };

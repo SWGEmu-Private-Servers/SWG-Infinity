@@ -10,8 +10,6 @@
 
 #include "engine/engine.h"
 
-#include "engine/util/json_utils.h"
-
 namespace server {
  namespace zone {
   namespace objects {
@@ -32,9 +30,9 @@ protected:
 	uint32 strength;
 	uint32 duration;
 
-	SerializableTime applied;
-	SerializableTime expires;
-	SerializableTime nextTick;
+	Time applied;
+	Time expires;
+	Time nextTick;
 	int secondaryStrength;
 
 public:
@@ -51,8 +49,6 @@ public:
 
 	//~DamageOverTime();
 
-	friend void to_json(nlohmann::json& j, const DamageOverTime& t);
-
 	void activate();
 	uint32 applyDot(CreatureObject* victim);
 	uint32 initDot(CreatureObject* victim, CreatureObject* attacker);
@@ -66,7 +62,8 @@ public:
 	inline uint32 doPoisonTick(CreatureObject* victim, CreatureObject* attacker);
 	inline uint32 doDiseaseTick(CreatureObject* victim, CreatureObject* attacker);
 	inline uint32 doForceChokeTick(CreatureObject* victim, CreatureObject* attacker);
-
+	inline uint32 doForceBurnTick(CreatureObject* victim, CreatureObject* attacker);
+	
 	// Setters
 	inline void setAttackerID(uint64 value) {
 		attackerID = value;

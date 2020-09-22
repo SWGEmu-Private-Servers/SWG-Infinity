@@ -6,7 +6,6 @@
 #include "server/zone/managers/combat/CombatManager.h"
 #include "server/zone/managers/creature/CreatureManager.h"
 #include "server/zone/objects/creature/CreatureObject.h"
-#include "server/zone/objects/transaction/TransactionLog.h"
 #include "engine/engine.h"
 
 class MilkCreatureTask : public Task {
@@ -28,7 +27,7 @@ public:
 
 		Locker _clocker(player, creature);
 
-		if (!creature->isInRange(player, 5.f) || creature->isDead()) {
+		if (!creature->isInRange(player, 10.f) || creature->isDead()) {
 			updateMilkState(CreatureManager::NOTMILKED);
 			player->sendSystemMessage("@skl_use:milk_too_far"); // The creature has moved too far away to continue milking it.
 			return;
@@ -44,11 +43,7 @@ public:
 		float skill = 100;
 		bool success = true;
 
-		if (player->hasBuff(STRING_HASHCODE("skill_buff_mask_scent_self"))) {
-			skill += player->getSkillMod("mask_scent");
-		} else if (player->hasBuff(STRING_HASHCODE("skill_buff_mask_scent"))) {
-			skill +=  player->getSkillMod("private_conceal");
-		}
+		skill += player->getSkillMod("creature_harvesting");
 
 		failureChance /= (skill / 100);
 
@@ -63,7 +58,7 @@ public:
 			} else {
 				currentPhase = ONEFAILURE;
 			}
-			this->reschedule(10000);
+			this->reschedule(5000);
 			break;
 		case ONESUCCESS:
 			if (success) {
@@ -72,14 +67,14 @@ public:
 			} else {
 					player->sendSystemMessage("@skl_use:milk_continue"); // You continue to milk the creature.
 					currentPhase = FINAL;
-					this->reschedule(10000);
+					this->reschedule(5000);
 			}
 			break;
 		case ONEFAILURE:
 			if (success) {
 				player->sendSystemMessage("@skl_use:milk_continue"); // You continue to milk the creature.
 				currentPhase = FINAL;
-				this->reschedule(10000);
+				this->reschedule(5000);
 			} else {
 				updateMilkState(CreatureManager::NOTMILKED);
 				_clocker.release();
@@ -105,31 +100,46 @@ public:
 		ManagedReference<ResourceManager*> resourceManager = player->getZoneServer()->getResourceManager();
 
 		String restype = creature->getMilkType();
-		int quantity = creature->getMilk();
+		int playerSkill = player->getSkillMod("creature_harvesting");
+		int quantity = int(creature->getMilk() * float(playerSkill / 100.0f));
 
 		int quantityExtracted = Math::max(quantity, 3);
 
 		ManagedReference<ResourceSpawn*> resourceSpawn = resourceManager->getCurrentSpawn(restype, player->getZone()->getZoneName());
 
-		if (resourceSpawn == nullptr) {
+		if (resourceSpawn == NULL) {
 			player->sendSystemMessage("Error: Server cannot locate a current spawn of " + restype);
 			return;
 		}
 
 		float density = resourceSpawn->getDensityAt(player->getZone()->getZoneName(), player->getPositionX(), player->getPositionY());
 
-		if (density > 0.80f) {
+		String creatureHealth = "";
+
+		if (density > 0.75f) {
 			quantityExtracted = int(quantityExtracted * 1.25f);
-		} else if (density > 0.60f) {
+			creatureHealth = "creature_quality_fat";
+		} else if (density > 0.50f) {
 			quantityExtracted = int(quantityExtracted * 1.00f);
-		} else if (density > 0.40f) {
+			creatureHealth = "creature_quality_medium";
+		} else if (density > 0.25f) {
 			quantityExtracted = int(quantityExtracted * 0.75f);
+			creatureHealth = "creature_quality_skinny";
 		} else {
 			quantityExtracted = int(quantityExtracted * 0.50f);
+			creatureHealth = "creature_quality_scrawny";
 		}
 
-		TransactionLog trx(TrxCode::HARVESTED, player, resourceSpawn);
-		resourceManager->harvestResourceToPlayer(trx, player, resourceSpawn, quantityExtracted);
+
+		resourceManager->harvestResourceToPlayer(player, resourceSpawn, quantityExtracted);
+
+		/// Send System Messages
+		StringIdChatParameter harvestMessage("skl_use", creatureHealth);
+
+		harvestMessage.setDI(quantityExtracted);
+		harvestMessage.setTU(resourceSpawn->getFinalClass());
+
+		player->sendSystemMessage(harvestMessage);
 
 		updateMilkState(CreatureManager::ALREADYMILKED);
 	}

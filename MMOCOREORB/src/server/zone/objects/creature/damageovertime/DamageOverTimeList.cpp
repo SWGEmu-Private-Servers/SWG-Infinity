@@ -69,7 +69,6 @@ uint64 DamageOverTimeList::activateDots(CreatureObject* victim) {
 	if( statesRemoved & CreatureState::ONFIRE )
 		victim->clearState(CreatureState::ONFIRE);
 
-
 	if (nextTick.isPast()) {
 		dot = false;
 		removeAll();
@@ -366,6 +365,9 @@ void DamageOverTimeList::sendStartMessage(CreatureObject* victim, uint64 type) {
 	case CommandEffect::FORCECHOKE:
 		victim->sendSystemMessage("@combat_effects:choke_single");
 		break;
+	case CommandEffect::FORCEBURN:
+		victim->sendSystemMessage("@dot_message:start_fire");
+		break;
 	}
 }
 
@@ -428,4 +430,3 @@ void DamageOverTimeList::sendDecreaseMessage(CreatureObject* victim, uint64 type
 		break;
 	}
 }
-

@@ -17,13 +17,14 @@
 #include "server/zone/managers/player/PlayerManager.h"
 #include "server/zone/managers/skill/SkillManager.h"
 #include "server/zone/objects/tangible/threat/ThreatMap.h"
-#include "server/zone/objects/transaction/TransactionLog.h"
 
 const char LuaCreatureObject::className[] = "LuaCreatureObject";
 
 Luna<LuaCreatureObject>::RegType LuaCreatureObject::Register[] = {
 		{ "_setObject", &LuaCreatureObject::_setObject },
 		{ "_getObject", &LuaSceneObject::_getObject },
+		{ "getBankCredits", &LuaCreatureObject::getBankCredits },
+		{ "setBankCredits", &LuaCreatureObject::setBankCredits },
 		{ "sendSystemMessage", &LuaCreatureObject::sendSystemMessage },
 		{ "sendSystemMessageWithDI", &LuaCreatureObject::sendSystemMessageWithDI },
 		{ "sendSystemMessageWithTO", &LuaCreatureObject::sendSystemMessageWithTO },
@@ -82,17 +83,12 @@ Luna<LuaCreatureObject>::RegType LuaCreatureObject::Register[] = {
 		{ "isNeutral", &LuaCreatureObject::isNeutral},
 		{ "teleport", &LuaSceneObject::teleport},
 		{ "getFirstName", &LuaCreatureObject::getFirstName},
-		{ "getLastName", &LuaCreatureObject::getLastName},
-		{ "setLastName", &LuaCreatureObject::setLastName},
 		{ "isAiAgent", &LuaCreatureObject::isAiAgent},
 		{ "setFactionRank", &LuaCreatureObject::setFactionRank},
 		{ "getFactionRank", &LuaCreatureObject::getFactionRank},
 		{ "getCashCredits", &LuaCreatureObject::getCashCredits},
-		{ "getBankCredits", &LuaCreatureObject::getBankCredits },
 		{ "subtractCashCredits", &LuaCreatureObject::subtractCashCredits},
-		{ "subtractBankCredits", &LuaCreatureObject::subtractBankCredits},
 		{ "addCashCredits", &LuaCreatureObject::addCashCredits},
-		{ "addBankCredits", &LuaCreatureObject::addBankCredits},
 		{ "removeScreenPlayState", &LuaCreatureObject::removeScreenPlayState},
 		{ "isGrouped", &LuaCreatureObject::isGrouped},
 		{ "isGroupedWith", &LuaCreatureObject::isGroupedWith},
@@ -138,11 +134,8 @@ Luna<LuaCreatureObject>::RegType LuaCreatureObject::Register[] = {
 		{ "isCovert", &LuaTangibleObject::isCovert },
 		{ "setFactionStatus", &LuaTangibleObject::setFactionStatus },
 		{ "getDamageDealerList", &LuaCreatureObject::getDamageDealerList },
-		{ "getHealingThreatList", &LuaCreatureObject::getHealingThreatList },
-		{ "getSkillMod", &LuaCreatureObject::getSkillMod },
-		{ "getGender", &LuaCreatureObject::getGender },
-		{ "isRidingMount", &LuaCreatureObject::isRidingMount },
-		{ "dismount", &LuaCreatureObject::dismount },
+		{ "getHealingThreatList", &LuaCreatureObject::getHealingThreatList},
+		{ "getSkillMod", &LuaCreatureObject::getSkillMod},
 		{ 0, 0 }
 };
 
@@ -150,7 +143,7 @@ LuaCreatureObject::LuaCreatureObject(lua_State *L) : LuaTangibleObject(L) {
 #ifdef DYNAMIC_CAST_LUAOBJECTS
 	realObject = dynamic_cast<CreatureObject*>(_getRealSceneObject());
 
-	E3_ASSERT(!_getRealSceneObject() || realObject != nullptr);
+	assert(!_getRealSceneObject() || realObject != NULL);
 #else
 	realObject = static_cast<CreatureObject*>(lua_touserdata(L, 1));
 #endif
@@ -168,7 +161,7 @@ int LuaCreatureObject::_setObject(lua_State* L) {
 	if (obj != realObject)
 		realObject = obj;
 
-	E3_ASSERT(!_getRealSceneObject() || realObject != nullptr);
+	assert(!_getRealSceneObject() || realObject != NULL);
 #else
 	auto obj = static_cast<CreatureObject*>(lua_touserdata(L, -1));
 
@@ -182,40 +175,6 @@ int LuaCreatureObject::_setObject(lua_State* L) {
 int LuaCreatureObject::getFirstName(lua_State* L) {
 	String text = realObject->getFirstName();
 	lua_pushstring(L, text.toCharArray());
-	return 1;
-}
-
-int LuaCreatureObject::getLastName(lua_State* L) {
-	String text = realObject->getLastName();
-	lua_pushstring(L, text.toCharArray());
-	return 1;
-}
-
-int LuaCreatureObject::setLastName(lua_State* L) {
-	int argc = lua_gettop(L) - 1;
-
-	if (argc < 1 || argc > 2) {
-		Logger::console.error("incorrect number of arguments for LuaCreatureObject::setLastName");
-		return 0;
-	}
-
-	String newLastName;
-	bool skipVerify;
-
-	if (argc == 1) {
-		newLastName = lua_tostring(L, -1);
-		skipVerify = false;
-	} else {
-		newLastName = lua_tostring(L, -2);
-		skipVerify = lua_toboolean(L, -1);
-	}
-
-	Locker locker(realObject);
-
-	auto errmsg = realObject->setLastName(newLastName, skipVerify);
-
-	lua_pushstring(L, errmsg.toCharArray());
-
 	return 1;
 }
 
@@ -243,14 +202,14 @@ int LuaCreatureObject::isFeigningDeath(lua_State* L) {
 }
 
 int LuaCreatureObject::hasState(lua_State* L) {
-	uint32 state = (uint32) lua_tonumber(L, -1);
+	uint64 state = (uint64) lua_tonumber(L, -1);
 
 	lua_pushnumber(L, realObject->hasState(state));
 	return 1;
 }
 
 int LuaCreatureObject::setState(lua_State* L) {
-	uint32 state = (uint32) lua_tonumber(L, -1);
+	uint64 state = (uint32) lua_tonumber(L, -1);
 
 	Locker locker(realObject);
 
@@ -341,7 +300,7 @@ int LuaCreatureObject::sendSystemMessageWithTT(lua_State* L) {
 int LuaCreatureObject::sendGroupMessage(lua_State* L) {
 	String value = lua_tostring(L, -1);
 
-	if (realObject == nullptr)
+	if (realObject == NULL)
 		return 0;
 
 	if (!realObject->isGrouped()) {
@@ -391,6 +350,14 @@ int LuaCreatureObject::setMaxHAM(lua_State* L) {
 int LuaCreatureObject::playMusicMessage(lua_State *L) {
 	String value = lua_tostring(L, -1);
 	realObject->playMusicMessage(value);
+
+	return 0;
+}
+
+int LuaCreatureObject::setBankCredits(lua_State *L) {
+	uint32 credits = (uint32) lua_tonumber(L, -1);
+
+	realObject->setBankCredits(credits);
 
 	return 0;
 }
@@ -465,7 +432,7 @@ int LuaCreatureObject::surrenderSkill(lua_State* L) {
 int LuaCreatureObject::getInCellNumber(lua_State* L) {
 	SceneObject* parent = realObject->getParent().get().get();
 
-	if (parent == nullptr || !parent->isCellObject())
+	if (parent == NULL || !parent->isCellObject())
 		lua_pushnumber(L, -1);
 	else {
 		int cellId = ((CellObject*)parent)->getCellNumber();
@@ -479,7 +446,7 @@ int LuaCreatureObject::getInCellNumber(lua_State* L) {
 int LuaCreatureObject::getBuildingParentID(lua_State* L) {
 	ManagedReference<SceneObject*> parent = realObject->getParentRecursively(SceneObjectType::BUILDING);
 
-	if (parent == nullptr)
+	if (parent == NULL)
 		lua_pushnumber(L, 0);
 	else
 		lua_pushnumber(L, parent->getObjectID());
@@ -500,7 +467,7 @@ int LuaCreatureObject::removeScreenPlayState(lua_State* L) {
 	String play = lua_tostring(L, -1);
 	uint64 stateToClear = lua_tointeger(L, -2);
 
-	if (realObject != nullptr) {
+	if (realObject != NULL) {
 		realObject->setScreenPlayState(play, realObject->getScreenPlayState(play) & (~stateToClear));
 		realObject->notifyObservers(ObserverEventType::SCREENPLAYSTATECHANGED, realObject);
 	}
@@ -555,7 +522,7 @@ int LuaCreatureObject::inflictDamage(lua_State* L) {
 
 	TangibleObject* attacker = cast<TangibleObject*>(scene);
 
-	E3_ASSERT(attacker);
+	assert(attacker);
 
 	Locker locker(realObject);
 
@@ -575,7 +542,7 @@ int LuaCreatureObject::getBankCredits(lua_State *L) {
 int LuaCreatureObject::getConversationSession(lua_State* L) {
 	Reference<ConversationSession*> session = realObject->getActiveSession(SessionFacadeType::CONVERSATION).castTo<ConversationSession*>();
 
-	if (session != nullptr) {
+	if (session != NULL) {
 		session->_setUpdated(true);
 		lua_pushlightuserdata(L, session);
 	} else
@@ -587,7 +554,7 @@ int LuaCreatureObject::getConversationSession(lua_State* L) {
 int LuaCreatureObject::doAnimation(lua_State* L) {
 	String animString = lua_tostring(L, -1);
 
-	if (realObject != nullptr)
+	if (realObject != NULL)
 		realObject->doAnimation(animString);
 
 	return 0;
@@ -598,7 +565,7 @@ int LuaCreatureObject::engageCombat(lua_State* L) {
 
 	Locker locker(realObject);
 
-	if (enemy != nullptr)
+	if (enemy != NULL)
 		realObject->addDefender(enemy);
 
 	return 0;
@@ -607,7 +574,7 @@ int LuaCreatureObject::engageCombat(lua_State* L) {
 int LuaCreatureObject::getPlayerObject(lua_State* L) {
 	Reference<PlayerObject*> obj = realObject->getPlayerObject();
 
-	if (obj != nullptr) {
+	if (obj != NULL) {
 		obj->_setUpdated(true);
 		lua_pushlightuserdata(L, obj);
 	} else
@@ -677,21 +644,7 @@ int LuaCreatureObject::getCashCredits(lua_State* L) {
 int LuaCreatureObject::subtractCashCredits(lua_State* L) {
 	Locker locker(realObject);
 
-	int credits = lua_tointeger(L, -1);
-	TransactionLog trx(realObject, TrxCode::LUASCRIPT, credits, true);
-	trx.addContextFromLua(L);
-	realObject->subtractCashCredits(credits);
-
-	return 0;
-}
-
-int LuaCreatureObject::subtractBankCredits(lua_State* L) {
-	Locker locker(realObject);
-
-	int credits = lua_tointeger(L, -1);
-	TransactionLog trx(realObject, TrxCode::LUASCRIPT, credits, false);
-	trx.addContextFromLua(L);
-	realObject->subtractBankCredits(credits);
+	realObject->subtractCashCredits(lua_tointeger(L, -1));
 
 	return 0;
 }
@@ -702,22 +655,7 @@ int LuaCreatureObject::addCashCredits(lua_State* L) {
 
 	Locker locker(realObject);
 
-	TransactionLog trx(TrxCode::LUASCRIPT, realObject, credits, true);
-	trx.addContextFromLua(L);
 	realObject->addCashCredits(credits, notifyClient);
-
-	return 0;
-}
-
-int LuaCreatureObject::addBankCredits(lua_State* L) {
-	bool notifyClient = lua_toboolean(L, -1);
-	int credits = lua_tonumber(L, -2);
-
-	Locker locker(realObject);
-
-	TransactionLog trx(TrxCode::LUASCRIPT, realObject, credits, false);
-	trx.addContextFromLua(L);
-	realObject->addBankCredits(credits, notifyClient);
 
 	return 0;
 }
@@ -741,12 +679,12 @@ int LuaCreatureObject::isGrouped(lua_State* L) {
 int LuaCreatureObject::isGroupedWith(lua_State* L) {
 	CreatureObject* groupMember = (CreatureObject*) lua_touserdata(L, -1);
 
-	if (realObject == nullptr || groupMember == nullptr || !realObject->isGrouped())
+	if (realObject == NULL || groupMember == NULL || !realObject->isGrouped())
 		return 0;
 
 	GroupObject* group = realObject->getGroup();
 
-	lua_pushboolean(L, group != nullptr && group->hasMember(groupMember));
+	lua_pushboolean(L, group != NULL && group->hasMember(groupMember));
 
 	return 1;
 }
@@ -754,18 +692,18 @@ int LuaCreatureObject::isGroupedWith(lua_State* L) {
 int LuaCreatureObject::setLootRights(lua_State* L) {
 	CreatureObject* player = (CreatureObject*) lua_touserdata(L, -1);
 
-	if (realObject == nullptr)
+	if (realObject == NULL)
 		return 0;
 
 	uint64 ownerID = 0;
 
-	if (player != nullptr) {
+	if (player != NULL) {
 		ownerID = player->getObjectID();
 	}
 
 	SceneObject* inventory = realObject->getSlottedObject("inventory");
 
-	if (inventory == nullptr)
+	if (inventory == NULL)
 		return 0;
 
 	Locker locker(inventory);
@@ -779,7 +717,7 @@ int LuaCreatureObject::getGroupSize(lua_State* L) {
 
 	GroupObject* group = realObject->getGroup();
 
-	if (group == nullptr) {
+	if (group == NULL) {
 		lua_pushnumber(L, 0);
 		return 1;
 	}
@@ -811,7 +749,7 @@ int LuaCreatureObject::getGroupMember(lua_State* L) {
 
 	GroupObject* group = realObject->getGroup();
 
-	if (group == nullptr) {
+	if (group == NULL) {
 		lua_pushnil(L);
 		return 1;
 	}
@@ -825,8 +763,8 @@ int LuaCreatureObject::getGroupMember(lua_State* L) {
 
 	CreatureObject* creo = group->getGroupMember(i);
 
-	if (creo == nullptr) {
-		realObject->info("LuaCreatureObject::getGroupMember GroupMember is nullptr.");
+	if (creo == NULL) {
+		realObject->info("LuaCreatureObject::getGroupMember GroupMember is NULL.");
 		lua_pushnil(L);
 	} else {
 		creo->_setUpdated(true);
@@ -901,14 +839,14 @@ int LuaCreatureObject::isPlayingMusic(lua_State* L) {
 int LuaCreatureObject::getPerformanceName(lua_State* L) {
 	ManagedReference<Facade*> facade = realObject->getActiveSession(SessionFacadeType::ENTERTAINING);
 
-	if (facade == nullptr) {
+	if (facade == NULL) {
 		lua_pushnil(L);
 		return 1;
 	}
 
 	ManagedReference<EntertainingSession*> session = dynamic_cast<EntertainingSession*> (facade.get());
 
-	if (session == nullptr) {
+	if (session == NULL) {
 		lua_pushnil(L);
 		return 1;
 	}
@@ -972,7 +910,7 @@ int LuaCreatureObject::awardExperience(lua_State* L) {
 int LuaCreatureObject::getOwner(lua_State* L) {
 	CreatureObject* retVal = realObject->getLinkedCreature().get();
 
-	if (retVal == nullptr)
+	if (retVal == NULL)
 		lua_pushnil(L);
 	else
 		lua_pushlightuserdata(L, retVal);
@@ -1107,24 +1045,4 @@ int LuaCreatureObject::getSkillMod(lua_State* L) {
 	lua_pushnumber(L, result);
 
 	return 1;
-}
-
-int LuaCreatureObject::getGender(lua_State* L) {
-
-	lua_pushnumber(L, realObject->getGender());
-
-	return 1;
-}
-
-int LuaCreatureObject::isRidingMount(lua_State* L) {
-	bool isMounted = realObject->isRidingMount();
-
-	lua_pushboolean(L, isMounted);
-
-	return 1;
-}
-
-int LuaCreatureObject::dismount(lua_State* L) {
-	realObject->dismount();
-	return 0;
 }

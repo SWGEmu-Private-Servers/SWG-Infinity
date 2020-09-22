@@ -1,9 +1,5 @@
 /*
  * ArmorObjectMenuComponent.cpp
- *
- *  Created on: 2/4/2013
- *      Author: bluree
- *		Credits: TA & Valk
  */
 
 #include "server/zone/objects/creature/CreatureObject.h"
@@ -23,10 +19,10 @@ void ArmorObjectMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject, 
 
 	ManagedReference<SceneObject*> parent = sceneObject->getParent().get();
 
-	if (parent != nullptr && parent->isCellObject()) {
+	if (parent != NULL && parent->isCellObject()) {
 		ManagedReference<SceneObject*> obj = parent->getParent().get();
 
-		if (obj != nullptr && obj->isBuildingObject()) {
+		if (obj != NULL && obj->isBuildingObject()) {
 			ManagedReference<BuildingObject*> buio = cast<BuildingObject*>(obj.get());
 
 			if (!buio->isOnAdminList(player))
@@ -39,8 +35,9 @@ void ArmorObjectMenuComponent::fillObjectMenuResponse(SceneObject* sceneObject, 
 			return;
 	}
 
-	String text = "Color Change";
-	menuResponse->addRadialMenuItem(81, 3, text);
+	if (!parent->isPlayerCreature()) {
+				menuResponse->addRadialMenuItem(81, 3, "Modify Color");	
+		}
 	
     WearableObjectMenuComponent::fillObjectMenuResponse(sceneObject, menuResponse, player); 	
 }
@@ -51,7 +48,7 @@ int ArmorObjectMenuComponent::handleObjectMenuSelect(SceneObject* sceneObject, C
 		
 		ManagedReference<SceneObject*> parent = sceneObject->getParent().get();
 	
-		if (parent == nullptr)
+		if (parent == NULL)
 			return 0;
 	
 		if (parent->isPlayerCreature()) {
@@ -62,7 +59,7 @@ int ArmorObjectMenuComponent::handleObjectMenuSelect(SceneObject* sceneObject, C
 		if (parent->isCellObject()) {
 			ManagedReference<SceneObject*> obj = parent->getParent().get();
 
-			if (obj != nullptr && obj->isBuildingObject()) {
+			if (obj != NULL && obj->isBuildingObject()) {
 				ManagedReference<BuildingObject*> buio = cast<BuildingObject*>(obj.get());
 
 				if (!buio->isOnAdminList(player))
@@ -77,25 +74,37 @@ int ArmorObjectMenuComponent::handleObjectMenuSelect(SceneObject* sceneObject, C
 
 		ZoneServer* server = player->getZoneServer();
 
-		if (server != nullptr) {		
+		if (server != NULL) 
+		{		
 
 		// The color index.
 		String appearanceFilename = sceneObject->getObjectTemplate()->getAppearanceFilename();
 		VectorMap<String, Reference<CustomizationVariable*> > variables;
 		AssetCustomizationManagerTemplate::instance()->getCustomizationVariables(appearanceFilename.hashCode(), variables, false);
 
-		// The Sui Box.
-		ManagedReference<SuiColorBox*> cbox = new SuiColorBox(player, SuiWindowType::COLOR_ARMOR);
-		cbox->setCallback(new ColorArmorSuiCallback(server));
-		cbox->setColorPalette(variables.elementAt(1).getKey()); // First one seems to be the frame of it? Skip to 2nd.
-		cbox->setUsingObject(sceneObject);
+		for(int i = 0; i < variables.size(); i++)
+		{
+			String varkey = variables.elementAt(i).getKey();
+				if (varkey.contains("color")) 
+				{
+					
+					// The Sui Box.
+					ManagedReference<SuiColorBox*> cbox = new SuiColorBox(player, SuiWindowType::COLOR_ARMOR);
+					cbox->setCallback(new ColorArmorSuiCallback(server));
+					cbox->setColorPalette(variables.elementAt(i).getKey()); // First one seems to be the frame of it? Skip to 2nd.
+					cbox->setUsingObject(sceneObject);
 
-		// Add to player.
-		ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
-		ghost->addSuiBox(cbox);
-		player->sendMessage(cbox->generateMessage());
+					// Make Color number the title of the SUI Box
+					cbox->setPromptTitle("Color " + String::valueOf(i + 1));
+
+					// Add to player.
+					ManagedReference<PlayerObject*> ghost = player->getPlayerObject();
+					ghost->addSuiBox(cbox);
+					player->sendMessage(cbox->generateMessage());
+					
+				}
 		}
-
+		}
 	}
 	
 	return WearableObjectMenuComponent::handleObjectMenuSelect(sceneObject, player, selectedID);

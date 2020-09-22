@@ -30,13 +30,13 @@ public:
 		try {
 			StringTokenizer tokenizer(arguments.toString());
 
-			Reference<SceneObject*> targetObject = nullptr;
+			Reference<SceneObject*> targetObject = NULL;
 			Reference<PlayerObject*> ghost = creature->getSlottedObject("ghost").castTo<PlayerObject*>();
 
 			if (!tokenizer.hasMoreTokens()) {
 				targetObject = server->getZoneServer()->getObject(creature->getTargetID());
 
-				if (targetObject != nullptr) {
+				if (targetObject != NULL) {
 					Locker crossLocker(targetObject, creature);
 
 					Vector3 worldPosition = targetObject->getWorldPosition();
@@ -55,7 +55,7 @@ public:
 			}
 
 			Zone* zone = creature->getZone();
-			if(zone == nullptr)
+			if(zone == NULL)
 				return GENERALERROR;
 
 			String objectFilter;
@@ -82,22 +82,33 @@ public:
 			for (int i = 0; i < objects.size(); ++i) {
 				ManagedReference<SceneObject*> object = cast<SceneObject*>(objects.get(i).get());
 
-				if (object == nullptr)
+				if (object == NULL)
 					continue;
 
 				if (object == creature)
 					continue;
 
+                ManagedReference<TangibleObject*> tano = cast<TangibleObject*>(objects.get(i).get());				
+				
 				results.deleteAll();
 
 				Locker crlocker(object, creature);
+				
+				if (tano != NULL)
+					Locker crlocker(tano, creature);
 
 				String name = object->getDisplayedName();
+
+				String serial = "";
+				
+				if (tano != NULL)
+					serial = tano->getSerialNumber();
+				
 
 				if (objectFilter == "-p") {
 					if (!object->isPlayerCreature())
 						continue;
-				} else if (!name.toLowerCase().contains(objectFilter.toLowerCase()))
+				} else if (!name.toLowerCase().contains(objectFilter.toLowerCase()) && (!serial.toLowerCase().contains(objectFilter.toLowerCase())))
 					continue;
 
 				results << name;

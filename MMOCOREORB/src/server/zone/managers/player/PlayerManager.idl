@@ -6,7 +6,6 @@ package server.zone.managers.player;
 
 import engine.log.Logger;
 import system.util.SortedVector;
-import system.util.VectorMap;
 import server.zone.ZoneProcessServer;
 include server.zone.packets.charcreation.ClientCreateCharacterCallback;
 import server.zone.objects.tangible.TangibleObject;
@@ -40,38 +39,14 @@ include server.zone.managers.player.JukeboxSong;
 include server.zone.managers.player.QuestInfo;
 include server.zone.objects.player.badges.Badge;
 include system.util.Vector;
+import system.util.VectorMap;
 include system.lang.ref.Reference;
 include server.zone.managers.player.XpBonusList;
 import server.zone.ZoneClientSession;
-import system.thread.Mutex;
-include engine.util.JSONSerializationType;
-import server.zone.objects.player.events.OnlinePlayerLogTask;
-import system.lang.Time;
-include server.zone.managers.player.PlayerNameIterator;
 
 @dirty
 class PlayerManager extends Observer implements Logger {
 	transient ZoneProcessServer processor;
-
-	@dereferenced
-	private transient Logger playerLogger;
-
-	private transient string playerLoggerFilename;
-
-	@dereferenced
-	protected transient Mutex playerLoggerMutex;
-	protected transient int playerLoggerLines = 0;
-
-	@dereferenced
-	protected transient Mutex onlinePlayerLogMutext;
-
-	@weakReference
-	protected transient OnlinePlayerLogTask onlinePlayerLogTask;
-	protected transient int onlinePlayerLogSum = 0;
-	protected transient boolean onlinePlayersLogOnSessionChange = false;
-
-	@dereferenced
-	protected transient Time lastOnlinePlayerLogMsg;
 
 	// Used for frog/gm buffs
 	protected int performanceBuff;
@@ -116,7 +91,7 @@ class PlayerManager extends Observer implements Logger {
 	@dereferenced
 	private transient OnlineZoneClientMap onlineZoneClientMap;
 
-	public native PlayerManager(ZoneServer zoneServer, ZoneProcessServer impl, boolean trackOnlineUsers);
+	public native PlayerManager(ZoneServer zoneServer, ZoneProcessServer impl);
 	public native void loadNameMap();
 
 	private native void loadLuaConfig();
@@ -148,10 +123,6 @@ class PlayerManager extends Observer implements Logger {
 
 	@local
 	public native boolean checkPlayerName(ClientCreateCharacterCallback callback);
-
-	public native string setFirstName(CreatureObject creature, final string newFirstName);
-
-	public native string setLastName(CreatureObject creature, final string newLastName, boolean skipVerify = false);
 
 	public native int notifyObserverEvent(unsigned int eventType, Observable observable, ManagedObject arg1, long arg2);
 
@@ -414,9 +385,7 @@ class PlayerManager extends Observer implements Logger {
 	public native void sendAdminFRSList(CreatureObject player);
 	public native void sendAdminList(CreatureObject player);
 
-    @dereferenced
-    @local
-	public native VectorMap<string, int> generateAdminList();
+	//public native VectorMap<UnicodeString, int> getPlayerList(CreatureObject player);
 
 	public native CraftingStation getNearbyCraftingStation(CreatureObject player, int type);
 
@@ -439,22 +408,6 @@ class PlayerManager extends Observer implements Logger {
 
 	public native void fixHAM(CreatureObject player);
 	public native void fixBuffSkillMods(CreatureObject player);
-
-	@local
-	@dereferenced
-	public native JSONSerializationType basePlayerLogEntry(CreatureObject creature, PlayerObject ghost);
-
-	@local
-	public native void writePlayerLogEntry(@dereferenced JSONSerializationType logEntry);
-
-	@local
-	public native void writePlayerLog(CreatureObject creature, PlayerObject ghost, final string msg, int logLevelType);
-
-	@local
-	public native void writePlayerLog(PlayerObject ghost, final string msg, int logLevelType);
-
-	@local
-	public native void writePlayerLog(CreatureObject creature, final string msg, int logLevelType);
 
 	public native int getPlayerQuestID(final string name);
 	public native string getPlayerQuestParent(int questID);
@@ -504,6 +457,8 @@ class PlayerManager extends Observer implements Logger {
 	public native boolean shouldDeleteCharacter(unsigned long characterID, int galaxyID);
 
 	public native boolean doBurstRun(CreatureObject player, float hamModifier, float cooldownModifier);
+	public native boolean doRocketBoots(CreatureObject player, float hamModifier, float cooldownModifier);
+	public native boolean doDash(CreatureObject player, float hamModifier, float cooldownModifier);
 
 	/**
 	 * Enhances the target character with doc/ent buffs
@@ -511,6 +466,11 @@ class PlayerManager extends Observer implements Logger {
 	 * @post { player is locked }
 	 */
 	public native void enhanceCharacter(CreatureObject player);
+
+	public native void gmenhanceCharacter(CreatureObject player, int buffAmount);
+
+	public native void regainEnhanceCharacter(CreatureObject player, int buffAmount, int duration);
+
 
 	/**
 	 * Creates and adds buff to Player
@@ -564,30 +524,21 @@ class PlayerManager extends Observer implements Logger {
 
 	@local
 	@arg1preLocked
+	public native int calculateAttackers(CreatureObject victim, CreatureObject killer, ThreatMap threatMap);
+
+	@local
+	public native int getRank(CreatureObject player);
+
+	@local
+	public native void awardPvpProgress(TangibleObject killer, CreatureObject destructedObject, boolean performedDeathBlow);
+
+	@local
+	public native boolean isSameFaction(CreatureObject player1, CreatureObject player2);
+
+	@local
+	@arg1preLocked
 	public native void doPvpDeathRatingUpdate(CreatureObject player, ThreatMap threatMap);
 
 	private native void loadXpBonusList();
 	public native float getSpeciesXpModifier(final string species, final string xpType);
-
-	public native void unlockFRSForTesting(CreatureObject player, int councilType);
-
-	@local
-	@dereferenced
-	public native Vector<unsigned long> getOnlinePlayerList();
-
-	@local
-	public native void logOnlinePlayers(boolean onlyWho);
-
-	@local
-	public native boolean rescheduleOnlinePlayerLogTask(int logSeconds);
-
-	public void updateOnlinePlayers() {
-		// Update just the log/who.json file based on Core3.LogOnlineOnSessionChange (default: true)
-		logOnlinePlayers(!onlinePlayersLogOnSessionChange);
-	}
-
-	public native void stopOnlinePlayerLogTask();
-
-	@local
-	public native void iteratePlayerNames(@dereferenced final PlayerNameIterator iterator);
 }
