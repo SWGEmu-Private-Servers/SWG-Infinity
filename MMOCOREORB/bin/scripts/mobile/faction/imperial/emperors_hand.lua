@@ -1,7 +1,7 @@
 emperors_hand = Creature:new {
 	objectName = "@mob/creature_names:emperors_hand",
 	socialGroup = "imperial",
-	faction = "imperial",
+	faction = "",
 	level = 252,
 	chanceHit = 23.5,
 	damageMin = 1395,
@@ -40,10 +40,17 @@ emperors_hand = Creature:new {
 				{group = "pistols", chance = 1000000},
 				{group = "melee_weapons", chance = 1500000},
 				{group = "armor_attachments", chance = 1100000},
-				{group = "clothing_attachments", chance = 1100000},
+				{group = "jedi_clothing_attachments", chance = 1100000},
 				{group = "carbines", chance = 1000000}
-			}
-		}
+			},
+			lootChance = 7500000,
+		},
+		{
+		groups = {
+			{group = "emporers_hand", chance = 10000000},
+		},
+		lootChance = 500000,
+	},
 	},
 	weapons = {"dark_jedi_weapons_gen3"},
 	conversationTemplate = "",

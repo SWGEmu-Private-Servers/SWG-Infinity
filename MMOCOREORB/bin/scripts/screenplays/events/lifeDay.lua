@@ -41,7 +41,7 @@ lifeDayScreenplay = ScreenPlay:new {
 registerScreenPlay("lifeDayScreenplay", true)
 
 function lifeDayScreenplay:start()
-	if getFormattedTime():find("Dec") ~= nil then
+	if (isZoneEnabled("naboo")) then
 		writeStringSharedMemory("lifeDayScreenplayName", "lifeDay" .. tostring(os.date('%Y')))
 		self:spawnMobiles()
 	end

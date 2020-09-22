@@ -43,40 +43,39 @@
 
 FlameCone2Command = {
         name = "flamecone2",
-	damageMultiplier = 6,
-	speedMultiplier = 4,
+	damageMultiplier = 7,
+	speedMultiplier = 3,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 0.5,
 	mindCostMultiplier = 0.5,
 	accuracyBonus = 0,
-	
+
 	coneAngle = 45,
 	coneAction = true,
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	animation = "fire_flame_thrower_cone_2", 
+	animation = "fire_flame_thrower_cone_2",
 	animType = GENERATE_INTENSITY,
 	combatSpam = "flamecone2",
 	dotEffects = {
-	  DotEffect( 
-		ONFIRE, 
+	  DotEffect(
+		ONFIRE,
 		{"resistance_fire", "fire_resist"},
 		HEALTH,
 		true,
 		0,
 		100,
-		100, 
+		100,
 		60,
 		10,
 		2
 	  )
 	},
-	
+
 	weaponType = SPECIALHEAVYWEAPON,
-	
-	range = 16
+
+	range = 26
 }
 
 AddCommand(FlameCone2Command)
-

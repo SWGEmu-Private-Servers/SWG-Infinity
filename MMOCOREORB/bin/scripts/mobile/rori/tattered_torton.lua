@@ -17,7 +17,7 @@ tattered_torton = Creature:new {
 	hideAmount = 1000,
 	boneType = "bone_mammal",
 	boneAmount = 1000,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ tattered_torton = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/torton_hue.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	scale = 0.85,
 	lootGroups = {},
 	weapons = {},

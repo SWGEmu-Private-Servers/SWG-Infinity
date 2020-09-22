@@ -48,19 +48,19 @@ object_installation_turret_turret_tower_large = object_installation_turret_share
 	zoneComponent = "TurretZoneComponent",
 	dataObjectComponent = "TurretDataComponent",
 	-- Damagetypes in WeaponObject
-	vulnerability = BLAST + LIGHTSABER,
+	vulnerability = BLAST,
 	-- LIGHT, MEDIUM, HEAVY
 	rating = HEAVY,
 
-	kinetic = 90,
+	kinetic = 75,
 	energy = 95,
-	electricity = 90,
+	electricity = 75,
 	stun = 100,
 	blast = -1,
-	heat = 90,
-	cold = 90,
-	acid = 90,
-	lightSaber = -1,
+	heat = 75,
+	cold = 75,
+	acid = 75,
+	lightSaber = 75,
 	chanceHit = 4,
 	weapon = "object/weapon/ranged/turret/turret_tower_large.iff",
 

@@ -4,7 +4,7 @@ fbase_rebel_elite_heavy_trooper_hard = Creature:new {
 	randomNameTag = true,
 	socialGroup = "rebel",
 	faction = "rebel",
-	level = 180,
+	level = 250,
 	chanceHit = 9.0,
 	damageMin = 1045,
 	damageMax = 1800,
@@ -12,7 +12,7 @@ fbase_rebel_elite_heavy_trooper_hard = Creature:new {
 	baseHAM = 119000,
 	baseHAMmax = 165000,
 	armor = 2,
-	resists = {140,30,30,150,150,150,150,-1,-1},
+	resists = {140,125,115,150,150,150,150,125,-1},
 	meatType = "",
 	meatAmount = 0,
 	hideType = "",
@@ -35,16 +35,22 @@ fbase_rebel_elite_heavy_trooper_hard = Creature:new {
 		{
 			groups = {
 				{group = "color_crystals", chance = 300000},
-				{group = "junk", chance = 6000000},
 				{group = "holocron_dark", chance = 150000},
 				{group = "holocron_light", chance = 150000},
 				{group = "weapons_all", chance = 1050000},
 				{group = "armor_all", chance = 1050000},
-				{group = "clothing_attachments", chance = 150000},
-				{group = "armor_attachments", chance = 150000},
+				{group = "clothing_attachments", chance = 3150000},
+				{group = "armor_attachments", chance = 3150000},
 				{group = "wearables_all", chance = 1000000}
-			}
-		}
+			},
+		},
+		{
+			groups = { -- Trooper
+				{group = "armor_attachments", chance = 9250000},
+				{group = "power_crystals", chance = 750000},
+			},
+			lootChance = 1500000,		
+		},
 	},
 	weapons = {"rebel_weapons_medium"},
 	conversationTemplate = "",

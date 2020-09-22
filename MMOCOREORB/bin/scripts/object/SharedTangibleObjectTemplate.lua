@@ -98,6 +98,8 @@ SharedTangibleObjectTemplate = SharedObjectTemplate:new {
 				"object/creature/player/wookiee_male.iff",
 				"object/creature/player/wookiee_female.iff",
 				"object/creature/player/zabrak_male.iff",
+				 "object/creature/player/chiss_male.iff",
+ 				 "object/creature/player/chiss_female.iff",
 				"object/creature/player/zabrak_female.iff" },
 	
 	level = 10,

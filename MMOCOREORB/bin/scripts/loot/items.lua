@@ -12,6 +12,9 @@ JUNKCORSEC = 256
 
 includeFile("items/attachment_armor.lua")
 includeFile("items/attachment_clothing.lua")
+--Custom
+includeFile("items/attachment_jedi_clothing.lua")
+--Custom
 includeFile("items/balanced_feed_mechanism.lua")
 includeFile("items/blacksun_razor_knuckler_schematic.lua")
 includeFile("items/blank_canvas.lua")
@@ -44,6 +47,7 @@ includeFile("items/pistol_de10.lua")
 includeFile("items/treasure_map.lua")
 includeFile("items/viewscreen_printer.lua")
 includeFile("items/viewscreen_reader.lua")
+includeFile("items/custom/chiss_backpack.lua")
 
 --armor sub-folder
 includeFile("items/armor/bh_armor_belt.lua")
@@ -182,44 +186,6 @@ includeFile("items/coa/coa_reb_3.lua")
 includeFile("items/coa/coa_reb_4.lua")
 includeFile("items/coa/coa_rebel_message.lua")
 
--- component loot sub-folder
-includeFile("items/component_loot/biologic_effect_controller_advanced.lua")
-includeFile("items/component_loot/biologic_effect_controller.lua")
-includeFile("items/component_loot/blaster_pistol_barrel_advanced.lua")
-includeFile("items/component_loot/blaster_pistol_barrel.lua")
-includeFile("items/component_loot/blaster_power_handler_advanced.lua")
-includeFile("items/component_loot/blaster_power_handler.lua")
-includeFile("items/component_loot/blaster_rifle_barrel_advanced.lua")
-includeFile("items/component_loot/blaster_rifle_barrel.lua")
-includeFile("items/component_loot/dispersal_mechanism_advanced.lua")
-includeFile("items/component_loot/dispersal_mechanism.lua")
-includeFile("items/component_loot/infection_amplifier_advanced.lua")
-includeFile("items/component_loot/infection_amplifier.lua")
-includeFile("items/component_loot/liquid_delivery_suspension_advanced.lua")
-includeFile("items/component_loot/liquid_delivery_suspension.lua")
-includeFile("items/component_loot/projectile_feed_mechanism_advanced.lua")
-includeFile("items/component_loot/projectile_feed_mechanism.lua")
-includeFile("items/component_loot/projectile_pistol_barrel_advanced.lua")
-includeFile("items/component_loot/projectile_pistol_barrel.lua")
-includeFile("items/component_loot/projectile_rifle_barrel_advanced.lua")
-includeFile("items/component_loot/projectile_rifle_barrel.lua")
-includeFile("items/component_loot/reinforcement_core_advanced.lua")
-includeFile("items/component_loot/reinforcement_core.lua")
-includeFile("items/component_loot/release_mechanism_duration_advanced.lua")
-includeFile("items/component_loot/release_mechanism_duration.lua")
-includeFile("items/component_loot/resilience_compound_advanced.lua")
-includeFile("items/component_loot/resilience_compound.lua")
-includeFile("items/component_loot/scope_weapon_advanced.lua")
-includeFile("items/component_loot/scope_weapon.lua")
-includeFile("items/component_loot/solid_delivery_shell_advanced.lua")
-includeFile("items/component_loot/solid_delivery_shell.lua")
-includeFile("items/component_loot/stock_advanced.lua")
-includeFile("items/component_loot/stock.lua")
-includeFile("items/component_loot/sword_core_advanced.lua")
-includeFile("items/component_loot/sword_core.lua")
-includeFile("items/component_loot/vibro_unit_advanced.lua")
-includeFile("items/component_loot/vibro_unit.lua")
-
 --corellian_corvette sub-folder
 includeFile("items/corellian_corvette/shirt_s03_rebel.lua")
 includeFile("items/corellian_corvette/armor_marine_chest_plate_rebel.lua")
@@ -284,6 +250,7 @@ includeFile("items/death_watch_bunker/mandalorian_rebreather.lua")
 includeFile("items/death_watch_bunker/mandalorian_wine_schematic.lua")
 includeFile("items/death_watch_bunker/pistol_de10_schematic.lua")
 includeFile("items/death_watch_bunker/protective_liquid_coating.lua")
+includeFile("items/death_watch_bunker/armor_segment_mandalorian_schematic.lua")
 
 --forage sub-folder
 includeFile("items/forage/foraged_alever_tweth_pek.lua")
@@ -346,6 +313,7 @@ includeFile("items/geonosian_lab/geo_relic_tech_kit.lua")
 includeFile("items/geonosian_lab/geo_solidifying_agent.lua")
 includeFile("items/geonosian_lab/geo_sonic_blaster.lua")
 includeFile("items/geonosian_lab/geo_sonic_blaster_schematic.lua")
+includeFile("items/geonosian_lab/geo_carbine_schematic.lua")
 includeFile("items/geonosian_lab/geo_spider_fang.lua")
 includeFile("items/geonosian_lab/geo_spider_venom.lua")
 includeFile("items/geonosian_lab/geo_spider_venom_base.lua")
@@ -387,6 +355,7 @@ includeFile("items/junk/expired_ticket.lua")
 includeFile("items/junk/hyperdrive_part.lua")
 includeFile("items/junk/ledger.lua")
 includeFile("items/junk/locked_briefcase.lua")
+-- includeFile("items/junk/mysterious_container.lua")  .iff unavailable
 includeFile("items/junk/locked_container.lua")
 includeFile("items/junk/loudspeaker.lua")
 includeFile("items/junk/magic_eight_ball.lua")
@@ -480,6 +449,9 @@ includeFile("items/loot_schematic/tatooine_tapestry_schematic.lua")
 includeFile("items/loot_schematic/technical_console_schematic_1.lua")
 includeFile("items/loot_schematic/technical_console_schematic_2.lua")
 includeFile("items/loot_schematic/throw_pillow_schematic.lua")
+includeFile("items/loot_schematic/cortosis_grenade_loot_schematic.lua")
+
+
 
 --npc sub-folder
 includeFile("items/npc/aakuan_belt.lua")
@@ -827,6 +799,7 @@ includeFile("items/weapon/nyax_sword.lua")
 includeFile("items/weapon/one_handed_sword.lua")
 includeFile("items/weapon/one_handed_curved_sword.lua")
 includeFile("items/weapon/one_handed_ryyk_blade.lua")
+includeFile("items/weapon/sword_mandalorian.lua")
 includeFile("items/weapon/pistol_cdef.lua")
 includeFile("items/weapon/pistol_d18.lua")
 includeFile("items/weapon/pistol_dh17.lua")
@@ -842,6 +815,7 @@ includeFile("items/weapon/pistol_scout_trooper.lua")
 includeFile("items/weapon/pistol_sr_combat.lua")
 includeFile("items/weapon/pistol_striker.lua")
 includeFile("items/weapon/pistol_tangle.lua")
+includeFile("items/weapon/pistol_mandalorian.lua")
 includeFile("items/weapon/polearm_lance.lua")
 includeFile("items/weapon/polearm_lance_vibrolance.lua")
 includeFile("items/weapon/polearm_staff_janta.lua")
@@ -868,6 +842,8 @@ includeFile("items/weapon/two_handed_sword_battleaxe.lua")
 includeFile("items/weapon/two_handed_sword_cleaver.lua")
 includeFile("items/weapon/two_handed_sword_katana.lua")
 includeFile("items/weapon/two_handed_sword_maul.lua")
+
+includeFile("items/weapon/lightsaber_mandalorian.lua")
 
 --wearables sub folder
 includeFile("items/wearables/apron/apron_chef_s01.lua")
@@ -1200,3 +1176,232 @@ includeFile("items/wearables/wookiee/wke_skirt_s01.lua")
 includeFile("items/wearables/wookiee/wke_skirt_s02.lua")
 includeFile("items/wearables/wookiee/wke_skirt_s03.lua")
 includeFile("items/wearables/wookiee/wke_skirt_s04.lua")
+
+-- named crystals
+includeFile("items/force_crystal_mauls_vengence.lua")
+includeFile("items/force_crystal_qui_gons_devotion.lua")
+includeFile("items/force_crystal_baass_wisdom.lua")
+includeFile("items/force_crystal_banes_heart.lua")
+includeFile("items/force_crystal_bnars_sacrifice.lua")
+includeFile("items/force_crystal_bondaras_folly.lua")
+includeFile("items/force_crystal_dawn_of_dagobah.lua")
+includeFile("items/force_crystal_gallias_intuition.lua")
+includeFile("items/force_crystal_horns_future.lua")
+includeFile("items/force_crystal_kenobis_legacy.lua")
+includeFile("items/force_crystal_kits_ferocity.lua")
+includeFile("items/force_crystal_kuns_blood.lua")
+includeFile("items/force_crystal_mundis_response.lua")
+includeFile("items/force_crystal_prowess_of_plo_koon.lua")
+includeFile("items/force_crystal_quintessence_of_the_force.lua")
+includeFile("items/force_crystal_strength_of_luminaria.lua")
+includeFile("items/force_crystal_sunriders_destiny.lua")
+includeFile("items/force_crystal_ulics_redemption.lua")
+includeFile("items/force_crystal_windus_guile.lua")
+includeFile("items/force_crystal_henriettes_might.lua")
+includeFile("items/force_crystal_wickeds_burn.lua")
+includeFile("items/force_crystal_dilly_dillys_damnation.lua")
+includeFile("items/force_crystal_infinity_white.lua")
+includeFile("items/force_crystal_black.lua")
+includeFile("items/force_crystal_orange.lua")
+
+-- custom
+includeFile("items/npc/meatlump_vibro_unit.lua")
+includeFile("items/npc/meatlump_reinforcement_core.lua")
+includeFile("items/npc/meatlump_power_handler.lua")
+
+-- smuggler sub folder
+-- includeFile("items/smuggler/prototype_liquid_suspension.lua")
+-- includeFile("items/smuggler/prototype_blaster_barrel.lua")
+-- includeFile("items/smuggler/prototype_blaster_power_handler.lua")
+-- includeFile("items/smuggler/prototype_composite_shell.lua")
+-- includeFile("items/smuggler/prototype_delivery_shell.lua")
+-- includeFile("items/smuggler/prototype_projectile_barrel.lua")
+-- includeFile("items/smuggler/prototype_projectile_rifle_barrel.lua")
+-- includeFile("items/smuggler/prototype_release_mechanism.lua")
+-- includeFile("items/smuggler/prototype_rifle_blaster_barrel.lua")
+-- includeFile("items/smuggler/prototype_scope.lua")
+-- includeFile("items/smuggler/prototype_stock.lua")
+-- includeFile("items/smuggler/prototype_ubese_shell.lua")
+-- includeFile("items/smuggler/recovered_artifact.lua")
+
+------------------------------Boogles Custom------------------------------
+--Wearables--
+includeFile("items/wearables/boogles_wearables_geo/ring/beast_mastery_ring.lua")
+--Wearables--
+--Geo-Cave Stuff--
+includeFile("items/geonosian_lab/boogles_geo_items/experimental_vibro_motor.lua")
+includeFile("items/geonosian_lab/boogles_geo_items/epic_geo_power_cube_green.lua")
+includeFile("items/geonosian_lab/boogles_geo_items/epic_geo_power_cube_white.lua")
+includeFile("items/geonosian_lab/boogles_geo_items/epic_geo_power_cube_red.lua")
+includeFile("items/geonosian_lab/boogles_geo_items/epic_geo_power_cube_yellow.lua")
+includeFile("items/geonosian_lab/boogles_geo_items/experimented_rancor_hides.lua")
+includeFile("items/geonosian_lab/boogles_geo_items/experimented_rancor_padded_armor_segment.lua")
+includeFile("items/geonosian_lab/boogles_geo_items/experimented_rancor_tooth.lua")
+--Geo-Cave Stuff--
+--Weapons--
+--Weapons--
+------------------------------Boogles Custom------------------------------
+
+------------------------------Halloween-----------------------------------
+includeFile("items/halloween/enhanced_spider_bones.lua")
+includeFile("items/halloween/experimental_spider_bones.lua")
+
+includeFile("items/halloween/enhanced_spider_blood.lua")
+includeFile("items/halloween/experimental_spider_blood.lua")
+
+includeFile("items/halloween/enhanced_spider_venom.lua")
+includeFile("items/halloween/experimental_spider_venom.lua")
+
+includeFile("items/halloween/enhanced_spider_fang.lua")
+includeFile("items/halloween/experimental_spider_fang.lua")
+------------------------------Halloween-----------------------------------
+
+includeFile("items/npc/ns_bicep_r_s01.lua")
+
+includeFile("items/loot_schematic/ns_hat_s01_schematic.lua")
+includeFile("items/loot_schematic/ns_hat_s02_schematic.lua")
+includeFile("items/loot_schematic/ns_hat_s03_schematic.lua")
+
+includeFile("items/loot_schematic/ns_shirt_s01_schematic.lua")
+includeFile("items/loot_schematic/ns_shirt_s02_schematic.lua")
+includeFile("items/loot_schematic/ns_shirt_s03_schematic.lua")
+
+includeFile("items/loot_schematic/ns_boots_schematic.lua")
+
+includeFile("items/loot_schematic/ns_dress_schematic.lua")
+
+includeFile("items/loot_schematic/ns_pants_s01_schematic.lua")
+includeFile("items/loot_schematic/ns_pants_s02_schematic.lua")
+
+includeFile("items/loot_schematic/stap_speeder_schematic.lua")
+includeFile("items/loot_schematic/flare_s_swoop_crafted_schematic.lua")
+includeFile("items/loot_schematic/landspeeder_ab1_schematic.lua")
+includeFile("items/loot_schematic/sith_speeder_schematic.lua")
+includeFile("items/loot_schematic/geo_speeder_schematic.lua")
+
+-- NGE Houses
+includeFile("items/loot_schematic/bespin_house_loot_schematic.lua")
+includeFile("items/loot_schematic/musty_house_loot_schematic.lua")
+includeFile("items/loot_schematic/vehicle_house_loot_schematic.lua")
+
+-- NGE Robes
+includeFile("items/loot_schematic/robe_s32_loot_schematic.lua")
+includeFile("items/loot_schematic/robe_s32_h1_loot_schematic.lua")
+includeFile("items/loot_schematic/robe_s33_loot_schematic.lua")
+includeFile("items/loot_schematic/robe_s33_h1_loot_schematic.lua")
+includeFile("items/loot_schematic/exar_cultist_hood_down_loot_schematic.lua")
+includeFile("items/loot_schematic/exar_cultist_hood_up_loot_schematic.lua")
+
+-- Veteran Rewards
+
+-- 90 days
+includeFile("items/veteran_rewards/data_terminal_s1.lua")
+includeFile("items/veteran_rewards/data_terminal_s2.lua")
+includeFile("items/veteran_rewards/data_terminal_s3.lua")
+includeFile("items/veteran_rewards/data_terminal_s4.lua")
+includeFile("items/veteran_rewards/frn_vet_protocol_droid_toy.lua")
+includeFile("items/veteran_rewards/frn_vet_r2_toy.lua")
+
+-- 180 days
+includeFile("items/veteran_rewards/frn_couch_falcon_corner_s01.lua")
+includeFile("items/veteran_rewards/frn_couch_falcon_section_s01.lua")
+includeFile("items/veteran_rewards/frn_vet_tie_fighter_toy.lua")
+includeFile("items/veteran_rewards/frn_vet_x_wing_toy.lua")
+
+-- 270 days
+includeFile("items/veteran_rewards/goggles_s01.lua")
+includeFile("items/veteran_rewards/goggles_s02.lua")
+includeFile("items/veteran_rewards/goggles_s03.lua")
+includeFile("items/veteran_rewards/goggles_s04.lua")
+includeFile("items/veteran_rewards/goggles_s05.lua")
+includeFile("items/veteran_rewards/goggles_s06.lua")
+includeFile("items/veteran_rewards/frn_vet_darth_vader_toy.lua")
+
+-- 360 days
+includeFile("items/veteran_rewards/frn_tech_console_sectional_a.lua")
+includeFile("items/veteran_rewards/frn_tech_console_sectional_b.lua")
+includeFile("items/veteran_rewards/frn_tech_console_sectional_c.lua")
+includeFile("items/veteran_rewards/frn_tech_console_sectional_d.lua")
+includeFile("items/veteran_rewards/frn_vet_jabba_toy.lua")
+includeFile("items/veteran_rewards/frn_vet_stormtrooper_toy.lua")
+
+-- 450 days
+includeFile("items/veteran_rewards/camp_spit_s2.lua")
+includeFile("items/veteran_rewards/camp_spit_s3.lua")
+includeFile("items/veteran_rewards/frn_tato_vase_style_01.lua")
+includeFile("items/veteran_rewards/frn_tato_vase_style_02.lua")
+includeFile("items/veteran_rewards/foodcart.lua")
+includeFile("items/veteran_rewards/frn_bench_generic.lua")
+
+-- 540 days
+includeFile("items/veteran_rewards/professor_desk.lua")
+includeFile("items/veteran_rewards/diagnostic_screen.lua")
+includeFile("items/veteran_rewards/frn_all_plant_potted_lg_s2.lua")
+includeFile("items/veteran_rewards/frn_all_plant_potted_lg_s3.lua")
+includeFile("items/veteran_rewards/frn_all_plant_potted_lg_s4.lua")
+
+-- 630 days
+includeFile("items/veteran_rewards/bar_counter_s1.lua")
+includeFile("items/veteran_rewards/bar_piece_curve_s1.lua")
+includeFile("items/veteran_rewards/bar_piece_curve_s2.lua")
+includeFile("items/veteran_rewards/bar_piece_straight_s1.lua")
+includeFile("items/veteran_rewards/bar_piece_straight_s2.lua")
+
+-- 720 days
+includeFile("items/veteran_rewards/frn_all_table_s01.lua")
+includeFile("items/veteran_rewards/frn_all_table_s02.lua")
+includeFile("items/veteran_rewards/frn_all_table_s03.lua")
+includeFile("items/veteran_rewards/frn_tatt_chair_cantina_seat_2.lua")
+includeFile("items/veteran_rewards/frn_tato_cafe_parasol.lua")
+
+-- 810 days
+includeFile("items/veteran_rewards/rug_oval_m_s02.lua")
+includeFile("items/veteran_rewards/rug_oval_sml_s01.lua")
+includeFile("items/veteran_rewards/rug_rect_m_s01.lua")
+includeFile("items/veteran_rewards/rug_rect_sml_s01.lua")
+includeFile("items/veteran_rewards/rug_rnd_m_s01.lua")
+includeFile("items/veteran_rewards/rug_rnd_sml_s01.lua")
+
+-- 900 days
+includeFile("items/veteran_rewards/loot_skull_bith.lua")
+includeFile("items/veteran_rewards/loot_skull_human.lua")
+includeFile("items/veteran_rewards/loot_skull_ithorian.lua")
+includeFile("items/veteran_rewards/loot_skull_thune.lua")
+includeFile("items/veteran_rewards/loot_skull_voritor.lua")
+includeFile("items/veteran_rewards/helmet_s06.lua")
+
+-- 990 days
+includeFile("items/veteran_rewards/rug_rect_lg_s01.lua")
+includeFile("items/veteran_rewards/rug_rect_lg_s02.lua")
+includeFile("items/veteran_rewards/rug_oval_lg_s01.lua")
+includeFile("items/veteran_rewards/rug_rnd_lg_s01.lua")
+includeFile("items/veteran_rewards/frn_all_desk_map_table.lua")
+includeFile("items/veteran_rewards/armor_nightsister_bicep_r_s01.lua")
+
+-- 1080 days
+includeFile("items/veteran_rewards/painting_01.lua")
+includeFile("items/veteran_rewards/painting_02.lua")
+includeFile("items/veteran_rewards/painting_03.lua")
+includeFile("items/veteran_rewards/painting_04.lua")
+includeFile("items/veteran_rewards/painting_05.lua")
+includeFile("items/veteran_rewards/painting_06.lua")
+includeFile("items/veteran_rewards/painting_07.lua")
+includeFile("items/veteran_rewards/painting_08.lua")
+includeFile("items/veteran_rewards/painting_09.lua")
+
+-- May fourth
+
+includeFile("items/infinity/may_fourth/hssiss_lizard_venom.lua")
+includeFile("items/infinity/may_fourth/ork_slug_blood.lua")
+
+-- Robes
+
+includeFile("items/custom/robe_jedi_dark_s02.lua")
+includeFile("items/custom/robe_jedi_dark_s03.lua")
+includeFile("items/custom/robe_jedi_dark_s04.lua")
+includeFile("items/custom/robe_jedi_dark_s05.lua")
+
+includeFile("items/custom/robe_jedi_light_s02.lua")
+includeFile("items/custom/robe_jedi_light_s03.lua")
+includeFile("items/custom/robe_jedi_light_s04.lua")
+includeFile("items/custom/robe_jedi_light_s05.lua")

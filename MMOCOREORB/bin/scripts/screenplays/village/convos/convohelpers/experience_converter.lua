@@ -21,7 +21,8 @@ ExperienceConverter = ScreenPlay:new {
 			{ "combat_rangedspecialize_heavy", 30 },
 			{ "combat_rangedspecialize_pistol", 30 },
 			{ "combat_rangedspecialize_rifle", 30 },
-			{ "squadleader", 90 }
+			{ "squadleader", 90 },
+			{ "jedi_general", 6}
 		},
 		senses = {
 			{ "bio_engineer_dna_harvesting", 3 },
@@ -38,6 +39,7 @@ ExperienceConverter = ScreenPlay:new {
 			{ "scout", 8 },
 			{ "slicing", 3 },
 			{ "trapping", 25 },
+			{ "jedi_general", 12}
 		},
 		reflex = {
 			{ "bountyhunter", 5 },
@@ -50,19 +52,21 @@ ExperienceConverter = ScreenPlay:new {
 			{ "combat_rangedspecialize_heavy", 30 },
 			{ "combat_rangedspecialize_pistol", 30 },
 			{ "combat_rangedspecialize_rifle", 30 },
-			{ "squadleader", 90 }
+			{ "squadleader", 90 },
+			{ "jedi_general", 6}
 		},
 		crafting = {
-			{ "crafting_bio_engineer_creature", 4 },
-			{ "crafting_clothing_armor", 5 },
-			{ "crafting_clothing_general", 5 },
-			{ "crafting_droid_general", 5 },
-			{ "crafting_food_general", 5 },
-			{ "crafting_general", 8 },
-			{ "crafting_medicine_general", 5 },
-			{ "crafting_spice", 5 },
-			{ "crafting_structure_general", 35 },
-			{ "crafting_weapons_general", 5 }
+			{ "crafting_bio_engineer_creature", 1 },
+			{ "crafting_clothing_armor", 1.25 },
+			{ "crafting_clothing_general", 1.25 },
+			{ "crafting_droid_general", 1.25 },
+			{ "crafting_food_general", 1.25 },
+			{ "crafting_general", 1.25 },
+			{ "crafting_medicine_general", 1.25 },
+			{ "crafting_spice", 1.25 },
+--			{ "crafting_structure_general", 10.5 },
+			{ "crafting_weapons_general", 1.25 },
+			{ "jedi_general", 12}
 		}
 	}
 }
@@ -131,7 +135,6 @@ function ExperienceConverter:sendConversionSUI(pPlayer, pNpc, experienceType)
 	sui.setTargetNetworkId(SceneObject(pNpc):getObjectID())
 	sui.setTitle("@quest/force_sensitive/utils:xp_transfer_prompt")
 	sui.setPrompt("Select the experience you wish to convert to " .. getStringId("@exp_n:fs_" .. experienceType) .. ".")
-	sui.setForceCloseDistance(10)
 
 	for i = 1, #xpList, 1 do
 		sui.add(getStringId("@exp_n:" .. xpList[i]), xpList[i])
@@ -221,7 +224,6 @@ function ExperienceConverter:convertXpTypeCallback(pPlayer, pSui, eventIndex, ar
 	sui.setConversionFromRatio(1)
 	sui.setConversionToRatio(1)
 	sui.setWindowType(SuiWindowType.FS_EXP_CONVERT)
-	sui.setForceCloseDistance(10)
 
 	sui.sendTo(pPlayer)
 end

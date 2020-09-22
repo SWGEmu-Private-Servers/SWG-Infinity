@@ -17,7 +17,7 @@ kimogila_dwarf = Creature:new {
 	hideAmount = 1000,
 	boneType = "",
 	boneAmount = 0,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 20,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ kimogila_dwarf = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/kimogila_hue.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	scale = 0.8,
 	lootGroups = {
 	 {

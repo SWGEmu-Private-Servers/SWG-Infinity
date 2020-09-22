@@ -157,7 +157,7 @@ knightTrialQuests = {
 		trialName = "stintaril_prowler",
 		trialType = TRIAL_HUNT,
 		huntTarget = "stintaril_prowler",
-		huntGoal = 8
+		huntGoal = 3
 	},
 	{
 		trialName = "blurrg_raptor",
@@ -169,7 +169,7 @@ knightTrialQuests = {
 		trialName = "enraged_kimogila",
 		trialType = TRIAL_HUNT,
 		huntTarget = "enraged_kimogila",
-		huntGoal = 3
+		huntGoal = 2
 	},
 	{
 		trialName = "peko_peko_albatross",

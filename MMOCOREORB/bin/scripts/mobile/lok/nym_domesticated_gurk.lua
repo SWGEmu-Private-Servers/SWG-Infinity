@@ -17,7 +17,7 @@ nym_domesticated_gurk = Creature:new {
 	hideAmount = 225,
 	boneType = "bone_mammal",
 	boneAmount = 250,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ nym_domesticated_gurk = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/gurk_hue.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	scale = 0.8,
 	lootGroups = {},
 	weapons = {},

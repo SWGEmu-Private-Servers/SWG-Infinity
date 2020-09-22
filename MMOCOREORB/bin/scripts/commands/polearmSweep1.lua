@@ -44,7 +44,7 @@
 PolearmSweep1Command = {
 	name = "polearmsweep1",
 
-	damageMultiplier = 2.0,
+	damageMultiplier = 2.75,
 	speedMultiplier = 1.5,
 	accuracyBonus = 10,
 	
@@ -57,7 +57,7 @@ PolearmSweep1Command = {
 		KNOCKDOWN_EFFECT, 
 		{ "knockdownRecovery", "lastKnockdown" }, 
 		{ "knockdown_defense" }, 
-		{},
+		{}, 
 		100, 
 		0, 
 		0 

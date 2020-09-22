@@ -17,7 +17,7 @@ carrion_spat = Creature:new {
 	hideAmount = 0,
 	boneType = "bone_avian",
 	boneAmount = 180,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ carrion_spat = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/carrion_spat_hue.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	controlDeviceTemplate = "object/intangible/pet/carrion_spat_hue.iff",
 	lootGroups = {},
 	weapons = {},

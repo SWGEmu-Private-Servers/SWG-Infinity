@@ -17,7 +17,7 @@ giant_carrion_spat = Creature:new {
 	hideAmount = 0,
 	boneType = "bone_avian",
 	boneAmount = 295,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -27,7 +27,6 @@ giant_carrion_spat = Creature:new {
 	scale = 2.0,
 
 	templates = {"object/mobile/giant_carrion_spat.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	controlDeviceTemplate = "object/intangible/pet/carrion_spat_hue.iff",
 	lootGroups = {},
 	weapons = {},

@@ -17,7 +17,7 @@ minor_guf_drolg = Creature:new {
 	hideAmount = 240,
 	boneType = "bone_mammal",
 	boneAmount = 170,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ minor_guf_drolg = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/minor_guf_drolg.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	controlDeviceTemplate = "object/intangible/pet/guf_drolg_hue.iff",
 	scale = 0.85,
 	lootGroups = {},

@@ -49,7 +49,7 @@ object_tangible_wearables_shirt_singing_mountain_clan_shirt_s01 = object_tangibl
 				"object/creature/player/sullustan_female.iff",
 				"object/creature/player/trandoshan_female.iff",
 				"object/creature/player/twilek_female.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/aqualish_female.iff",
 				"object/mobile/vendor/bith_female.iff",
 				"object/mobile/vendor/bothan_female.iff",

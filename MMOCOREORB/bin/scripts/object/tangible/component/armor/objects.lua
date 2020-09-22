@@ -5232,3 +5232,9 @@ object_tangible_component_armor_shared_shield_generator_vehicular = SharedTangib
 }
 
 ObjectTemplates:addClientTemplate(object_tangible_component_armor_shared_shield_generator_vehicular, "object/tangible/component/armor/shared_shield_generator_vehicular.iff")
+
+object_tangible_component_armor_shared_armor_segment_mandalorian = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/component/armor/shared_armor_segment_mandalorian.iff"
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_component_armor_shared_armor_segment_mandalorian, "object/tangible/component/armor/shared_armor_segment_mandalorian.iff")

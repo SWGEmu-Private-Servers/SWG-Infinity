@@ -17,7 +17,7 @@ mutant_rancor = Creature:new {
 	hideAmount = 901,
 	boneType = "bone_mammal",
 	boneAmount = 851,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 12,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ mutant_rancor = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/mutant_rancor.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = 1.15,
 	lootGroups = {
 		{

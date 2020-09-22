@@ -47,6 +47,7 @@ function RoriRebelMilitaryBaseScreenPlay:spawnRebels()
 	spawnMobile("rori", "specforce_technician", 300, getRandomNumber(12) + -5357, 76, getRandomNumber(12) + 5008, getRandomNumber(360), 0)
 	spawnMobile("rori", "specforce_lieutenant", 300, getRandomNumber(12) + -5357, 76, getRandomNumber(12) + 5008, getRandomNumber(360), 0)
 	spawnMobile("rori", "specforce_marine", 300, getRandomNumber(12) + -5357, 76, getRandomNumber(12) + 5008, getRandomNumber(360), 0)
+	spawnMobile("rori", "light_jedi_knight", 1200, -5355.56, 76, 5049.3, 0.343, 0) 
 
 	-- Left supplies
 	spawnMobile("rori", "specforce_procurement_specialist", 360, -5393.190, 76.000, 5062.330, 50.886, 0)
@@ -113,6 +114,7 @@ function RoriRebelMilitaryBaseScreenPlay:spawnImperials()
 	spawnMobile("rori", "stormtrooper_medic", 300, getRandomNumber(12) + -5357, 76, getRandomNumber(12) + 5008, getRandomNumber(360), 0)
 	spawnMobile("rori", "stormtrooper_rifleman", 300, getRandomNumber(12) + -5357, 76, getRandomNumber(12) + 5008, getRandomNumber(360), 0)
 	spawnMobile("rori", "stormtrooper", 300, getRandomNumber(12) + -5357, 76, getRandomNumber(12) + 5008, getRandomNumber(360), 0)
+	spawnMobile("rori", "fdark_jedi_knight", 1200, -5355.56, 76, 5049.3, 0.343, 0) 
 
 	-- Left supplies
 	spawnMobile("rori", "stormtrooper_medic", 360, -5393.190, 76.000, 5062.330, 50.886, 0)

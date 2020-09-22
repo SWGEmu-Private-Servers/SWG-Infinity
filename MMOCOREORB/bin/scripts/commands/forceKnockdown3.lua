@@ -45,20 +45,25 @@ ForceKnockdown3Command = {
 	name = "forceknockdown3",
 
     damageMultiplier = 0,
-	speed = 4.0,
-	forceCost = 200,
+	speed = 1.5,
+	forceCost = 100,
 	visMod = 25,
-	accuracySkillMod = "forceknockdown_accuracy",
+	accuracyBonus = 185,
 	areaAction = true,
-	areaRange = 15,
+	areaRange = 20,
+
+	minDamage = 1000,
+	maxDamage = 1200,
+
+	damageType = STUN_DAMAGE,
 
 	stateEffects = {
 	  StateEffect(
 		KNOCKDOWN_EFFECT,
 		{ "knockdownRecovery", "lastKnockdown" },
+		{ "knockdown_defense" },
 		{},
-		{},
-		65,
+		185,
 		0,
 		0
 	  )
@@ -68,7 +73,7 @@ ForceKnockdown3Command = {
 
 	combatSpam = "forceknockdown3",
 
-	poolsToDamage = NO_ATTRIBUTE,
+	poolsToDamage = RANDOM_ATTRIBUTE,
 
 	forceAttack = true,
 

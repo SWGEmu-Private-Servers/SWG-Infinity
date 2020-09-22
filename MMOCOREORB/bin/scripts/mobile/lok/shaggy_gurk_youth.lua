@@ -17,7 +17,7 @@ shaggy_gurk_youth = Creature:new {
 	hideAmount = 275,
 	boneType = "bone_mammal",
 	boneAmount = 300,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ shaggy_gurk_youth = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/shaggy_gurk_youth.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	scale = 0.9,
 	lootGroups = {},
 	weapons = {},

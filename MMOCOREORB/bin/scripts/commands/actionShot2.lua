@@ -44,7 +44,7 @@
 ActionShot2Command = {
         name = "actionshot2",
 
-	damageMultiplier = 2.0,
+	damageMultiplier = 2.5,
 	speedMultiplier = 2.0,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 1.25,
@@ -65,7 +65,7 @@ ActionShot2Command = {
 		POSTUREDOWN_EFFECT, 
 		{ "postureDownRecovery" }, 
 		{ "posture_change_down_defense" }, 
-		{},
+		{}, 
 		100, 
 		0, 
 		0 
@@ -80,7 +80,7 @@ ActionShot2Command = {
 		true,
 		0,
 		100,
-		60, 
+		95, 
 		60
 	  )
 	},

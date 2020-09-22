@@ -51,4 +51,7 @@ function NabooStaticSpawnsNorthScreenPlay:spawnMobiles()
 	spawnMobile("naboo", "giant_fanned_rawl", 900, getRandomNumber(5) + 3431, -198.1, getRandomNumber(5) + 5086, getRandomNumber(360), 0)
 	spawnMobile("naboo", "giant_fanned_rawl", 900, getRandomNumber(5) + 3431, -198.1, getRandomNumber(5) + 5086, getRandomNumber(360), 0)
 
+	--Highgarden Recruiters
+	spawnMobile("naboo", "imperial_recruiter", 60, -4983.92, 6.57816, 2865.29, 240, 0)
+	spawnMobile("naboo", "rebel_recruiter", 60, -4983.92, 6.32951, 2870.26, 240, 0)
 end

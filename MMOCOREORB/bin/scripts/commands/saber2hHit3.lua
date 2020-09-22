@@ -52,6 +52,18 @@ Saber2hHit3Command = {
 	forceCostMultiplier = 2.0,
 	visMod = 25,
 
+	stateEffects = {
+	  StateEffect( 
+		DIZZY_EFFECT, 
+		{}, 
+		{ "dizzy_defense", "resistance_states" }, 
+		{ "jedi_state_defense" }, 
+		85, 
+		0, 
+		30 
+	  )
+	},
+
 	animation = "showoff_3", 
 	animType = GENERATE_INTENSITY,
 

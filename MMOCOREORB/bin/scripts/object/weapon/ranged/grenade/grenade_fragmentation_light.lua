@@ -63,12 +63,12 @@ object_weapon_ranged_grenade_grenade_fragmentation_light = object_weapon_ranged_
 			"object/creature/player/twilek_female.iff",
 			"object/creature/player/wookiee_male.iff",
 			"object/creature/player/wookiee_female.iff",
-			"object/creature/player/zabrak_male.iff",
-			"object/creature/player/zabrak_female.iff" },
+			"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
+			"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff"},
 
 	-- RANGEDATTACK, MELEEATTACK, FORCEATTACK, TRAPATTACK, GRENADEATTACK, HEAVYACIDBEAMATTACK,
 	-- HEAVYLIGHTNINGBEAMATTACK, HEAVYPARTICLEBEAMATTACK, HEAVYROCKETLAUNCHERATTACK, HEAVYLAUNCHERATTACK
-	attackType = GRENADEATTACK,
+	attackType = GENADEATTACK,
 
 	-- ENERGY, KINETIC, ELECTRICITY, STUN, BLAST, HEAT, COLD, ACID, LIGHTSABER
 	damageType = BLAST,

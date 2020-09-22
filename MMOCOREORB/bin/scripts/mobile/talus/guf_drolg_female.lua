@@ -17,7 +17,7 @@ guf_drolg_female = Creature:new {
 	hideAmount = 265,
 	boneType = "bone_mammal",
 	boneAmount = 190,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ guf_drolg_female = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/guf_drolg_hue.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	controlDeviceTemplate = "object/intangible/pet/guf_drolg_hue.iff",
 	scale = 1.05,
 	lootGroups = {},

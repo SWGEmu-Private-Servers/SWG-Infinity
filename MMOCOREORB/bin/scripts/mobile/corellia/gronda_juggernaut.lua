@@ -17,7 +17,7 @@ gronda_juggernaut = Creature:new {
 	hideAmount = 400,
 	boneType = "bone_mammal",
 	boneAmount = 375,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 14,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ gronda_juggernaut = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/gronda_hue.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.4,
 	lootGroups = {},
 	weapons = {},

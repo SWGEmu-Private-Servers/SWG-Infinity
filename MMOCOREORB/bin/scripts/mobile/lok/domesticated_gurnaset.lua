@@ -18,7 +18,7 @@ domesticated_gurnaset = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 304,
 	milkType = "milk_domesticated",
-	milk = 200,
+	milk = 2 * 200,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ domesticated_gurnaset = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/gurnaset_hue.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	lootGroups = {},
 	weapons = {"creature_spit_small_yellow"},
 	conversationTemplate = "",

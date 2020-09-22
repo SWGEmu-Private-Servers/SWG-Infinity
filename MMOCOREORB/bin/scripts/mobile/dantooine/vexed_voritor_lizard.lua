@@ -12,12 +12,12 @@ vexed_voritor_lizard = Creature:new {
 	armor = 1,
 	resists = {135,-1,5,5,-1,-1,5,5,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 50,
+	meatAmount = 123,
 	hideType = "hide_leathery",
-	hideAmount = 50,
+	hideAmount = 123,
 	boneType = "bone_avian",
-	boneAmount = 50,
-	milk = 0,
+	boneAmount = 123,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ vexed_voritor_lizard = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/vexed_voritor_lizard.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.15,
 	lootGroups = {
 		{

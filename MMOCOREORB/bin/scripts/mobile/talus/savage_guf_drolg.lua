@@ -17,7 +17,7 @@ savage_guf_drolg = Creature:new {
 	hideAmount = 460,
 	boneType = "bone_mammal",
 	boneAmount = 320,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ savage_guf_drolg = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/guf_drolg_hue.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	controlDeviceTemplate = "object/intangible/pet/guf_drolg_hue.iff",
 	scale = 1.2,
 	lootGroups = {},

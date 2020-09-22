@@ -39,14 +39,25 @@ looted_container = {
 		{itemTemplate = "attachment_clothing", weight = 43860},
 		{itemTemplate = "attachment_armor", weight = 43860},
 
-		-- Weapons (25% chance)
-		{groupTemplate = "weapons_all", weight = 2500000},
+		-- Weapons (24% chance)
+		{groupTemplate = "weapons_all", weight = 2300000},
 
-		-- Armors (25% chance)
-		{groupTemplate = "armor_all", weight = 2500000},
+		-- Armors (24% chance)
+		{groupTemplate = "armor_all", weight = 2400000},
 
 		-- Clothing (25% chance)
-		{groupTemplate = "wearables_all", weight = 2500000},
+		{groupTemplate = "wearables_all", weight = 2400000},
+
+		-- AB1 LAndspeeder (1% chance)
+		{groupTemplate = "landspeeder_ab1", weight = 100000},
+
+		-- Sith Speeder (1% chance)
+		--{groupTemplate = "sith_speeder", weight = 100000},
+
+		-- Vet rewards (2% chance)
+		{groupTemplate = "veteran_rewards_90_days", weight = 200000},
+		{groupTemplate = "veteran_rewards_180_days", weight = 70000},
+		{groupTemplate = "veteran_rewards_270_days", weight = 30000},
 	}
 }
 

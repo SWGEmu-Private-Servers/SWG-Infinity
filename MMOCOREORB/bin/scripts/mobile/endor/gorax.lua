@@ -1,7 +1,7 @@
 gorax = Creature:new {
 	objectName = "@mob/creature_names:gorax",
 	socialGroup = "gorax",
-	faction = "gorax",
+	faction = "",
 	level = 300,
 	chanceHit = 30,
 	damageMin = 1645,
@@ -17,7 +17,7 @@ gorax = Creature:new {
 	hideAmount = 0,
 	boneType = "",
 	boneAmount = 0,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 20,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,

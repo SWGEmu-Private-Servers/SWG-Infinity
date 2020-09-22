@@ -45,7 +45,7 @@ object_tangible_wearables_hat_singing_mountain_clan_hat_s01 = object_tangible_we
 	playerRaces = { "object/creature/player/bothan_female.iff",
 				"object/creature/player/human_female.iff",
 				"object/creature/player/rodian_female.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/bothan_female.iff",
 				"object/mobile/vendor/human_female.iff",
 				"object/mobile/vendor/rodian_female.iff",

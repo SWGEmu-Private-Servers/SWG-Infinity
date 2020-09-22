@@ -17,7 +17,7 @@ war_gronda = Creature:new {
 	hideAmount = 300,
 	boneType = "bone_mammal",
 	boneAmount = 240,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ war_gronda = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/war_gronda.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	controlDeviceTemplate = "object/intangible/pet/gronda_hue.iff",
 	scale = 1.1,
 	lootGroups = {},

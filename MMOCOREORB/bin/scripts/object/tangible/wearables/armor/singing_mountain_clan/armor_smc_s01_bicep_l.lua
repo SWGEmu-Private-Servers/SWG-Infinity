@@ -51,7 +51,7 @@ object_tangible_wearables_armor_singing_mountain_clan_armor_smc_s01_bicep_l = ob
 				"object/creature/player/sullustan_female.iff",
 				"object/creature/player/trandoshan_female.iff",
 				"object/creature/player/twilek_female.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/aqualish_female.iff",
 				"object/mobile/vendor/bith_female.iff",
 				"object/mobile/vendor/bothan_female.iff",

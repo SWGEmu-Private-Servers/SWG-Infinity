@@ -44,23 +44,43 @@
 ForceThrow2Command = {
 	name = "forcethrow2",
 
-	minDamage = 250,
-	maxDamage = 500,
-	speed = 4.0,
+	minDamage = 750,
+	maxDamage = 2000,
+	speed = 1,
 	forceCost = 56,
 	visMod = 25,
-	accuracySkillMod = "forcethrow_accuracy",
+	accuracyBonus = 145,
+	coneAngle = 60,
+	coneAction = true,
 
 	stateEffects = {
-		StateEffect(
-			STUN_EFFECT,
-			{},
-			{},
-			{ "jedi_state_defense" },
-			65,
-			0,
-			10
-		)
+	  StateEffect(
+		STUN_EFFECT,
+		{},
+		{ "jedi_state_defense" },
+		{},
+		85,
+		0,
+		10
+	  ),
+	    StateEffect(
+		DIZZY_EFFECT,
+		{},
+		{},
+		{ "jedi_state_defense" },
+		85,
+		0,
+		10
+	  ),
+	  	StateEffect(
+		BLIND_EFFECT,
+		{},
+		{},
+		{ "jedi_state_defense" },
+		80,
+		0,
+		10
+	  )
 	},
 
 	animation = "force_throw_1_particle_level_1",
@@ -68,15 +88,10 @@ ForceThrow2Command = {
 
 	combatSpam = "forcethrow2",
 
-	poolsToDamage = RANDOM_ATTRIBUTE,
+	poolsToDamage = HEALTH_ATTRIBUTE + ACTION_ATTRIBUTE + MIND_ATTRIBUTE,
 
 	forceAttack = true,
-	damageType = KINETIC_DAMAGE,
-
-	frsLightMinDamageModifier = 3,
-	frsLightMaxDamageModifier = 6,
-	frsDarkMinDamageModifier = 3,
-	frsDarkMaxDamageModifier = 6,
+	damageType = BLAST_DAMAGE,
 
 	range = 32
 }

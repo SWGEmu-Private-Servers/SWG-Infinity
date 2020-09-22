@@ -50,14 +50,13 @@ Intimidate1Command = {
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
 	
-	accuracySkillMod = "intimidate",
-
+	accuracySkillMod = "intimidate",	
 	stateEffects = {
 	  StateEffect( 
 		INTIMIDATE_EFFECT, 
+		{ "intimidate_defense", "resistance_states" }, 
 		{}, 
 		{}, 
-		{},
 		100, 
 		0, 
 		30 

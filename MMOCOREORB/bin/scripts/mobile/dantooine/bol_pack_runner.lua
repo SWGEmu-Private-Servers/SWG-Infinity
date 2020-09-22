@@ -17,7 +17,7 @@ bol_pack_runner = Creature:new {
 	hideAmount = 300,
 	boneType = "bone_mammal",
 	boneAmount = 180,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ bol_pack_runner = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/bol_pack_runner.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	scale = 0.95,
 	lootGroups = {},
 	weapons = {},

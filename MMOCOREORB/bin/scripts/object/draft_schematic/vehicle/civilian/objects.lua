@@ -533,49 +533,42 @@ ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared
 
 object_draft_schematic_vehicle_civilian_shared_speeder_bike_swoop = SharedDraftSchematicObjectTemplate:new {
 	clientTemplateFileName = "object/draft_schematic/vehicle/civilian/shared_speeder_bike_swoop.iff"
-	--Data below here is deprecated and loaded from the tres, keeping for easy lookups
---[[
-	appearanceFilename = "",
-	arrangementDescriptorFilename = "abstract/slot/arrangement/arrangement_datapad.iff",
-
-	clearFloraRadius = 0,
-	clientDataFile = "",
-	clientGameObjectType = 2049,
-	collisionActionBlockFlags = 0,
-	collisionActionFlags = 0,
-	collisionActionPassFlags = 0,
-	collisionMaterialBlockFlags = 0,
-	collisionMaterialFlags = 0,
-	collisionMaterialPassFlags = 0,
-	containerType = 0,
-	containerVolumeLimit = 0,
-
-	detailedDescription = "string_id_table",
-
-	gameObjectType = 2049,
-
-	locationReservationRadius = 0,
-	lookAtText = "string_id_table",
-
-	noBuildRadius = 0,
-
-	objectName = "string_id_table",
-	onlyVisibleInTools = 0,
-
-	portalLayoutFilename = "",
-
-	scale = 0,
-	scaleThresholdBeforeExtentTest = 0.5,
-	sendToClient = 1,
-	slotDescriptorFilename = "",
-	snapToTerrain = 0,
-	surfaceType = 0,
-
-	totalCellNumber = 0,
-
-	clientObjectCRC = 4231876597,
-	derivedFromTemplates = {"object/object/base/shared_base_object.iff", "object/intangible/base/shared_base_intangible.iff", "object/draft_schematic/base/shared_base_draft_schematic.iff"}
-]]
 }
 
 ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared_speeder_bike_swoop, "object/draft_schematic/vehicle/civilian/shared_speeder_bike_swoop.iff")
+
+--Barc
+object_draft_schematic_vehicle_civilian_shared_barc_speeder = SharedDraftSchematicObjectTemplate:new {
+	clientTemplateFileName = "object/draft_schematic/vehicle/civilian/shared_barc_speeder.iff"
+}
+ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared_barc_speeder, "object/draft_schematic/vehicle/civilian/shared_barc_speeder.iff")
+
+--Flare swoop
+object_draft_schematic_vehicle_civilian_shared_flare_s_swoop_crafted = SharedDraftSchematicObjectTemplate:new {
+	clientTemplateFileName = "object/draft_schematic/vehicle/civilian/shared_flare_s_swoop_crafted.iff"
+}
+ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared_flare_s_swoop_crafted, "object/draft_schematic/vehicle/civilian/shared_flare_s_swoop_crafted.iff")
+
+--STAP Speeder
+object_draft_schematic_vehicle_civilian_shared_stap_speeder = SharedDraftSchematicObjectTemplate:new {
+	clientTemplateFileName = "object/draft_schematic/vehicle/civilian/shared_speeder_stap.iff"
+}
+ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared_stap_speeder, "object/draft_schematic/vehicle/civilian/shared_speeder_stap.iff")
+
+--AB1 Speeder
+object_draft_schematic_vehicle_civilian_shared_landspeeder_ab1 = SharedDraftSchematicObjectTemplate:new {
+	clientTemplateFileName = "object/draft_schematic/vehicle/civilian/shared_landspeeder_ab1.iff"
+}
+ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared_landspeeder_ab1, "object/draft_schematic/vehicle/civilian/shared_landspeeder_ab1.iff")
+
+--Sith Speeder
+object_draft_schematic_vehicle_civilian_shared_sith_speeder = SharedDraftSchematicObjectTemplate:new {
+	clientTemplateFileName = "object/draft_schematic/vehicle/civilian/shared_sith_speeder.iff"
+}
+ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared_sith_speeder, "object/draft_schematic/vehicle/civilian/shared_sith_speeder.iff")
+
+--Geo Speeder
+object_draft_schematic_vehicle_civilian_shared_geo_speeder = SharedDraftSchematicObjectTemplate:new {
+	clientTemplateFileName = "object/draft_schematic/vehicle/civilian/shared_geo_speeder.iff"
+}
+ObjectTemplates:addClientTemplate(object_draft_schematic_vehicle_civilian_shared_geo_speeder, "object/draft_schematic/vehicle/civilian/shared_geo_speeder.iff")

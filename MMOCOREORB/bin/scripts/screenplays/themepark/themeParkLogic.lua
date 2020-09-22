@@ -515,9 +515,9 @@ function ThemeParkLogic:handleMissionAccept(npcNumber, missionNumber, pConversin
 	if (areaSpawnPoint == nil) then
 		return false
 	end
-
+	
 	local areaDist = 100
-
+	
 	if mission.missionType == "destroy" then
 		areaDist = 350
 	end
@@ -599,11 +599,7 @@ function ThemeParkLogic:writeData(pConversingPlayer, dataName, value)
 		return
 	end
 
-	if (value == 0) then
-		deleteData(CreatureObject(pConversingPlayer):getObjectID() .. dataName)
-	else
-		writeData(CreatureObject(pConversingPlayer):getObjectID() .. dataName, value)
-	end
+	writeData(CreatureObject(pConversingPlayer):getObjectID() .. dataName, value)
 end
 
 function ThemeParkLogic:getMission(npcNumber, missionNumber)
@@ -1138,7 +1134,7 @@ function ThemeParkLogic:notifyEnteredBreechArea(pActiveArea, pPlayer)
 			end
 
 			spatialChat(pNpc, stfFile .. ":npc_breech_" .. missionNumber)
-			deleteData(playerID .. ":breechNpcID")
+			writeData(playerID .. ":breechNpcID", 0)
 			writeData(playerID .. ":breechTriggered", 1)
 		end
 
@@ -1184,7 +1180,7 @@ function ThemeParkLogic:notifyTriggeredBreechAggro(pNpc, pPlayer)
 			local missionNumber = self:getCurrentMissionNumber(npcNumber, pPlayer)
 			local stfFile = self:getStfFile(npcNumber)
 			spatialChat(pBreechNpc, stfFile .. ":npc_breech_" .. missionNumber)
-			deleteData(playerID .. ":breechNpcID")
+			writeData(playerID .. ":breechNpcID", 0)
 			writeData(playerID .. ":breechTriggered", 1)
 		end
 
@@ -1538,7 +1534,7 @@ function ThemeParkLogic:notifyEnteredEscortArea(pActiveArea, pCreature)
 		local stfFile = self:getStfFile(npcNumber)
 		spatialChat(pCreature, stfFile .. ":npc_dropoff_" .. missionNumber)
 		deleteData(areaID .. ":escortNpcID")
-		deleteData(CreatureObject(pPlayer):getObjectID() .. ":escortAreaID")
+		writeData(CreatureObject(pPlayer):getObjectID() .. ":escortAreaID", 0)
 		SceneObject(pActiveArea):destroyObjectFromWorld()
 		return 1
 	end
@@ -1789,7 +1785,7 @@ function ThemeParkLogic:completeMission(pConversingPlayer)
 	end
 
 	writeData(playerID .. ":activeMission", 2)
-	deleteData(playerID .. ":destroyableBuildingID")
+	writeData(playerID .. ":destroyableBuildingID", 0)
 end
 
 function ThemeParkLogic:failMission(pConversingPlayer)
@@ -2070,9 +2066,9 @@ function ThemeParkLogic:goToNextMission(pConversingPlayer)
 	local npcName = npcData.spawnData.npcTemplate
 
 	local playerID = SceneObject(pConversingPlayer):getObjectID()
-	deleteData(playerID .. ":activeMission")
-	deleteData(playerID .. ":hasPreReqItem")
-	deleteData(playerID .. ":breechTriggered")
+	writeData(playerID .. ":activeMission", 0)
+	writeData(playerID .. ":hasPreReqItem", 0)
+	writeData(playerID .. ":breechTriggered", 0)
 	writeStringData(playerID .. ":activeScreenPlay", "")
 	CreatureObject(pConversingPlayer):setScreenPlayState(2 ^ (missionNumber - 1), self.screenPlayState .. "_mission_" .. npcName)
 

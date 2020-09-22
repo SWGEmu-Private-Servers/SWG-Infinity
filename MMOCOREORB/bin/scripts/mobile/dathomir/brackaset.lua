@@ -12,13 +12,13 @@ brackaset = Creature:new {
 	armor = 0,
 	resists = {30,30,120,30,30,-1,-1,-1,-1},
 	meatType = "meat_wild",
-	meatAmount = 100,
+	meatAmount = 123,
 	hideType = "hide_leathery",
-	hideAmount = 91,
+	hideAmount = 123,
 	boneType = "bone_mammal",
-	boneAmount = 81,
+	boneAmount = 123,
 	milkType = "milk_wild",
-	milk = 50,
+	milk = 2 * 250,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ brackaset = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/brackaset_hue.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	controlDeviceTemplate = "object/intangible/pet/brackaset_hue.iff",
 	lootGroups = {
 		 {

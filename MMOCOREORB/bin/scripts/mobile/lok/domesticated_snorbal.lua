@@ -18,7 +18,7 @@ domesticated_snorbal = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 400,
 	milkType = "milk_domesticated",
-	milk = 300,
+	milk = 2 * 300,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ domesticated_snorbal = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/snorbal_hue.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	lootGroups = {},
 	weapons = {},
 	conversationTemplate = "",

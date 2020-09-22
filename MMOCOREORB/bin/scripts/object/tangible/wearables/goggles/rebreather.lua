@@ -60,8 +60,8 @@ object_tangible_wearables_goggles_rebreather = object_tangible_wearables_goggles
 				"object/creature/player/twilek_female.iff",
 				"object/creature/player/wookiee_male.iff",
 				"object/creature/player/wookiee_female.iff",
-				"object/creature/player/zabrak_male.iff",
-				"object/creature/player/zabrak_female.iff" },
+			"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
+			"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff"},
 }
 
 ObjectTemplates:addTemplate(object_tangible_wearables_goggles_rebreather, "object/tangible/wearables/goggles/rebreather.iff")

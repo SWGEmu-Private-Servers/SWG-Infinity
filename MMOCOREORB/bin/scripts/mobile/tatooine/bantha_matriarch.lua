@@ -18,7 +18,7 @@ bantha_matriarch = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 320,
 	milkType = "milk_wild",
-	milk = 265,
+	milk = 2 * 265,
 	tamingChance = 0,
 	ferocity = 4,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ bantha_matriarch = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/matriarch_bantha.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.25,
 	lootGroups = {},
 	weapons = {},

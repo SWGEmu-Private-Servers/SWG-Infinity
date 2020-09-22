@@ -49,7 +49,7 @@ object_tangible_wearables_skirt_skirt_s03 = object_tangible_wearables_skirt_shar
 				"object/creature/player/sullustan_female.iff",
 				"object/creature/player/trandoshan_female.iff",
 				"object/creature/player/twilek_female.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/aqualish_female.iff",
 				"object/mobile/vendor/bith_female.iff",
 				"object/mobile/vendor/bothan_female.iff",
@@ -59,6 +59,7 @@ object_tangible_wearables_skirt_skirt_s03 = object_tangible_wearables_skirt_shar
 				"object/mobile/vendor/sullustan_female.iff",
 				"object/mobile/vendor/trandoshan_female.iff",
 				"object/mobile/vendor/twilek_female.iff",
+				"object/mobile/vendor/chiss_female.iff",
 				"object/mobile/vendor/zabrak_female.iff" },
 
 	numberExperimentalProperties = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},

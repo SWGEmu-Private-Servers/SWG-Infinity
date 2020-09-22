@@ -17,7 +17,7 @@ gurk_whelp = Creature:new {
 	hideAmount = 225,
 	boneType = "bone_mammal",
 	boneAmount = 250,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ gurk_whelp = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/gurk_whelp.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	scale = 0.8,
 	lootGroups = {},
 	weapons = {},

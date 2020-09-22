@@ -12,12 +12,12 @@ horned_voritor_lizard = Creature:new {
 	armor = 1,
 	resists = {140,140,5,5,180,180,180,-1,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 65,
+	meatAmount = 123,
 	hideType = "hide_leathery",
-	hideAmount = 40,
+	hideAmount = 123,
 	boneType = "bone_avian",
-	boneAmount = 50,
-	milk = 0,
+	boneAmount = 123,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ horned_voritor_lizard = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/voritor_lizard_hue.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.2,
 	lootGroups = {
 		{

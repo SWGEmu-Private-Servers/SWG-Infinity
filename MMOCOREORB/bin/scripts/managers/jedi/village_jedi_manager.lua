@@ -6,7 +6,7 @@ jediManagerName = "VillageJediManager"
 
 NOTINABUILDING = 0
 
-NUMBEROFTREESTOMASTER = 6
+NUMBEROFTREESTOMASTER = 4
 
 VillageJediManager = JediManager:new {
 	screenplayName = jediManagerName,
@@ -110,7 +110,7 @@ function VillageJediManager:canLearnSkill(pPlayer, skillName)
 		end
 	end
 
-	if skillName == "force_title_jedi_rank_01" and CreatureObject(pPlayer):getForceSensitiveSkillCount(false) < 24 then
+	if skillName == "force_title_jedi_rank_01" and CreatureObject(pPlayer):getForceSensitiveSkillCount(false) < 2 then
 		return false
 	end
 
@@ -123,14 +123,11 @@ end
 
 --Check to ensure force skill prerequisites are maintained
 function VillageJediManager:canSurrenderSkill(pPlayer, skillName)
-
-	if skillName == "force_title_jedi_rank_02" or skillName == "force_title_jedi_novice" then
-		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_title")
+	if skillName == "force_title_jedi_novice" and CreatureObject(pPlayer):getForceSensitiveSkillCount(true) > 0 then
 		return false
 	end
 
-	if string.find(skillName, "force_sensitive_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):getForceSensitiveSkillCount(false) <= 24 then
-		CreatureObject(pPlayer):sendSystemMessage("@jedi_spam:revoke_force_sensitive")
+	if string.find(skillName, "force_sensitive_") and CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and CreatureObject(pPlayer):getForceSensitiveSkillCount(false) <= 2 and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") then
 		return false
 	end
 
@@ -155,16 +152,6 @@ function VillageJediManager:onFSTreeCompleted(pPlayer, branch)
 	if (VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer) >= NUMBEROFTREESTOMASTER) then
 		VillageJediManagerCommon.setJediProgressionScreenPlayState(pPlayer, VILLAGE_JEDI_PROGRESSION_COMPLETED_VILLAGE)
 		FsOutro:startOldMan(pPlayer)
-	end
-end
-
-function VillageJediManager:onSkillRevoked(pPlayer, pSkill)
-	if (pPlayer == nil) then
-		return
-	end
-
-	if (JediTrials:isOnPadawanTrials(pPlayer) or JediTrials:isOnKnightTrials(pPlayer)) then
-		JediTrials:droppedSkillDuringTrials(pPlayer, pSkill)
 	end
 end
 

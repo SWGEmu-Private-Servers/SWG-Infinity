@@ -29,7 +29,7 @@ function JediTrials:isEligibleForPadawanTrials(pPlayer)
 
 	local learnedBranches = VillageJediManagerCommon.getLearnedForceSensitiveBranches(pPlayer)
 
-	return CreatureObject(pPlayer):hasScreenPlayState(32, "VillageJediProgression") and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and learnedBranches >= 6 and tonumber(readScreenPlayData(pPlayer, "PadawanTrials", "completedTrials")) ~= 1
+	return CreatureObject(pPlayer):hasScreenPlayState(32, "VillageJediProgression") and not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_02") and learnedBranches >= 2 and tonumber(readScreenPlayData(pPlayer, "PadawanTrials", "completedTrials")) ~= 1
 end
 
 function JediTrials:isOnPadawanTrials(pPlayer)
@@ -69,6 +69,11 @@ function JediTrials:onPlayerLoggedIn(pPlayer)
 		writeScreenPlayData(pPlayer, "KnightTrials", "completedTrials", 1)
 	end
 
+	if (self:isOnPadawanTrials(pPlayer) or self:isOnKnightTrials(pPlayer)) then
+		dropObserver(SKILLREMOVED, "JediTrials", "droppedSkillDuringTrials", pPlayer)
+		createObserver(SKILLREMOVED, "JediTrials", "droppedSkillDuringTrials", pPlayer)
+	end
+
 	if (self:isOnPadawanTrials(pPlayer)) then
 		PadawanTrials:onPlayerLoggedIn(pPlayer)
 	end
@@ -88,7 +93,7 @@ function JediTrials:droppedSkillDuringTrials(pPlayer, pSkill)
 	local droppedSkill = LuaSkill(pSkill)
 	local skillName = droppedSkill:getName()
 
-	if (self:isOnPadawanTrials(pPlayer) and not self:isEligibleForPadawanTrials(pPlayer)) then
+	if (self:isOnPadawanTrials(pPlayer) and string.find(skillName, "force_sensitive_") and not self:isEligibleForPadawanTrials(pPlayer)) then
 		local sui = SuiMessageBox.new("JediTrials", "emptyCallback")
 		sui.setTitle("@jedi_trials:padawan_trials_title")
 		sui.setPrompt("@jedi_trials:padawan_trials_no_longer_eligible")
@@ -105,7 +110,7 @@ function JediTrials:droppedSkillDuringTrials(pPlayer, pSkill)
 	return 0
 end
 
-function JediTrials:unlockJediPadawan(pPlayer, dontSendSui)
+function JediTrials:unlockJediPadawan(pPlayer)
 	if (pPlayer == nil) then
 		return
 	end
@@ -116,12 +121,10 @@ function JediTrials:unlockJediPadawan(pPlayer, dontSendSui)
 		return
 	end
 
-	if (dontSendSui == nil or dontSendSui == false) then
-		local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
-		sui.setTitle("@jedi_trials:padawan_trials_title")
-		sui.setPrompt("@jedi_trials:padawan_trials_completed")
-		sui.sendTo(pPlayer)
-	end
+	local sui = SuiMessageBox.new("JediTrials", "emptyCallback") -- No callback
+	sui.setTitle("@jedi_trials:padawan_trials_title")
+	sui.setPrompt("@jedi_trials:padawan_trials_completed")
+	sui.sendTo(pPlayer)
 
 	if (not CreatureObject(pPlayer):hasSkill("force_title_jedi_rank_01")) then
 		awardSkill(pPlayer, "force_title_jedi_rank_01")
@@ -170,7 +173,7 @@ function JediTrials:unlockJediKnight(pPlayer)
 		jediState = 4
 		setFactionVal = FACTIONREBEL
 	elseif (councilType == self.COUNCIL_DARK) then
-		knightRobe = "object/tangible/wearables/robe/robe_jedi_dark_s01.iff"
+		knightRobe = 'object/tangible/wearables/robe/robe_jedi_dark_s01.iff'
 		unlockMusic = "sound/music_become_dark_jedi.snd"
 		unlockString = "@jedi_trials:knight_trials_completed_dark"
 		enclaveLoc = { 5079, 305, "yavin4" }
@@ -288,18 +291,6 @@ function JediTrials:getNearestForceShrine(pPlayer)
 	end
 
 	local planet = SceneObject(pPlayer):getZoneName()
-	local onValidPlanet = false
-
-	for i = 1, #self.shrinePlanets, 1 do
-		if (self.shrinePlanets[i] == planet) then
-			onValidPlanet = true
-		end
-	end
-
-	if (not onValidPlanet) then
-		planet = "naboo"
-	end
-
 	local pClosestShrine = nil
 	local lastDist = 128000 -- Initialize as anything higher than a SWG zone.
 
@@ -455,7 +446,6 @@ function JediTrials:resetTrialData(pPlayer, trialType)
 	elseif (trialType == "knight") then
 		deleteScreenPlayData(pPlayer, "KnightTrials", "trialsCompleted")
 		deleteScreenPlayData(pPlayer, "KnightTrials", "startedTrials")
-		deleteScreenPlayData(pPlayer, "JediTrials", "JediCouncil")
 	end
 
 	deleteScreenPlayData(pPlayer, "JediTrials", "currentTrial")
@@ -484,34 +474,4 @@ function JediTrials:getTrialNumByName(pPlayer, name)
 	end
 
 	return -1
-end
-
-function JediTrials:completePadawanForTesting(pPlayer)
-	writeScreenPlayData(pPlayer, "PadawanTrials", "startedTrials", 1)
-	self:setTrialsCompleted(pPlayer, #padawanTrialQuests)
-	self:unlockJediPadawan(pPlayer, true)
-end
-
-function JediTrials:completeKnightForTesting(pPlayer, councilType)
-	writeScreenPlayData(pPlayer, "KnightTrials", "startedTrials", 1)
-	writeScreenPlayData(pPlayer, "JediTrials", "JediCouncil", councilType)
-	self:setTrialsCompleted(pPlayer, #knightTrialQuests)
-	self:unlockJediKnight(pPlayer)
-
-	local enclaveLoc
-
-	if (isZoneEnabled("yavin4")) then
-		if (councilType == self.COUNCIL_LIGHT) then
-			enclaveLoc = { -5575, 0, 4905 }
-		else
-			enclaveLoc = { 5079, 0, 305 }
-		end
-
-		local player = CreatureObject(pPlayer)
-
-		if (player:isRidingMount()) then
-			player:dismount()
-		end
-		SceneObject(pPlayer):switchZone("yavin4", enclaveLoc[1], enclaveLoc[2], enclaveLoc[3], 0)
-	end
 end

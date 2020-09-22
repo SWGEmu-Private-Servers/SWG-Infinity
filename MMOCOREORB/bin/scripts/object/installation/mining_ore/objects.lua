@@ -217,3 +217,12 @@ object_installation_mining_ore_shared_mining_ore_harvester_style_2 = SharedInsta
 }
 
 ObjectTemplates:addClientTemplate(object_installation_mining_ore_shared_mining_ore_harvester_style_2, "object/installation/mining_ore/shared_mining_ore_harvester_style_2.iff")
+
+
+
+
+object_installation_mining_ore_shared_mining_ore_harvester_advanced = SharedInstallationObjectTemplate:new {
+	clientTemplateFileName = "object/installation/mining_ore/shared_mining_ore_harvester_advanced.iff"
+}
+
+ObjectTemplates:addClientTemplate(object_installation_mining_ore_shared_mining_ore_harvester_advanced, "object/installation/mining_ore/shared_mining_ore_harvester_advanced.iff")

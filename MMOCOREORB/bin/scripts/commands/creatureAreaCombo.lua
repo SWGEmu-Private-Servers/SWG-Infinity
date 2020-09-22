@@ -63,8 +63,8 @@ CreatureAreaComboCommand = {
 	  StateEffect(
 		STUN_EFFECT,
 		{},
-		{ "stun_defense" },
-		{ "jedi_state_defense", "resistance_states" },
+		{ "stun_defense", "resistance_states" },
+		{ "jedi_state_defense" },
 		75,
 		0,
 		10
@@ -72,8 +72,8 @@ CreatureAreaComboCommand = {
 	  StateEffect(
 		BLIND_EFFECT,
 		{},
-		{ "blind_defense" },
-		{ "jedi_state_defense", "resistance_states" },
+		{ "blind_defense", "resistance_states" },
+		{ "jedi_state_defense" },
 		75,
 		0,
 		10
@@ -81,8 +81,8 @@ CreatureAreaComboCommand = {
 	  StateEffect(
 		INTIMIDATE_EFFECT,
 		{},
-		{ "intimidate_defense" },
-		{ "jedi_state_defense", "resistance_states" },
+		{ "intimidate_defense", "resistance_states" },
+		{ "jedi_state_defense" },
 		75,
 		0,
 		10

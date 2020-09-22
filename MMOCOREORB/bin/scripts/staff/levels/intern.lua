@@ -1,10 +1,8 @@
 intern = {
 	level = 1,
 	name = "intern",
-	tag = "SWGEmu-Intern",
+	tag = "Senator",
 	skills = {
-		"admin_base",
-		"admin_intern_01",
 	}
 }
 

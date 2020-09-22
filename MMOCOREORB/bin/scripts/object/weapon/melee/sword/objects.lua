@@ -1426,3 +1426,11 @@ object_weapon_melee_sword_shared_sword_rantok = SharedWeaponObjectTemplate:new {
 }
 
 ObjectTemplates:addClientTemplate(object_weapon_melee_sword_shared_sword_rantok, "object/weapon/melee/sword/shared_sword_rantok.iff")
+
+
+object_weapon_melee_sword_shared_sword_mandalorian = SharedWeaponObjectTemplate:new {
+	clientTemplateFileName = "object/weapon/melee/sword/shared_sword_mandalorian.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_weapon_melee_sword_shared_sword_mandalorian, "object/weapon/melee/sword/shared_sword_mandalorian.iff")

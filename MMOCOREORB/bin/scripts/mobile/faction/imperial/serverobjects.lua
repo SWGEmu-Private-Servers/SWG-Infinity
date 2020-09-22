@@ -189,3 +189,7 @@ includeFile("faction/imperial/stormtrooper_rifleman.lua")
 includeFile("faction/imperial/stormtrooper_sniper.lua")
 includeFile("faction/imperial/stormtrooper_squad_leader.lua")
 includeFile("faction/imperial/veteran_compforce_trooper.lua")
+
+-- DarklordIce custom -- 
+includeFile("faction/imperial/fdark_jedi_knight.lua")
+-- DarklordIce custom --

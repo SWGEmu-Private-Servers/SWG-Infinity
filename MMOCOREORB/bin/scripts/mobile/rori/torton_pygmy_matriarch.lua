@@ -17,7 +17,7 @@ torton_pygmy_matriarch = Creature:new {
 	hideAmount = 500,
 	boneType = "bone_mammal",
 	boneAmount = 700,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 9,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ torton_pygmy_matriarch = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/torton_hue.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = .6,
 	lootGroups = {},
 	weapons = {},

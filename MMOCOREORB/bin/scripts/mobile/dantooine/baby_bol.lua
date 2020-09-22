@@ -18,7 +18,7 @@ baby_bol = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 180,
 	milkType = "milk_wild",
-	milk = 85,
+	milk = 2 * 85,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ baby_bol = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/baby_bol.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = 0.7,
 	lootGroups = {},
 	weapons = {},

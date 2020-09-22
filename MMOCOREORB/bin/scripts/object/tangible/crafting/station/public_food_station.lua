@@ -62,7 +62,7 @@ object_tangible_crafting_station_public_food_station = object_tangible_crafting_
 				"object/creature/player/twilek_female.iff",
 				"object/creature/player/wookiee_male.iff",
 				"object/creature/player/wookiee_female.iff",
-				"object/creature/player/zabrak_male.iff",
+				"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
 				"object/creature/player/zabrak_female.iff" },
 
    customizationOptions = {},

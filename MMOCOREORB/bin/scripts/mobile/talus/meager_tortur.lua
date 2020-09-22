@@ -17,7 +17,7 @@ meager_tortur = Creature:new {
 	hideAmount = 575,
 	boneType = "bone_mammal",
 	boneAmount = 650,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ meager_tortur = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/meager_tortur.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	scale = 0.85,
 	lootGroups = {},
 	weapons = {},

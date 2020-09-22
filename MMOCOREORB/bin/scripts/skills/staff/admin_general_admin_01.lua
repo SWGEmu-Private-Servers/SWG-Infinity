@@ -23,6 +23,7 @@ admin_general_admin_01 = {
 	commands = {
 		"teleport",
 		"teleportto",
+		"teleportGroup",
 		"invulnerable",
 		"kill",
 		"setSpeed",

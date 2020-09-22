@@ -18,7 +18,7 @@ bolma_youth = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 150,
 	milkType = "milk_wild",
-	milk = 80,
+	milk = 2 * 250,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ bolma_youth = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/bolma_youth.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 0.8,
 	lootGroups = {},
 	weapons = {},

@@ -49,6 +49,8 @@ FireLightningCone1Command = {
 	healthCostMultiplier = 1,
 	actionCostMultiplier = 1,
 	mindCostMultiplier = 1,
+  accuracyBonus = 10,
+
 
 	animation = "fire_lightning_rifle_single_1",
 	animType = GENERATE_INTENSITY,
@@ -57,11 +59,10 @@ FireLightningCone1Command = {
 
 	coneAngle = 60,
 	coneAction = true,
-	
+
 	weaponType = SPECIALHEAVYWEAPON,
 
-	range = 16
+	range = 24
 }
 
 AddCommand(FireLightningCone1Command)
-

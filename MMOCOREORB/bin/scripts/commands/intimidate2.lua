@@ -55,9 +55,9 @@ Intimidate2Command = {
 	stateEffects = {
 	  StateEffect( 
 		INTIMIDATE_EFFECT, 
+		{ "intimidate_defense", "resistance_states" }, 
 		{}, 
 		{}, 
-		{},
 		100, 
 		0, 
 		120 

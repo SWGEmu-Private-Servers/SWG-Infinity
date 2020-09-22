@@ -66,7 +66,7 @@ HealthShot2Command = {
 		true,
 		0,
 		100,
-		60, 
+		95, 
 		60
 	  )
 	},

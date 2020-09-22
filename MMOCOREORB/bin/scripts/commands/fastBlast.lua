@@ -44,7 +44,7 @@
 FastBlastCommand = {
         name = "fastblast",
 
-	damageMultiplier = 6,
+	damageMultiplier = 6.15,
 	speedMultiplier = 3.05,
 	healthCostMultiplier = 1.5,
 	actionCostMultiplier = 1.5,
@@ -53,14 +53,25 @@ FastBlastCommand = {
 
 	poolsToDamage = HEALTH_ATTRIBUTE + ACTION_ATTRIBUTE + MIND_ATTRIBUTE,
 
-	animation = "fire_5_special_single", 
+		stateEffects = {
+	  StateEffect(
+		INTIMIDATE_EFFECT,
+		{"intimidate_defense"},
+		{},
+		{},
+		55,
+		0,
+		10
+	  ),
+	 },
+
+	animation = "fire_5_special_single",
 	animType = GENERATE_RANGED,
 
 	combatSpam = "fastblast",
-	weaponType = PISTOLWEAPON,
+	weaponType = RANGEDWEAPON,
 
 	range = -1
 }
 
 AddCommand(FastBlastCommand)
-

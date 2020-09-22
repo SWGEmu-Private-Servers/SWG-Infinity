@@ -27,8 +27,8 @@ VillageRaids = ScreenPlay:new {
 	},
 
 	enemyData = {
-		minSpawnPulse = 5000 * 1000,
-		maxSpawnPulse = 7000 * 1000,
+		minSpawnPulse = 5400 * 1000,  -- 90 minutes
+		maxSpawnPulse = 5400 * 1000,  -- 90 minutes
 		minDistance = 25, -- Min distance from center of spawn loc
 		maxDistance = 50 -- Max distance from center of spawn loc
 	},
@@ -61,7 +61,7 @@ VillageRaids = ScreenPlay:new {
 		maxSpawn = 100, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 2, -- Max mobs to have up at any one time
 		mobileLifespan = 20 * 60 * 1000, -- Time until spawned mobs should be destroyed
-		expireTime = 2500 * 1000, -- Time until spawner should expire
+		expireTime = 2700 * 1000, -- Time until spawner should expire (45 minutes)
 		aiHandlerFunc = "" -- Name of function that should setup a defender after it's spawned
 	},
 
@@ -93,7 +93,7 @@ VillageRaids = ScreenPlay:new {
 		maxSpawn = 100, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 5, -- Max mobs to have up at any one time
 		mobileLifespan = 20 * 60 * 1000, -- Time until spawned mobs should be destroyed
-		expireTime = 2500 * 1000, -- Time until spawner should expire
+		expireTime = 2700 * 1000, -- Time until spawner should expire (45 minutes)
 		aiHandlerFunc = "setupSpawnedRaider", -- Name of function that should setup a defender after it's spawned
 		spawnVerifyFunc = "verifyCurrentPhase" -- Function to verify if a spawner should continue creating waves
 	},
@@ -112,7 +112,7 @@ VillageRaids = ScreenPlay:new {
 		maxSpawn = 100, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 10, -- Max mobs to have up at any one time
 		mobileLifespan = 20 * 60 * 1000, -- Time until spawned mobs should be destroyed
-		expireTime = 2500 * 1000, -- Time until spawner should expire
+		expireTime = 2700 * 1000, -- Time until spawner should expire (45 minutes)
 		aiHandlerFunc = "setupSpawnedRaider", -- Name of function that should setup a defender after it's spawned
 		spawnVerifyFunc = "verifyCurrentPhase" -- Function to verify if a spawner should continue creating waves
 	},
@@ -132,7 +132,7 @@ VillageRaids = ScreenPlay:new {
 		maxSpawn = 100, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 10, -- Max mobs to have up at any one time
 		mobileLifespan = 20 * 60 * 1000, -- Time until spawned mobs should be destroyed
-		expireTime = 2500 * 1000, -- Time until spawner should expire
+		expireTime = 2700 * 1000, -- Time until spawner should expire (45 minutes)
 		aiHandlerFunc = "setupSpawnedRaider", -- Name of function that should setup a defender after it's spawned
 		spawnVerifyFunc = "verifyCurrentPhase" -- Function to verify if a spawner should continue creating waves
 	},
@@ -151,7 +151,7 @@ VillageRaids = ScreenPlay:new {
 		maxSpawn = 100, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 10, -- Max mobs to have up at any one time
 		mobileLifespan = 20 * 60 * 1000, -- Time until spawned mobs should be destroyed
-		expireTime = 2500 * 1000, -- Time until spawner should expire
+		expireTime = 2700 * 1000, -- Time until spawner should expire (45 minutes)
 		aiHandlerFunc = "setupSpawnedRaider", -- Name of function that should setup a defender after it's spawned
 		spawnVerifyFunc = "verifyCurrentPhase" -- Function to verify if a spawner should continue creating waves
 	},
@@ -171,7 +171,7 @@ VillageRaids = ScreenPlay:new {
 		maxSpawn = 100, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 10, -- Max mobs to have up at any one time
 		mobileLifespan = 20 * 60 * 1000, -- Time until spawned mobs should be destroyed
-		expireTime = 2500 * 1000, -- Time until spawner should expire
+		expireTime = 2700 * 1000, -- Time until spawner should expire (45 minutes)
 		aiHandlerFunc = "setupSpawnedRaider", -- Name of function that should setup a defender after it's spawned
 		spawnVerifyFunc = "verifyCurrentPhase" -- Function to verify if a spawner should continue creating waves
 	},

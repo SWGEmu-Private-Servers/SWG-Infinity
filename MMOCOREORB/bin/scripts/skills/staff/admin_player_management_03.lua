@@ -29,6 +29,7 @@ admin_player_management_03 = {
 		"emptyMailTarget",
 		"grantSkill",
 		"grantTitle",
+		"recalcForce",
 		"hasVeteranReward",
 		"money",
 		"revokeSkill",

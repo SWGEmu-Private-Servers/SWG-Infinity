@@ -12,9 +12,9 @@ kliknik_queen_harvester = Creature:new {
 	armor = 0,
 	resists = {140,140,-1,15,15,-1,-1,-1,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 15,
+	meatAmount = 123,
 	hideType = "hide_scaley",
-	hideAmount = 4,
+	hideAmount = 123,
 	boneType = "",
 	boneAmount = 0,
 	milk = 0,
@@ -26,7 +26,6 @@ kliknik_queen_harvester = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/kliknik_hue.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = 1.2,
 	lootGroups = {
 	 {

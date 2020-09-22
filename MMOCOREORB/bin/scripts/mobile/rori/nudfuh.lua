@@ -17,7 +17,7 @@ nudfuh = Creature:new {
 	hideAmount = 1000,
 	boneType = "bone_mammal",
 	boneAmount = 1000,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ nudfuh = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/nudfuh.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	lootGroups = {},
 	weapons = {},
 	conversationTemplate = "",

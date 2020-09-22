@@ -12,12 +12,12 @@ slinking_voritor_hunter = Creature:new {
 	armor = 1,
 	resists = {145,145,10,10,10,-1,10,10,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 90,
+	meatAmount = 123,
 	hideType = "hide_leathery",
-	hideAmount = 65,
+	hideAmount = 123,
 	boneType = "bone_avian",
-	boneAmount = 50,
-	milk = 0,
+	boneAmount = 123,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ slinking_voritor_hunter = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/slinking_voritor_hunter.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = 1.25,
 	lootGroups = {
 		{

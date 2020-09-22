@@ -23,6 +23,7 @@ admin_player_management_04 = {
 	commands = {
 		"addAllowedPlayer",
 		"addBannedPlayer",
+		"createEffect",
 		"getAccountInfo",
 		"getPlayerId",
 		"getStationName",

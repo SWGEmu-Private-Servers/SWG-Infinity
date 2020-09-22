@@ -155,3 +155,12 @@ includeFile("faction/rebel/tamed_gurrcat.lua")
 includeFile("faction/rebel/tamed_huurton.lua")
 includeFile("faction/rebel/tamed_razor_cat.lua")
 includeFile("faction/rebel/tamed_slice_hound.lua")
+
+--Boogs Custom--
+includeFile("faction/rebel/rebel_droideka.lua")
+--Boogs Custom--
+
+--DLI Custom--
+includeFile("faction/rebel/light_jedi_knight.lua")
+--DLI Custom--
+

@@ -61,8 +61,8 @@ object_tangible_wearables_armor_composite_armor_composite_leggings = object_tang
 				"object/creature/player/trandoshan_female.iff",
 				"object/creature/player/twilek_male.iff",
 				"object/creature/player/twilek_female.iff",
-				"object/creature/player/zabrak_male.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/aqualish_female.iff",
 				"object/mobile/vendor/aqualish_male.iff",
 				"object/mobile/vendor/bith_female.iff",
@@ -96,9 +96,9 @@ object_tangible_wearables_armor_composite_armor_composite_leggings = object_tang
 	specialResists = ELECTRICITY,
 
 	-- These are default Blue Frog stats
-	healthEncumbrance = 130,
-	actionEncumbrance = 230,
-	mindEncumbrance = 85,
+	healthEncumbrance = 80,
+	actionEncumbrance = 100,
+	mindEncumbrance = 80,
 
 	maxCondition = 30000,
 

@@ -48,7 +48,7 @@ object_tangible_wearables_shoes_shoes_s08 = object_tangible_wearables_shoes_shar
 				"object/creature/player/rodian_female.iff",
 				"object/creature/player/sullustan_female.iff",
 				"object/creature/player/twilek_female.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/aqualish_female.iff",
 				"object/mobile/vendor/bith_female.iff",
 				"object/mobile/vendor/bothan_female.iff",

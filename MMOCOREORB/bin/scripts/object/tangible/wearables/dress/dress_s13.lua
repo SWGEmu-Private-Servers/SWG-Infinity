@@ -50,7 +50,7 @@ object_tangible_wearables_dress_dress_s13 = object_tangible_wearables_dress_shar
 				"object/creature/player/sullustan_male.iff",
 				"object/creature/player/trandoshan_male.iff",
 				"object/creature/player/twilek_male.iff",
-				"object/creature/player/zabrak_male.iff",
+				"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
 				"object/mobile/vendor/aqualish_male.iff",
 				"object/mobile/vendor/bith_male.iff",
 				"object/mobile/vendor/bothan_male.iff",

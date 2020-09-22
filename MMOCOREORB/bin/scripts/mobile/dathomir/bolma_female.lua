@@ -18,7 +18,7 @@ bolma_female = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 300,
 	milkType = "milk_wild",
-	milk = 180,
+	milk = 2 * 250,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ bolma_female = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/bolma_hue.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	scale = 1.1,
 	lootGroups = {},
 	weapons = {},

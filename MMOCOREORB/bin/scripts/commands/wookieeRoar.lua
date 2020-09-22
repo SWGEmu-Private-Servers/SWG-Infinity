@@ -58,8 +58,8 @@ WookieeRoarCommand = {
 	  StateEffect( 
 		INTIMIDATE_EFFECT, 
 		{}, 
-		{ "intimidate_defense" }, 
-		{ "jedi_state_defense", "resistance_states" },
+		{ "intimidate_defense", "resistance_states" }, 
+		{ "jedi_state_defense" }, 
 		100, 
 		0, 
 		60 

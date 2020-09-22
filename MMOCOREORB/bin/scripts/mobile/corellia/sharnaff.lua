@@ -18,7 +18,7 @@ sharnaff = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 180,
 	milkType = "milk_wild",
-	milk = 220,
+	milk = 2 * 250,
 	tamingChance = 0,
 	ferocity = 2,
 	pvpBitmask = ATTACKABLE,
@@ -26,8 +26,7 @@ sharnaff = Creature:new {
 	optionsBitmask = AIENABLED,
 	diet = CARNIVORE,
 
-	templates = {"object/mobile/sharnaff_hue.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
+	templates = {"object/mobile/sharnaff.iff"},
 	lootGroups = {
 		{
 			groups = {

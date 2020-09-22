@@ -12,12 +12,12 @@ voritor_lizard = Creature:new {
 	armor = 0,
 	resists = {10,10,10,10,10,10,10,-1,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 35,
+	meatAmount = 123,
 	hideType = "hide_leathery",
-	hideAmount = 25,
+	hideAmount = 123,
 	boneType = "bone_avian",
-	boneAmount = 30,
-	milk = 0,
+	boneAmount = 123,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -25,8 +25,7 @@ voritor_lizard = Creature:new {
 	optionsBitmask = AIENABLED,
 	diet = CARNIVORE,
 
-	templates = {"object/mobile/voritor_lizard_hue.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
+	templates = {"object/mobile/voritor_lizard.iff"},
 	controlDeviceTemplate = "object/intangible/pet/voritor_lizard_hue.iff",
 	lootGroups = {
 		{

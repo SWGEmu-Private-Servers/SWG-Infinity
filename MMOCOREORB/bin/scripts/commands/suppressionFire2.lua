@@ -44,7 +44,7 @@
 SuppressionFire2Command = {
         name = "suppressionfire2",
 
-	damageMultiplier = 2.5,
+	damageMultiplier = 3.5,
 	speedMultiplier = 1.5,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 1.25,
@@ -56,8 +56,8 @@ SuppressionFire2Command = {
 		POSTUREDOWN_EFFECT, 
 		{ "postureDownRecovery" }, 
 		{ "posture_change_down_defense" }, 
-		{},
-		100, 
+		{}, 
+		105, 
 		0, 
 		0 
 	  )

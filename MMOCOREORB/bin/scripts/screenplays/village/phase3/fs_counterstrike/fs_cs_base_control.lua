@@ -8,12 +8,12 @@ FsCsBaseControl = {
 	shieldExpelDistance = 10, -- How far back to push creatures from where they reached the shield
 	shieldRemoteRange = 75, -- Range player must be in to use remote on shield
 
-	reinforcementWaveMin = 90 * 1000, -- Min time before spawning a reinforcement wave
-	reinforcementWaveMax = 180 * 1000, -- Max time before spawning a reinforcement wave
+	reinforcementWaveMin = 60 * 1000, -- Min time before spawning a reinforcement wave
+	reinforcementWaveMax = 90 * 1000, -- Max time before spawning a reinforcement wave
 
 	-- Defense wave data
 	lootMobDataTable = {
-		spawnerPulse = 120 * 1000, -- Time between spawn pulses
+		spawnerPulse = 60 * 1000, -- Time between spawn pulses
 		maxSpawn = 5, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 5, -- Max mobs to have up at any one time
 		mobileLifespan = 1200 * 1000, -- Time until spawned mobs should be destroyed

@@ -25,7 +25,6 @@ admin_qa_basilisk = {
 		"dumpTargetInformation",
 		"dumpZoneInformation",
 		"getObjVars",
-		"setspeed",
 		"teleport",
 		"teleportto",
 		"invulnerable",

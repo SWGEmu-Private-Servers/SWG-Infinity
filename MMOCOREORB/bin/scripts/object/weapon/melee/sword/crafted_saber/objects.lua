@@ -5206,3 +5206,11 @@ object_weapon_melee_sword_crafted_saber_shared_sword_lightsaber_training = Share
 }
 
 ObjectTemplates:addClientTemplate(object_weapon_melee_sword_crafted_saber_shared_sword_lightsaber_training, "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_training.iff")
+
+
+object_weapon_melee_sword_crafted_saber_shared_sword_lightsaber_mandalorian = SharedWeaponObjectTemplate:new {
+	clientTemplateFileName = "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_mandalorian.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_weapon_melee_sword_crafted_saber_shared_sword_lightsaber_mandalorian, "object/weapon/melee/sword/crafted_saber/shared_sword_lightsaber_mandalorian.iff")

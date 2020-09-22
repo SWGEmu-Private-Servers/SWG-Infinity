@@ -18,7 +18,7 @@ female_snorbal_calf = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 350,
 	milkType = "milk_wild",
-	milk = 250,
+	milk = 2 * 250,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ female_snorbal_calf = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/female_snorbal_calf.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	scale = 0.6,
 	lootGroups = {},
 	weapons = {},

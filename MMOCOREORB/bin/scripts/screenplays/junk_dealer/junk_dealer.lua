@@ -114,8 +114,11 @@ function JunkDealer:sellAllItems(pPlayer, pSui, pInventory)
 
 		if pItem ~= nil then
 			local value = TangibleObject(pItem):getJunkValue()
-			createEvent(10, "JunkDealer", "destroyItem", pItem, "")
-			
+			local item = SceneObject(pItem)
+
+			item:destroyObjectFromWorld()
+			item:destroyObjectFromDatabase()
+
 			amount = amount + value
 		end
 	end
@@ -126,15 +129,6 @@ function JunkDealer:sellAllItems(pPlayer, pSui, pInventory)
 	messageString:setTT(name)
 	messageString:setDI(amount)
 	CreatureObject(pPlayer):sendSystemMessage(messageString:_getObject())
-end
-
-function JunkDealer:destroyItem(pItem)
-	if (pItem == nil) then
-		return
-	end
-	
-	SceneObject(pItem):destroyObjectFromWorld()
-	SceneObject(pItem):destroyObjectFromDatabase()
 end
 
 function JunkDealer:sellItem(pPlayer, pSui, rowIndex, pInventory)
@@ -152,7 +146,8 @@ function JunkDealer:sellItem(pPlayer, pSui, rowIndex, pInventory)
 	local name = item:getDisplayedName()
 	local value = TangibleObject(pItem):getJunkValue()
 
-	createEvent(10, "JunkDealer", "destroyItem", pItem, "")
+	item:destroyObjectFromWorld()
+	item:destroyObjectFromDatabase()
 
 	CreatureObject(pPlayer):addCashCredits(value, true)
 

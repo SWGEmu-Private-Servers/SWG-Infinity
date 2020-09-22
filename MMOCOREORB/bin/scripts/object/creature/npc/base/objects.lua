@@ -2199,6 +2199,17 @@ object_creature_npc_base_shared_gorax_base_male = SharedCreatureObjectTemplate:n
 
 ObjectTemplates:addClientTemplate(object_creature_npc_base_shared_gorax_base_male, "object/creature/npc/base/shared_gorax_base_male.iff")
 
+--[[    The Grinch is gone until Christmas
+
+object_creature_npc_base_shared_gorax_base_male_grinch = SharedCreatureObjectTemplate:new {
+	clientTemplateFileName = "object/creature/npc/base/shared_gorax_base_male_grinch.iff"
+	--Data below here is deprecated and loaded from the tres, keeping for easy lookups
+}
+
+ObjectTemplates:addClientTemplate(object_creature_npc_base_shared_gorax_base_male_grinch, "object/creature/npc/base/shared_gorax_base_male_grinch.iff")
+
+]]
+
 object_creature_npc_base_shared_gran_base_male = SharedCreatureObjectTemplate:new {
 	clientTemplateFileName = "object/creature/npc/base/shared_gran_base_male.iff"
 	--Data below here is deprecated and loaded from the tres, keeping for easy lookups

@@ -17,7 +17,7 @@ graul_mangler = Creature:new {
 	hideAmount = 875,
 	boneType = "bone_mammal",
 	boneAmount = 775,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.05,
 	ferocity = 10,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ graul_mangler = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/graul_hue.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	controlDeviceTemplate = "object/intangible/pet/graul_hue.iff",
 	scale = 1.1,
 	lootGroups = {},

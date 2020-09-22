@@ -405,8 +405,18 @@ function recruiterScreenplay:awardItem(pPlayer, faction, itemString)
 	if (slotsremaining < (1 + bonusItemCount)) then
 		return self.errorCodes.INVENTORYFULL
 	end
-
-	local transferResult =  self:transferItem(pPlayer, pInventory, faction, itemString)
+        if(itemString == "ff_weapon_stock") then
+                createLoot(pInventory, "ff_weapon_stock", 0, true)
+                transferResult = 0
+	elseif(itemString == "high_velocity_blaster_barrel") then
+                createLoot(pInventory, "high_velocity_blaster_barrel", 0, true)
+                transferResult = 0
+	elseif(itemString == "lightweight_vibro") then
+                createLoot(pInventory, "lightweight_vibro", 0, true)
+                transferResult = 0
+	else
+		transferResult =  self:transferItem(pPlayer, pInventory, faction, itemString)
+	end
 
 	if (transferResult ~= self.errorCodes.SUCCESS) then
 		return transferResult

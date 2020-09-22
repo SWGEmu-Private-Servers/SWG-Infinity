@@ -61,8 +61,8 @@ object_weapon_melee_special_vibroknuckler = object_weapon_melee_special_shared_v
 				"object/creature/player/twilek_female.iff",
 				"object/creature/player/wookiee_male.iff",
 				"object/creature/player/wookiee_female.iff",
-				"object/creature/player/zabrak_male.iff",
-				"object/creature/player/zabrak_female.iff" },
+			"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
+			"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff"},
 
 	-- RANGEDATTACK, MELEEATTACK, FORCEATTACK, TRAPATTACK, GRENADEATTACK, HEAVYACIDBEAMATTACK,
 	-- HEAVYLIGHTNINGBEAMATTACK, HEAVYPARTICLEBEAMATTACK, HEAVYROCKETLAUNCHERATTACK, HEAVYLAUNCHERATTACK
@@ -112,7 +112,7 @@ object_weapon_melee_special_vibroknuckler = object_weapon_melee_special_shared_v
 	idealRange = 1,
 	idealAccuracy = 10,
 
-	maxRange = 3,
+	maxRange = 5,
 	maxRangeAccuracy = 10,
 
 	minDamage = 20,

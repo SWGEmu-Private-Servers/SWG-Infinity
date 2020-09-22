@@ -184,7 +184,7 @@ function TreasureMapMenuComponent:openChestEvent(pChest, pCreature)
 	local hasOpenedChest = readData(playerID .. ":hasOpenedChest")
 
 	if (hasOpenedChest ~= 1) then
-		local credits = getRandomNumber(500, 5000)
+		local credits = getRandomNumber(55000, 175000)
 		CreatureObject(pCreature):addCashCredits(credits, true)
 		CreatureObject(pCreature):sendSystemMessage("You find " .. credits .. " credits in the chest.")
 		writeData(playerID .. ":hasOpenedChest", 1)
@@ -233,7 +233,7 @@ function TreasureMapMenuComponent:spawnTreasureDefenders(pObject, pPlayer, x, z,
 		local pMobile3 = spawnMobile(mapData.planet, "pirate_armsman", 0, thirdSpawnPoint[1], thirdSpawnPoint[2], thirdSpawnPoint[3], 0, 0)
 		TreasureMapMenuComponent:setDefenderAggro(pMobile3, pPlayer)
 	elseif (mapType == 3) then
-		local pMobile = spawnMobile(mapData.planet, "bounty_hunter_thug", 0, firstSpawnPoint[1], firstSpawnPoint[2], firstSpawnPoint[3], 0, 0)
+		local pMobile = spawnMobile(mapData.planet, "bounty_hunter_thug_tm", 0, firstSpawnPoint[1], firstSpawnPoint[2], firstSpawnPoint[3], 0, 0)
 		spatialChat(pMobile, "@treasure_map/treasure_map:bark_" .. mapStringName[mapType])
 		TreasureMapMenuComponent:setDefenderAggro(pMobile, pPlayer)
 	else

@@ -17,7 +17,7 @@ young_malkloc_plainswalker = Creature:new {
 	hideAmount = 1350,
 	boneType = "bone_mammal",
 	boneAmount = 1100,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ young_malkloc_plainswalker = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/young_malkloc.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	scale = 0.9,
 	lootGroups = {},
 	weapons = {},

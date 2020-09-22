@@ -12,9 +12,9 @@ kliknik_dark_queen = Creature:new {
 	armor = 0,
 	resists = {145,145,30,135,135,-1,-1,-1,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 7,
+	meatAmount = 123,
 	hideType = "hide_scaley",
-	hideAmount = 4,
+	hideAmount = 123,
 	boneType = "",
 	boneAmount = 0,
 	milk = 0,
@@ -26,7 +26,6 @@ kliknik_dark_queen = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/kliknik_queen.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.2,
 	lootGroups = {
 		{

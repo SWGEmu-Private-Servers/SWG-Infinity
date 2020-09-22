@@ -877,11 +877,6 @@ function PadawanTrials:notifyQuestTargetDead(pVictim, pAttacker)
 
 	if (readData(npcID .. ":destroyNpcOnExit") ~= 1) then
 		local trialNumber = JediTrials:getCurrentTrial(pOwner)
-		
-		if (trialNumber == 0) then
-			return 1
-		end
-		
 		local trialData = padawanTrialQuests[trialNumber]
 
 		if (trialData == nil) then
@@ -978,8 +973,6 @@ function PadawanTrials:failTrial(pPlayer)
 	deleteScreenPlayData(pPlayer, "JediTrials", "huntTarget")
 	deleteScreenPlayData(pPlayer, "JediTrials", "huntTargetCount")
 	deleteScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal")
-	
-	dropObserver(KILLEDCREATURE, "PadawanTrials", "notifyKilledHuntTarget", pPlayer)
 
 	local failAmount = JediTrials:getTrialFailureCount(pPlayer)
 	local failAmountMsg = nil
@@ -1039,8 +1032,6 @@ function PadawanTrials:passTrial(pPlayer)
 	deleteScreenPlayData(pPlayer, "JediTrials", "huntTarget")
 	deleteScreenPlayData(pPlayer, "JediTrials", "huntTargetCount")
 	deleteScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal")
-	
-	dropObserver(KILLEDCREATURE, "PadawanTrials", "notifyKilledHuntTarget", pPlayer)
 
 	deleteData(playerID .. ":JediTrials:acceptedTask")
 	deleteData(playerID .. ":JediTrials:killedTarget")
@@ -1129,7 +1120,7 @@ function PadawanTrials:onPlayerLoggedIn(pPlayer)
 		local trialData = padawanTrialQuests[trialNumber]
 		local trialState = JediTrials:getTrialStateName(pPlayer, trialNumber)
 
-		if (trialData.trialType == TRIAL_HUNT and tonumber(readScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal")) ~= nil) then
+		if (trialData.trialType == TRIAL_HUNT and readScreenPlayData(pPlayer, "JediTrials", "huntTargetGoal") ~= nil) then
 			dropObserver(KILLEDCREATURE, "PadawanTrials", "notifyKilledHuntTarget", pPlayer)
 
 			if (self:hasCompletedHunt(pPlayer) and not JediTrials:hasTrialArea(pPlayer)) then

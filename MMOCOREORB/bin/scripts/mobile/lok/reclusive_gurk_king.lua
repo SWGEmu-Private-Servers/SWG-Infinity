@@ -17,7 +17,7 @@ reclusive_gurk_king = Creature:new {
 	hideAmount = 275,
 	boneType = "bone_mammal",
 	boneAmount = 300,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ reclusive_gurk_king = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/recluse_gurk_king.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	scale = 1.4,
 	lootGroups = {
 	 {

@@ -27,8 +27,17 @@ require("sui.custom.SuiProcessorPuzzle")
 require("sui.custom.SuiRadiationSensor")
 require("sui.custom.SuiReceiverPuzzle")
 
+-- Custom content
+includeFile("../custom_scripts/screenplays/screenplays.lua")
+includeFile("custom_screenplays/pvp/LokBattlefield.lua")
 includeFile("helperfuncs.lua")
 includeFile("playerTriggers.lua")
+includeFile("poi/corellia_rogue_corsec_base.lua")
+-- Big thanks to Tarkin's Revenge for mission direction and level code
+includeFile("tools/mission_level_choice.lua") 
+includeFile("tools/mission_direction_choice.lua")  
+includeFile("tools/login_skill_check.lua")  
+
 
 -- Theme parks
 includeFile("themepark/conversations/goru_conv_handler.lua")
@@ -111,25 +120,8 @@ includeFile("dungeon/death_watch_bunker/conversations/deathWatchMedicalDroidConv
 includeFile("dungeon/death_watch_bunker/conversations/deathWatchRescueScientistConvoHandler.lua")
 includeFile("dungeon/death_watch_bunker/conversations/deathWatchTechnicianConvoHandler.lua")
 includeFile("dungeon/death_watch_bunker/conversations/deathWatchWorkshopDroidConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/geoLab.lua")
-includeFile("dungeon/geonosian_lab/geoLabContainerComponents.lua")
-includeFile("dungeon/geonosian_lab/geoLabMenuComponents.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicAssistantConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicConstructionConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicEngineerTechConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicHeraldConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicHeraldDealerConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicRandomConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicScientistGeneric02ConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicScientistHumanConvoHandler.lua")
-includeFile("dungeon/geonosian_lab/conversations/biogenicSecurityTechConvoHandler.lua")
+includeFile("dungeon/geonosian_lab/geo_lab.lua")
 includeFile("dungeon/warren/warren.lua")
-includeFile("dungeon/warren/warrenComponents.lua")
-includeFile("dungeon/warren/convos/mirla_convo_handler.lua")
-includeFile("dungeon/warren/convos/oevitt_piboi_convo_handler.lua")
-includeFile("dungeon/warren/convos/manx_try_convo_handler.lua")
-includeFile("dungeon/warren/convos/captain_heff_convo_handler.lua")
-includeFile("dungeon/warren/convos/warren_worker_convo_handler.lua")
 includeFile("dungeon/corellian_corvette/conversations/corvetteTicketTakerConvoHandler.lua")
 includeFile("dungeon/corellian_corvette/conversations/corvetteTicketGiverConvoHandler.lua")
 includeFile("dungeon/corellian_corvette/conversations/corvetteRepairDroidConvoHandler.lua")
@@ -298,19 +290,11 @@ includeFile("events/bestine_election/convos/victor_questp_slums_conv_handler.lua
 includeFile("events/bestine_election/convos/victor_visalis_conv_handler.lua")
 includeFile("events/bestine_election/convos/tour_aryon_conv_handler.lua")
 
--- Cries of Alderaan
-includeFile("events/coa/coa.lua")
-includeFile("events/coa/coa2Screenplay.lua")
-includeFile("events/coa/conversations/imperial_commander_conv_handler.lua")
-includeFile("events/coa/conversations/imperial_coordinator_conv_handler.lua")
-includeFile("events/coa/conversations/imperial_informant_conv_handler.lua")
-includeFile("events/coa/conversations/rebel_commander_conv_handler.lua")
-includeFile("events/coa/conversations/rebel_coordinator_conv_handler.lua")
-includeFile("events/coa/conversations/rebel_lyda_conv_handler.lua")
-includeFile("events/coa/conversations/rebel_sympathizer_conv_handler.lua")
-
 -- Events
 includeFile("events/conversations/bestine_artist_conv_handler.lua")
+includeFile("events/conversations/imperial_commander_conv_handler.lua")
+includeFile("events/conversations/imperial_coordinator_conv_handler.lua")
+includeFile("events/conversations/imperial_informant_conv_handler.lua")
 includeFile("events/conversations/life_day_anarra_conv_handler.lua")
 includeFile("events/conversations/life_day_kkatamk_conv_handler.lua")
 includeFile("events/conversations/life_day_oraalarri_conv_handler.lua")
@@ -318,7 +302,12 @@ includeFile("events/conversations/life_day_radrrl_conv_handler.lua")
 includeFile("events/conversations/life_day_tebeurra_conv_handler.lua")
 includeFile("events/conversations/museum_curator_conv_handler.lua")
 includeFile("events/conversations/race_droid_conv_handler.lua")
+includeFile("events/conversations/rebel_commander_conv_handler.lua")
+includeFile("events/conversations/rebel_coordinator_conv_handler.lua")
+includeFile("events/conversations/rebel_lyda_conv_handler.lua")
+includeFile("events/conversations/rebel_sympathizer_conv_handler.lua")
 includeFile("events/bestineMuseum.lua")
+includeFile("events/coa2Screenplay.lua")
 includeFile("events/eventPromoter.lua")
 includeFile("events/lifeDay.lua")
 includeFile("events/buffTerminalMenuComponent.lua")
@@ -627,6 +616,7 @@ includeFile("poi/yavin4_blueleaf_temple.lua")
 includeFile("poi/yavin4_imperial_base.lua")
 includeFile("poi/yavin4_woolamander_temple.lua")
 
+
 --Static Spawns
 includeFile("static_spawns/corellia_static_spawns.lua")
 includeFile("static_spawns/dantooine_static_spawns.lua")
@@ -643,7 +633,8 @@ includeFile("static_spawns/talus_static_spawns_north.lua")
 includeFile("static_spawns/talus_static_spawns_south.lua")
 includeFile("static_spawns/tatooine_static_spawns_north.lua")
 includeFile("static_spawns/tatooine_static_spawns_south.lua")
-
+-- includeFile("infinity/pandora_merchant.lua")   -- Mysterious container .iff's missing
+includeFile("infinity/merchant_system.lua")
 --Yavin4
 includeFile("static_spawns/yavin4_static_spawns.lua")
 
@@ -666,8 +657,5 @@ includeFile("record_keepers/record_keepers.lua")
 --Tests
 includeFile("tests/tests.lua")
 
--- Server Event Automation
-includeFile("events/ServerEventAutomation.lua")
-
--- Custom content - Loads last to allow for overrides
-includeFile("../custom_scripts/screenplays/screenplays.lua")
+--custom
+--includeFile("infinity/corellia_target_dummys.lua")

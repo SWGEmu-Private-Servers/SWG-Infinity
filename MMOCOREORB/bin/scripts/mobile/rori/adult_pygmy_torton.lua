@@ -17,7 +17,7 @@ adult_pygmy_torton = Creature:new {
 	hideAmount = 400,
 	boneType = "bone_mammal",
 	boneAmount = 600,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ adult_pygmy_torton = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/torton_hue.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = .55,
 	lootGroups = {},
 	weapons = {},

@@ -571,3 +571,93 @@ object_tangible_wearables_armor_chitin_shared_armor_chitin_s01_leggings = Shared
 }
 
 ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_s01_leggings, "object/tangible/wearables/armor/chitin/shared_armor_chitin_s01_leggings.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bicep_l = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bicep_l.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bicep_l, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bicep_l.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bicep_r = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bicep_r.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bicep_r, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bicep_r.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_boots = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_boots.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_boots, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_boots.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bracer_l = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bracer_l.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bracer_l, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bracer_l.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bracer_r = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bracer_r.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_bracer_r, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_bracer_r.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_chest_plate = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_chest_plate.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_chest_plate, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_chest_plate.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_gloves = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_gloves.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_gloves, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_gloves.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_helmet = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_helmet.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_helmet, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_helmet.iff")
+
+--****************************************************************************************************************************************************************************
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_leggings = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_leggings.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_chitin_shared_armor_chitin_acklay_leggings, "object/tangible/wearables/armor/chitin/shared_armor_chitin_acklay_leggings.iff")
+
+--****************************************************************************************************************************************************************************

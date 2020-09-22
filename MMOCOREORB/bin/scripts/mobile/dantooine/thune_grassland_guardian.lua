@@ -18,7 +18,7 @@ thune_grassland_guardian = Creature:new {
 	boneType = "",
 	boneAmount = 0,
 	milkType = "milk_wild",
-	milk = 65,
+	milk = 2 * 250,
 	tamingChance = 0.15,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -27,7 +27,6 @@ thune_grassland_guardian = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/thune_grassland_guardian.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	controlDeviceTemplate = "object/intangible/pet/thune_hue.iff",
 	scale = 1.1,
 	lootGroups = {},

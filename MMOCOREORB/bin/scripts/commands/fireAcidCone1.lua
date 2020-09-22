@@ -44,8 +44,8 @@
 FireAcidCone1Command = {
         name = "fireacidcone1",
 	
-	damageMultiplier = 5,
-	speedMultiplier = 4,
+	damageMultiplier = 6,
+	speedMultiplier = 3,
 	healthCostMultiplier = 1.5,
 	actionCostMultiplier = 0.5,
 	mindCostMultiplier = 0.5,
@@ -58,12 +58,25 @@ FireAcidCone1Command = {
 
 	animation = "fire_acid_rifle_single_1", 
 	animType = GENERATE_INTENSITY,
-
 	combatSpam = "fireacidcone1",
+	dotEffects = {
+	  DotEffect( 
+		POISONED, 
+		{"resistance_poison", "poison_disease_resist"},
+		ACTION,
+		true,
+		0,
+		60,
+		80, 
+		60,
+		10,
+		2
+	  )
+	},
 	
 	weaponType = SPECIALHEAVYWEAPON,
 	
-	range = 16
+	range = 26
 }
 
 AddCommand(FireAcidCone1Command)

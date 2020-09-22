@@ -42,7 +42,10 @@
 
 
 object_tangible_wearables_armor_zam_armor_zam_wesell_helmet_quest = object_tangible_wearables_armor_zam_shared_armor_zam_wesell_helmet_quest:new {
+
 	templateType = ARMOROBJECT,
+
+	objectMenuComponent = "ArmorObjectMenuComponent",
 
 	playerRaces = { "object/creature/player/bothan_male.iff",
 				"object/creature/player/bothan_female.iff",
@@ -58,8 +61,8 @@ object_tangible_wearables_armor_zam_armor_zam_wesell_helmet_quest = object_tangi
 				"object/creature/player/trandoshan_female.iff",
 				"object/creature/player/twilek_male.iff",
 				"object/creature/player/twilek_female.iff",
-				"object/creature/player/zabrak_male.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/bothan_female.iff",
 				"object/mobile/vendor/bothan_male.iff",
 				"object/mobile/vendor/human_female.iff",

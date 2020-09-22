@@ -68,4 +68,11 @@ disabledWearableSkillMods = {
 	"keep_creature",
 	"stored_pets",
 	"combat_medic_effectiveness",
+	"mindblast_accuracy",
+	"forceintimidate_accuracy",
+	"forcethrow_accuracy",
+	"forceknockdown_accuracy",
+	"forceweaken_accuracy",
+	"forcelightning_accuracy",
+	"force_choke",
 }

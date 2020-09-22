@@ -571,3 +571,75 @@ object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_leggings 
 }
 
 ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_leggings, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_leggings.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bicep_l_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bicep_l_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bicep_l_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bicep_l_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bicep_r_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bicep_r_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bicep_r_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bicep_r_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_boots_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_boots_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_boots_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_boots_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bracer_l_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bracer_l_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bracer_l_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bracer_l_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bracer_r_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bracer_r_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_bracer_r_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_bracer_r_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_chest_plate_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_chest_plate_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_chest_plate_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_chest_plate_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_gloves_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_gloves_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_gloves_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_gloves_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_helmet_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_helmet_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_helmet_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_helmet_camo.iff")
+
+--****************************************************************************************************************************************************************************
+object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_leggings_camo = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_leggings_camo.iff"
+
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_wearables_armor_ithorian_defender_shared_ith_armor_s01_leggings_camo, "object/tangible/wearables/armor/ithorian_defender/shared_ith_armor_s01_leggings_camo.iff")

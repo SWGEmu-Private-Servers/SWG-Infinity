@@ -12,12 +12,12 @@ voritor_dasher = Creature:new {
 	armor = 0,
 	resists = {20,-1,20,-1,-1,-1,-1,20,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 40,
+	meatAmount = 123,
 	hideType = "hide_leathery",
-	hideAmount = 30,
+	hideAmount = 123,
 	boneType = "bone_avian",
-	boneAmount = 35,
-	milk = 0,
+	boneAmount = 123,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ voritor_dasher = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/voritor_dasher.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.05,
 	lootGroups = {
 		{

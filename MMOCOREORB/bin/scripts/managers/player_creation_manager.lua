@@ -1,10 +1,10 @@
 --Should all created players start with God Mode? 1 = yes, 0 = no
-freeGodMode = 0;
+freeGodMode = 0
 --How many cash credits new characters start with after creating a character (changed during test phase, normal value is 100)
-startingCash = 100
+startingCash = 5000
 --startingCash = 100000
 --How many bank credits new characters start with after creating a character (changed during test phase, normal value is 1000)
-startingBank = 1000
+startingBank = 10000
 --startingBank = 100000
 --How many skill points a new characters start with
 skillPoints = 250
@@ -31,6 +31,8 @@ brawlerTwoHander = "object/weapon/melee/axe/axe_heavy_duty.iff"
 
 brawlerPolearm = "object/weapon/melee/polearm/lance_staff_wood_s1.iff"
 
+brawlerVK = "object/weapon/melee/special/vibroknuckler.iff"
+
 survivalKnife = "object/weapon/melee/knife/knife_survival.iff"
 
 genericTool = "object/tangible/crafting/station/generic_tool.iff"
@@ -45,10 +47,21 @@ slitherhorn = "object/tangible/instrument/slitherhorn.iff"
 
 marojMelon = "object/tangible/food/foraged/foraged_fruit_s1.iff"
 
-x31Speeder = "object/tangible/deed/vehicle_deed/landspeeder_x31_deed.iff"
+SwoopBike = "object/tangible/deed/vehicle_deed/speederbike_swoop_deed.iff"
+
+paddedbelt = "object/tangible/wearables/armor/padded/armor_padded_s01_belt.iff"
+paddedbicepl = "object/tangible/wearables/armor/padded/armor_padded_s01_bicep_l.iff"
+paddedbicepr = "object/tangible/wearables/armor/padded/armor_padded_s01_bicep_r.iff"
+paddedboots = "object/tangible/wearables/armor/padded/armor_padded_s01_boots.iff"
+paddedbracerl = "object/tangible/wearables/armor/padded/armor_padded_s01_bracer_l.iff"
+paddedbracerr = "object/tangible/wearables/armor/padded/armor_padded_s01_bracer_r.iff"
+paddedchest = "object/tangible/wearables/armor/padded/armor_padded_s01_chest_plate.iff"
+paddedhelmet = "object/tangible/wearables/armor/padded/armor_padded_s01_helmet.iff"
+paddedgloves = "object/tangible/wearables/armor/padded/armor_padded_s01_gloves.iff"
+paddedleggings = "object/tangible/wearables/armor/padded/armor_padded_s01_leggings.iff"
 
 professionSpecificItems = {
-	combat_brawler = { brawlerOneHander, brawlerTwoHander, brawlerPolearm },
+	combat_brawler = { brawlerOneHander, brawlerTwoHander, brawlerPolearm, brawlerVK },
 	combat_marksman = { marksmanPistol, marksmanCarbine, marksmanRifle },
 	crafting_artisan = { genericTool, mineralTool, chemicalTool },
 	jedi = { },
@@ -57,4 +70,4 @@ professionSpecificItems = {
 	social_entertainer = { slitherhorn }
 }
 
-commonStartingItems = { marojMelon, survivalKnife, x31Speeder }
+commonStartingItems = { marojMelon, survivalKnife, SwoopBike, paddedbelt, paddedbicepl, paddedbicepr, paddedboots, paddedbracerl, paddedbracerr, paddedchest, paddedhelmet, paddedgloves, paddedleggings }

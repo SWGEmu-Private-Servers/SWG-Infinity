@@ -18,7 +18,7 @@ rogue_fambaa = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 675,
 	milkType = "milk_wild",
-	milk = 400,
+	milk = 2 * 400,
 	tamingChance = 0,
 	ferocity = 9,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -27,7 +27,6 @@ rogue_fambaa = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/fambaa_hue.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.1,
 	lootGroups = {
 	 {

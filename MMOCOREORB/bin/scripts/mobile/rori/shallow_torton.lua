@@ -17,7 +17,7 @@ shallow_torton = Creature:new {
 	hideAmount = 575,
 	boneType = "bone_mammal",
 	boneAmount = 650,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ shallow_torton = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/shallow_torton.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = 0.9,
 	lootGroups = {},
 	weapons = {},

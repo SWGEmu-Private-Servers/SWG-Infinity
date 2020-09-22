@@ -24,12 +24,14 @@ function padawan_architect_02_conv_handler:runScreenHandlers(pConvTemplate, pPla
 	local playerID = SceneObject(pPlayer):getObjectID()
 
 	if (screenID == "nice_away") then
+	printLuaError("PadawanTrials: gungan scheduled for removal, proper choice was made")
 		writeData(playerID .. ":JediTrials:spokeToTarget01", 1)
 		CreatureObject(pNpc):setPvpStatusBitmask(0)
 		CreatureObject(pNpc):setOptionsBitmask(0)
 		PadawanTrials:createMainLocation(pPlayer)
 		writeData(SceneObject(pNpc):getObjectID() .. ":destroyNpcOnExit", 1)
 	elseif (screenID == "initiate_attack_fail") then
+	printLuaError("PadawanTrials: Player attacked gungan")
 		PadawanTrials:removeNpcDestroyActiveArea(pPlayer)
 		CreatureObject(pNpc):engageCombat(pPlayer)
 	end

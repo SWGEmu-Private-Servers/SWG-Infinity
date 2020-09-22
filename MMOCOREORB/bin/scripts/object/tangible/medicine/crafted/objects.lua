@@ -10188,3 +10188,9 @@ object_tangible_medicine_crafted_shared_medpack_wound_strength_e = SharedTangibl
 }
 
 ObjectTemplates:addClientTemplate(object_tangible_medicine_crafted_shared_medpack_wound_strength_e, "object/tangible/medicine/crafted/shared_medpack_wound_strength_e.iff")
+
+
+object_tangible_medicine_crafted_shared_medpack_poison_hssiss = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/medicine/crafted/shared_medpack_poison_hssiss.iff"
+}
+ObjectTemplates:addClientTemplate(object_tangible_medicine_crafted_shared_medpack_poison_hssiss, "object/tangible/medicine/crafted/shared_medpack_poison_hssiss.iff")

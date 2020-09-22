@@ -8,12 +8,12 @@ FsVillageDefense = ScreenPlay:new {
 			outlaw = {
 				questNum = QuestManager.quests.FS_DEFEND_01,
 				questName = "fs_defend_01",
-				killReq = 50
+				killReq = 30
 			},
 			pirate = {
 				questNum = QuestManager.quests.FS_DEFEND_02,
 				questName = "fs_defend_02",
-				killReq = 25
+				killReq = 15
 			}
 		},
 		melee = {
@@ -22,12 +22,12 @@ FsVillageDefense = ScreenPlay:new {
 			outlaw = {
 				questNum = QuestManager.quests.FS_DEFEND_03,
 				questName = "fs_defend_03",
-				killReq = 50
+				killReq = 30
 			},
 			pirate = {
 				questNum = QuestManager.quests.FS_DEFEND_04,
 				questName = "fs_defend_04",
-				killReq = 25
+				killReq = 15
 			}
 		}
 	}
@@ -71,10 +71,10 @@ function FsVillageDefense:checkHealerList(pCreature)
 			local pQuest
 
 			if (QuestManager.hasActiveQuest(pPlayer, QuestManager.quests.FS_COMBAT_HEALING_2)) then
-				healReq = 100
+				healReq = 10
 				pQuest = getQuestInfo("fs_combat_healing_2")
 			else
-				healReq = 50
+				healReq = 5
 				pQuest = getQuestInfo("fs_combat_healing_1")
 			end
 
@@ -254,11 +254,11 @@ function FsVillageDefense:canAcceptSarguilloQuest(pPlayer)
 end
 
 function FsVillageDefense:canAcceptRangedQuest(pPlayer)
-	return not QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_DEFEND_WAIT_01) and not VillageJediManagerCommon.hasActiveQuestThisPhase(pPlayer) and not VillageJediManagerCommon.hasCompletedQuestThisPhase(pPlayer)
+	return not QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_DEFEND_WAIT_01) and not VillageJediManagerCommon.hasActiveQuestThisPhase(pPlayer)
 end
 
 function FsVillageDefense:canAcceptMeleeQuest(pPlayer)
-	return not QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_DEFEND_WAIT_02) and not VillageJediManagerCommon.hasActiveQuestThisPhase(pPlayer) and not VillageJediManagerCommon.hasCompletedQuestThisPhase(pPlayer)
+	return not QuestManager.hasCompletedQuest(pPlayer, QuestManager.quests.FS_DEFEND_WAIT_02) and not VillageJediManagerCommon.hasActiveQuestThisPhase(pPlayer)
 end
 
 function FsVillageDefense:hasActiveSarguilloQuest(pPlayer)

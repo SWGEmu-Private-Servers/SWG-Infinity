@@ -18,6 +18,8 @@ object_resource_container_resource_spawn = object_resource_container_shared_simp
 				"object/creature/player/wookiee_male.iff",
 				"object/creature/player/wookiee_female.iff",
 				"object/creature/player/zabrak_male.iff",
+				"object/creature/player/chiss_male.iff",
+				"object/creature/player/chiss_female.iff",
 				"object/creature/player/zabrak_female.iff" },
 
 	level = 10,
@@ -30,7 +32,6 @@ object_resource_container_resource_spawn = object_resource_container_shared_simp
 	pvpStatusBitmask = 0,
 	objectMenuComponent = "TangibleObjectMenuComponent",
 	attributeListComponent = "AttributeListComponent",
-	zoneComponent = "ZoneComponent",
 
 	sliceable = 0,
 

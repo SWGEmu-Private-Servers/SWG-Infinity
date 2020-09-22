@@ -42,13 +42,10 @@
 --true = 1, false = 0
 
 -- Basilisk staff levels
-includeFile("levels/qa_basilisk.lua")
-includeFile("levels/dev_basilisk.lua")
-
 includeFile("levels/admin.lua")
 includeFile("levels/dev.lua")
 includeFile("levels/qa.lua")
-includeFile("levels/csr.lua")
+includeFile("levels/infinity-gm.lua")
 includeFile("levels/ec.lua")
 includeFile("levels/intern.lua")
 --includeFile("levels/tester.lua")
@@ -57,3 +54,4 @@ includeFile("levels/eci.lua")
 includeFile("levels/csi.lua")
 includeFile("levels/cc.lua")
 includeFile("levels/ct.lua")
+includeFile("levels/senator.lua")

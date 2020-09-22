@@ -18,7 +18,7 @@ bolle_bol_calf = Creature:new {
 	boneType = "bone_mammal",
 	boneAmount = 130,
 	milkType = "milk_wild",
-	milk = 200,
+	milk = 2 * 250,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,6 @@ bolle_bol_calf = Creature:new {
 	diet = HERBIVORE,
 
 	templates = {"object/mobile/bolle_bol_calf.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = 0.65,
 	lootGroups = {},
 	weapons = {},

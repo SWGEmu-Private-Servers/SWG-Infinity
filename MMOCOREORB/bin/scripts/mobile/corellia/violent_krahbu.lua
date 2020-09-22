@@ -17,7 +17,7 @@ violent_krahbu = Creature:new {
 	hideAmount = 135,
 	boneType = "bone_mammal",
 	boneAmount = 135,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0.25,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ violent_krahbu = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/violent_krahbu.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	controlDeviceTemplate = "object/intangible/pet/krahbu_hue.iff",
 	scale = 1.15,
 	lootGroups = {},

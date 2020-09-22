@@ -1,5 +1,4 @@
 CrackdownCantina = ScreenPlay:new {
-	isEnabled = false,
 	cantinaPlanets = { "corellia", "naboo", "tatooine" },
 
 	cantinaOids = {
@@ -14,10 +13,6 @@ CrackdownCantina = ScreenPlay:new {
 registerScreenPlay("CrackdownCantina", true)
 
 function CrackdownCantina:start()
-	if (not isEnabled) then
-		return
-	end
-	
 	for i = 1, #self.cantinaPlanets, 1 do
 		local planetName = self.cantinaPlanets[i]
 
@@ -83,7 +78,7 @@ function CrackdownCantina:handlePotentialTrouble(pCantina, pPlayer)
 	end
 
 	-- Only going to check for trouble 20% of the time
-	if (getRandomNumber(100) > 20) then
+	if (getRandomNumber(100) >= 20) then
 		return
 	end
 
@@ -123,7 +118,7 @@ function CrackdownCantina:startTrouble(pCantina)
 	local spawnTemplate
 	local factionName
 
-	if (controllingFaction == FACTIONIMPERIAL or controllingFaction == FACTIONNEUTRAL) then
+	if (controllingFaction == FACTIONIMPERIAL) then
 		spawnTemplate = "crackdown_stormtrooper"
 		factionName = "imperial"
 	else
@@ -151,17 +146,16 @@ function CrackdownCantina:setupHarasser(pMobile, factionName)
 
 	local mobileID = SceneObject(pMobile):getObjectID()
 	createObserver(DESTINATIONREACHED, "CrackdownCantina", "destinationReached", pMobile)
-	createObserver(DEFENDERADDED, "CrackdownCantina", "onStartedCombat", pMobile)
+	createObserver(STARTCOMBAT, "CrackdownCantina", "onStartedCombat", pMobile)
+	createEvent(1000, "CrackdownCantina", "moveToHarassPoint", pMobile, "")
 
 	writeStringData(mobileID .. ":nextPoint", "cantina")
 	writeStringData(mobileID .. ":factionName", factionName)
 	AiAgent(pMobile):setAiTemplate("cantinacrackdown") -- Don't move unless patrol point is added to list, walking speed
 	AiAgent(pMobile):setFollowState(4) -- Patrolling
-
-	createEvent(2000, "CrackdownCantina", "moveToHarassPoint", pMobile, "")
 end
 
-function CrackdownCantina:onStartedCombat(pMobile, pPlayer)
+function CrackdownCantina:onStartedCombat(pMobile)
 	if (pMobile == nil or CreatureObject(pMobile):isDead()) then
 		return 1
 	end
@@ -175,10 +169,9 @@ function CrackdownCantina:onStartedCombat(pMobile, pPlayer)
 
 	if (readData(mobileID .. ":calledForBackup") ~= 1) then
 		writeData(mobileID .. ":calledForBackup", 1)
-		writeData(mobileID .. ":targetID", SceneObject(pPlayer):getObjectID())
 		spatialChat(pMobile, "@npc_reaction/imperial_crackdown_cantina:back_up")
 		local factionName = readStringData(mobileID .. ":factionName")
-		createEvent(1000, "CrackdownCantina", "callForBackup", pMobile, factionName)
+		createEvent(2000, "CrackdownCantina", "callForBackup", pMobile, factionName)
 	end
 
 	return 1
@@ -579,7 +572,7 @@ function CrackdownCantina:callForBackup(pMobile, factionName)
 		if (pSpawn ~= nil) then
 			local spawnID = SceneObject(pSpawn):getObjectID()
 			writeData(spawnID .. ":targetID", targetID)
-			createEvent(200, "CrackdownCantina", "setupBackupMobile", pSpawn, "")
+			createEvent(2000, "CrackdownCantina", "setupBackupMobile", pSpawn, "")
 		end
 	end
 
@@ -593,7 +586,7 @@ function CrackdownCantina:callForBackup(pMobile, factionName)
 		if (pSpawn ~= nil) then
 			local spawnID = SceneObject(pSpawn):getObjectID()
 			writeData(spawnID .. ":targetID", targetID)
-			createEvent(200, "CrackdownCantina", "setupBackupMobile", pSpawn, "")
+			createEvent(2000, "CrackdownCantina", "setupBackupMobile", pSpawn, "")
 		end
 	end
 
@@ -607,7 +600,7 @@ function CrackdownCantina:callForBackup(pMobile, factionName)
 		if (pSpawn ~= nil) then
 			local spawnID = SceneObject(pSpawn):getObjectID()
 			writeData(spawnID .. ":targetID", targetID)
-			createEvent(200, "CrackdownCantina", "setupBackupMobile", pSpawn, "")
+			createEvent(2000, "CrackdownCantina", "setupBackupMobile", pSpawn, "")
 		end
 	end
 end

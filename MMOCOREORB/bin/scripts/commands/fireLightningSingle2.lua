@@ -49,16 +49,37 @@ FireLightningSingle2Command = {
 	healthCostMultiplier = 1,
 	actionCostMultiplier = 1,
 	mindCostMultiplier = 1,
+	accuracyBonus = 25,
+
+	stateEffects = {
+	  StateEffect(
+		INTIMIDATE_EFFECT,
+		{"intimidate_defense"},
+		{},
+		{},
+		55,
+		0,
+		10
+	  ),
+	  StateEffect(
+		DIZZY_EFFECT,
+		{},
+		{ "dizzy_defense", "resistance_states" },
+		{ "jedi_state_defense" },
+		80,
+		0,
+		30
+	  ),
+	 },
 
 	animation = "fire_lightning_rifle_single_2",
 	animType = GENERATE_INTENSITY,
 
 	combatSpam = "firelightningsingle2",
-	
+
 	weaponType = SPECIALHEAVYWEAPON,
 
-	range = 16
+	range = 32
 }
 
 AddCommand(FireLightningSingle2Command)
-

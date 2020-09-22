@@ -42,7 +42,6 @@
 
 
 object_tangible_wearables_bodysuit_bodysuit_bwing_quest = object_tangible_wearables_bodysuit_shared_bodysuit_bwing_quest:new {
-	faction = "Rebel",
 	playerRaces = { "object/creature/player/bothan_male.iff",
 				"object/creature/player/bothan_female.iff",
 				"object/creature/player/human_male.iff",
@@ -57,8 +56,8 @@ object_tangible_wearables_bodysuit_bodysuit_bwing_quest = object_tangible_wearab
 				"object/creature/player/trandoshan_female.iff",
 				"object/creature/player/twilek_male.iff",
 				"object/creature/player/twilek_female.iff",
-				"object/creature/player/zabrak_male.iff",
-				"object/creature/player/zabrak_female.iff",
+				"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
+				"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff",
 				"object/mobile/vendor/aqualish_female.iff",
 				"object/mobile/vendor/aqualish_male.iff",
 				"object/mobile/vendor/bith_female.iff",

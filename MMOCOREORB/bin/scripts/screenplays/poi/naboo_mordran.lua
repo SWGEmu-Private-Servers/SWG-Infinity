@@ -16,8 +16,8 @@ end
 
 function NabooMordranScreenPlay:spawnMobiles()
 
-	--mordran respawns between 15-20 minutes
-	local pNpc = spawnMobile("naboo", "mordran", 1200, -1969, 6.4, -5295, 45, 0)
+	--mordran respawns between 6 - 6.5 hours
+	local pNpc = spawnMobile("naboo", "mordran", math.random(21600, 23400), -1969, 6.4, -5295, 45, 0)
 	spawnMobile("naboo", "outcast_gungan", 300, -1967, 6.4, -5296, 45, 0)
 	spawnMobile("naboo", "outcast_gungan", 300, -1964, 6.4, -5292, 45, 0)
 	spawnMobile("naboo", "outcast_gungan", 300, -1966, 6.4, -5301, 45, 0)

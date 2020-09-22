@@ -42,13 +42,11 @@
 --true = 1, false = 0
 
 ForceResistBleedingCommand = {
-	name = "forceresistbleeding",
-	forceCost = 250,
-	duration = 900,
-	--animationCRC = hashCode()
-	clientEffect = "clienteffect/pl_force_resist_bleeding_self.cef",
-	frsLightBuffModifier = 0.35,
-	frsDarkBuffModifier = 0.35,
+        name = "forceresistbleeding",
+        forceCost = 250,
+        duration = 1800,
+        --animationCRC = hashCode()
+        clientEffect = "clienteffect/pl_force_resist_bleeding_self.cef"
 }
 
 AddCommand(ForceResistBleedingCommand)

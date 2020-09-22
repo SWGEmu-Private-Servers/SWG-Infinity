@@ -48,7 +48,7 @@ object_installation_turret_turret_dish_sm = object_installation_turret_shared_tu
 	zoneComponent = "TurretZoneComponent",
 	dataObjectComponent = "TurretDataComponent",
 	-- Damagetypes in WeaponObject
-	vulnerability = BLAST + LIGHTSABER,
+	vulnerability = BLAST,
 	-- LIGHT, MEDIUM, HEAVY
 	rating = LIGHT,
 
@@ -60,7 +60,7 @@ object_installation_turret_turret_dish_sm = object_installation_turret_shared_tu
 	heat = 75,
 	cold = 75,
 	acid = 75,
-	lightSaber = -1,
+	lightSaber = 75,
 	chanceHit = 4,
 	weapon = "object/weapon/ranged/turret/turret_dish_large.iff",
 

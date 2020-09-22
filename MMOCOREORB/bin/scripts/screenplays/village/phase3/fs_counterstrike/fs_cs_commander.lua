@@ -17,7 +17,7 @@ FsCsCommander = {
 
 	-- Defense wave data
 	rescueMobDataTable = {
-		spawnerPulse = 120 * 1000, -- Time between spawn pulses
+		spawnerPulse = 60 * 1000, -- Time between spawn pulses
 		maxSpawn = 2, -- Max waves of mobiles to spawn over the entire lifetime of the spawner
 		maxPopulation = 2, -- Max mobs to have up at any one time
 		mobileLifespan = 300 * 1000, -- Time until spawned mobs should be destroyed

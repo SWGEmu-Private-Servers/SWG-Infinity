@@ -17,7 +17,7 @@ dune_kimogila = Creature:new {
 	hideAmount = 1000,
 	boneType = "",
 	boneAmount = 0,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ dune_kimogila = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/kimogila_hue.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	lootGroups = {
 	 {
 	        groups = {

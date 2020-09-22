@@ -44,8 +44,8 @@
 FlameSingle2Command = {
        name = "flamesingle2",
 
-	damageMultiplier = 8,
-	speedMultiplier = 4,
+	damageMultiplier = 9,
+	speedMultiplier = 3,
 	healthCostMultiplier = 2.0,
 	actionCostMultiplier = 0.5,
 	mindCostMultiplier = 0.5,
@@ -53,28 +53,27 @@ FlameSingle2Command = {
 
 	poolsToDamage = RANDOM_ATTRIBUTE,
 
-	animation = "fire_flame_thrower_single_2", 
+	animation = "fire_flame_thrower_single_2",
 	animType = GENERATE_INTENSITY,
 	combatSpam = "flamesingle2",
 	dotEffects = {
-	  DotEffect( 
-		ONFIRE, 
+	  DotEffect(
+		ONFIRE,
 		{"resistance_fire", "fire_resist"},
 		HEALTH,
 		true,
 		0,
 		100,
-		100, 
+		100,
 		60,
 		10,
 		2
 	  )
 	},
-	
+
 	weaponType = SPECIALHEAVYWEAPON,
-	
-	range = 16
+
+	range = 32
 }
 
 AddCommand(FlameSingle2Command)
-

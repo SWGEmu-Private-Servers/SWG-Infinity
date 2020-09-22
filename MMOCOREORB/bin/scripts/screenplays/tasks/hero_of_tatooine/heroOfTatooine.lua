@@ -121,42 +121,34 @@ function HeroOfTatooineScreenPlay:validateAltruismCave()
 end
 
 function HeroOfTatooineScreenPlay:initEvents()
-	self:createCourageEvent("initial")
-	self:createAltruismEvent("initial")
-	self:createIntellectEvent("initial")
-	self:createHonorEvent("initial")
+	if (not hasServerEvent("HeroOfTatCourage")) then
+		self:createCourageEvent("initial")
+	end
+	if (not hasServerEvent("HeroOfTatAltruism")) then
+		self:createAltruismEvent("initial")
+	end
+	if (not hasServerEvent("HeroOfTatIntellect")) then
+		self:createIntellectEvent("initial")
+	end
+	if (not hasServerEvent("HeroOfTatHonor")) then
+		self:createHonorEvent("initial")
+	end
 end
 
 function HeroOfTatooineScreenPlay:createCourageEvent(event)
-	if (hasServerEvent("HeroOfTatCourage")) then
-		rescheduleServerEvent("HeroOfTatCourage", self:getEventTimer(event))
-	else
-		createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doCourageChange", "HeroOfTatCourage")
-	end
+	createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doCourageChange", "HeroOfTatCourage")
 end
 
 function HeroOfTatooineScreenPlay:createAltruismEvent(event)
-	if (hasServerEvent("HeroOfTatAltruism")) then
-		rescheduleServerEvent("HeroOfTatAltruism", self:getEventTimer(event))
-	else
-		createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doAltruismChange", "HeroOfTatAltruism")
-	end
+	createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doAltruismChange", "HeroOfTatAltruism")
 end
 
 function HeroOfTatooineScreenPlay:createIntellectEvent(event)
-	if (hasServerEvent("HeroOfTatIntellect")) then
-		rescheduleServerEvent("HeroOfTatIntellect", self:getEventTimer(event))
-	else
-		createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doIntellectSpawn", "HeroOfTatIntellect")
-	end
+	createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doIntellectSpawn", "HeroOfTatIntellect")
 end
 
 function HeroOfTatooineScreenPlay:createHonorEvent(event)
-	if (hasServerEvent("HeroOfTatHonor")) then
-		rescheduleServerEvent("HeroOfTatHonor", self:getEventTimer(event))
-	else
-		createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doHonorChange", "HeroOfTatHonor")
-	end
+	createServerEvent(self:getEventTimer(event), "HeroOfTatooineScreenPlay", "doHonorChange", "HeroOfTatHonor")
 end
 
 function HeroOfTatooineScreenPlay:doCourageChange()
@@ -181,7 +173,7 @@ function HeroOfTatooineScreenPlay:doCourageChange()
 	end
 
 	-- Reschedule respawn if boar is in combat or dead
-	if (pCourageMob ~= nil and AiAgent(pCourageMob):isInCombat()) then
+	if (pCourageMob ~= nil and (AiAgent(pCourageMob):isInCombat() or CreatureObject(pCourageMob):isDead())) then
 		self:createCourageEvent("life")
 		return 0
 	elseif (pCourageMob ~= nil) then
@@ -582,8 +574,8 @@ function HeroOfTatooineScreenPlay:despawnAltruismObjects()
 	deleteData("hero_of_tat:farmerWifeId")
 	deleteData("hero_of_tat:farmerChildId")
 	deleteData("hero_of_tat:altruismCrate")
-	deleteData("hero_of_tat:altruismEscorterID") -- No escorter
-	deleteData("hero_of_tat:altruismEscortStatus") -- No one doing escort
+	writeData("hero_of_tat:altruismEscorterID", 0) -- No escorter
+	writeData("hero_of_tat:altruismEscortStatus", 0) -- No one doing escort
 end
 
 function HeroOfTatooineScreenPlay:getCavePlayerWithQuestCount()
@@ -654,7 +646,7 @@ function HeroOfTatooineScreenPlay:destroyCaveWall(pCrevice)
 	if (planterId ~= 0 and pPlanter ~= nil) then
 		playClientEffectLoc(planterId, "clienteffect/lair_damage_heavy_shake.cef", "tatooine", 162.5, -66.8, -97.7, 5995573)
 		playClientEffectLoc(planterId, "clienteffect/lair_damage_heavy_shake.cef", "tatooine", 150.96, -65.83, -97.66, 5995573)
-		deleteData("hero_of_tat:explosivePlanterID")
+		writeData("hero_of_tat:explosivePlanterID", 0)
 	end
 
 	SceneObject(pCrevice):destroyObjectFromWorld()
@@ -745,7 +737,7 @@ function HeroOfTatooineScreenPlay:completeEscort(pPlayer)
 		AiAgent(pWife):setAiTemplate("idlewait")
 	end
 
-	deleteData("hero_of_tat:altruismEscortStatus")
+	writeData("hero_of_tat:altruismEscortStatus", 0)
 	CreatureObject(pPlayer):sendSystemMessage("@quest/hero_of_tatooine/system_messages:altruism_quest_success")
 
 	local pInventory = SceneObject(pPlayer):getSlottedObject("inventory")
@@ -805,7 +797,7 @@ function HeroOfTatooineScreenPlay:doHonorChange()
 	end
 
 	-- Reschedule respawn if leader or pirates are in combat
-	if (pLeader ~= nil and AiAgent(pLeader):isInCombat()) then
+	if ((pLeader ~= nil and AiAgent(pLeader):isInCombat()) or (pPirate1 ~= nil and AiAgent(pPirate1):isInCombat()) or (pPirate2 ~= nil and AiAgent(pPirate2):isInCombat())) then
 		self:createHonorEvent("life")
 		return
 	end
@@ -1004,7 +996,7 @@ function HeroOfTatooineScreenPlay:doHonorFail(pPlayer)
 	CreatureObject(pPirate1):setPvpStatusBitmask(0)
 	CreatureObject(pPirate2):setPvpStatusBitmask(0)
 
-	deleteData("hero_of_tat:honor_result") -- 0 = fail, 1 = success
+	writeData("hero_of_tat:honor_result", 0) -- 0 = fail, 1 = success
 
 	writeData("hero_of_tat:honor_pirate1", SceneObject(pPirate1):getObjectID())
 	writeData("hero_of_tat:honor_pirate1_step", 1) -- First step, spawn mobile

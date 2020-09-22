@@ -63,8 +63,8 @@ object_tangible_survey_tool_survey_tool_lumber = object_tangible_survey_tool_sha
 				"object/creature/player/twilek_female.iff",
 				"object/creature/player/wookiee_male.iff",
 				"object/creature/player/wookiee_female.iff",
-				"object/creature/player/zabrak_male.iff",
-				"object/creature/player/zabrak_female.iff" },
+			"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
+			"object/creature/player/zabrak_female.iff","object/creature/player/chiss_female.iff"},
 
 	customizationOptions = {},
 	customizationDefaults = {},

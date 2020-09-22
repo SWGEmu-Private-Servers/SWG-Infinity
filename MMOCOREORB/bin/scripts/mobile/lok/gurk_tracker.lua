@@ -17,7 +17,7 @@ gurk_tracker = Creature:new {
 	hideAmount = 277,
 	boneType = "bone_mammal",
 	boneAmount = 302,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ gurk_tracker = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/gurk_hue.iff"},
-	hues = { 24, 25, 26, 27, 28, 29, 30, 31 },
 	scale = 1.1,
 	lootGroups = {},
 	weapons = {},

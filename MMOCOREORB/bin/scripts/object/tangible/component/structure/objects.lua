@@ -1810,3 +1810,12 @@ object_tangible_component_structure_shared_weapon_mount_heavy_stabilization_unit
 }
 
 ObjectTemplates:addClientTemplate(object_tangible_component_structure_shared_weapon_mount_heavy_stabilization_unit, "object/tangible/component/structure/shared_weapon_mount_heavy_stabilization_unit.iff")
+
+
+
+object_tangible_component_structure_shared_ore_mining_unit_advanced = SharedTangibleObjectTemplate:new {
+	clientTemplateFileName = "object/tangible/component/structure/shared_ore_mining_unit_advanced.iff"
+}
+
+ObjectTemplates:addClientTemplate(object_tangible_component_structure_shared_ore_mining_unit_advanced, "object/tangible/component/structure/shared_ore_mining_unit_advanced.iff")
+------------------------------------------------------------------------------------------------------------------------------------

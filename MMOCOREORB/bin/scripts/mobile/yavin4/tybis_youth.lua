@@ -16,7 +16,7 @@ tybis_youth = Creature:new {
 	hideType = "hide_bristley",
 	hideAmount = 150,
 	boneType = "bone_mammal",
-	boneAmount = 100,
+	boneAmount = 123,
 	milk = 0,
 	tamingChance = 0,
 	ferocity = 0,
@@ -26,7 +26,6 @@ tybis_youth = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/tybis_youth.iff"},
-	hues = { 8, 9, 10, 11, 12, 13, 14, 15 },
 	scale = 0.75,
 	lootGroups = {},
 	weapons = {},

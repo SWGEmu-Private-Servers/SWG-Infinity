@@ -19,7 +19,7 @@ dolac_dark_jedi_master = Creature:new {
 	hideAmount = 0,
 	boneType = "",
 	boneAmount = 0,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -27,7 +27,9 @@ dolac_dark_jedi_master = Creature:new {
 	optionsBitmask = AIENABLED + CONVERSABLE,
 	diet = HERBIVORE,
 
-	templates = { "dark_jedi" },	
+	templates = {
+		"object/mobile/dressed_dark_jedi_human_male_01.iff",
+		"object/mobile/dressed_dark_jedi_human_female_01.iff"},
 	lootGroups = {
 		{
 			groups = {

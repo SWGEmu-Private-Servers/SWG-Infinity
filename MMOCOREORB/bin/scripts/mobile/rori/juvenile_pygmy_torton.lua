@@ -17,7 +17,7 @@ juvenile_pygmy_torton = Creature:new {
 	hideAmount = 300,
 	boneType = "bone_mammal",
 	boneAmount = 400,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = ATTACKABLE,
@@ -26,7 +26,6 @@ juvenile_pygmy_torton = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/torton_hue.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	scale = .45,
 	lootGroups = {},
 	weapons = {},

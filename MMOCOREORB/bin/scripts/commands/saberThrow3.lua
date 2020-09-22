@@ -45,22 +45,23 @@ SaberThrow3Command = {
         name = "saberthrow3",
 
 	damageMultiplier = 2.0,
-	speedMultiplier = 4.5,
+	speedMultiplier = 3.5,
 	healthCostMultiplier = 0,
 	actionCostMultiplier = 0,
 	mindCostMultiplier = 0,
-	coneAngle = 30,
+	coneAngle = 60,
 	coneAction = true,
 	forceCostMultiplier = 2.5,
 	visMod = 25,
+	accuracyBonus = 105,
 
 	stateEffects = {
 	   StateEffect( 
 		KNOCKDOWN_EFFECT, 
 		{ "knockdownRecovery", "lastKnockdown" }, 
 		{ "knockdown_defense" }, 
-		{},
-		100, 
+		{}, 
+		115, 
 		0, 
 		0
 	  )

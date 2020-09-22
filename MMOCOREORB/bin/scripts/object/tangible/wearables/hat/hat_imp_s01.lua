@@ -45,7 +45,7 @@ object_tangible_wearables_hat_hat_imp_s01 = object_tangible_wearables_hat_shared
 	faction = "Imperial",
 	
 	playerRaces = { "object/creature/player/human_male.iff",
-				"object/creature/player/zabrak_male.iff",
+				"object/creature/player/zabrak_male.iff","object/creature/player/chiss_male.iff",
 				"object/mobile/vendor/human_male.iff",
 				"object/mobile/vendor/zabrak_male.iff" },
 }

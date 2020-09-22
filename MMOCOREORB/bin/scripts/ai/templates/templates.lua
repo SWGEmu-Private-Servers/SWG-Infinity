@@ -17,6 +17,7 @@ includeAiFile("templates/combatmovepet.lua")
 includeAiFile("templates/villageraider.lua")
 includeAiFile("templates/enclavesentinel.lua")
 includeAiFile("templates/deathwatchdefender.lua")
+includeAiFile("templates/targetdummy.lua")
 
 getTarget = {
 	{CREATURE_PET, "gettargetpetc"},

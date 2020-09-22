@@ -17,7 +17,7 @@ cyborg_tusk_cat = Creature:new {
 	hideAmount = 50,
 	boneType = "bone_mammal",
 	boneAmount = 45,
-	milk = 0,
+	milk = 2 * 0,
 	tamingChance = 0,
 	ferocity = 0,
 	pvpBitmask = AGGRESSIVE + ATTACKABLE + ENEMY,
@@ -26,7 +26,6 @@ cyborg_tusk_cat = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/warren_cyborg_tuskcat.iff"},
-	hues = { 0, 1, 2, 3, 4, 5, 6, 7 },
 	lootGroups = {},
 	weapons = {},
 	conversationTemplate = "",

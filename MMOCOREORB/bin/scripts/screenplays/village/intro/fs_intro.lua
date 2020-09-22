@@ -12,8 +12,8 @@ FsIntro = ScreenPlay:new {
 	VILLAGE = 8,
 
 	stepDelay = {
-		[1] = { 43200, 129600 }, -- Old man visit, 12-36 hours
-		[3] = { 3600, 43200 } -- Sith shadow attack, 1 hour to 12 hours
+		[1] = { 600, 3600 }, -- Old man visit, 12-36 hours
+		[3] = { 1200, 3600 } -- Sith shadow attack, 1 hour to 12 hours
 	}
 }
 
@@ -148,7 +148,7 @@ function FsIntro:onLoggedIn(pPlayer)
 		curStep = self.SITHWAIT
 	end
 
-	if (curStep ~= self.OLDMANWAIT and curStep ~= self.OLDMANMEET and not OldManIntroEncounter:hasForceCrystal(pPlayer) and not QuestManager.hasActiveQuest(pPlayer, QuestManager.quests.FS_VILLAGE_ELDER)) then
+	if (curStep ~= self.OLDMANWAIT and curStep ~= self.OLDMANMEET and not OldManIntroEncounter:hasForceCrystal(pPlayer)) then
 		if (SithShadowIntroTheater:hasTaskStarted(pPlayer)) then
 			SithShadowIntroTheater:finish(pPlayer)
 		end

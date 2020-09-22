@@ -12,9 +12,9 @@ kliknik_warrior = Creature:new {
 	armor = 0,
 	resists = {130,130,10,10,10,10,10,-1,-1},
 	meatType = "meat_carnivore",
-	meatAmount = 6,
+	meatAmount = 123,
 	hideType = "hide_scaley",
-	hideAmount = 4,
+	hideAmount = 123,
 	boneType = "",
 	boneAmount = 0,
 	milk = 0,
@@ -26,7 +26,6 @@ kliknik_warrior = Creature:new {
 	diet = CARNIVORE,
 
 	templates = {"object/mobile/kliknik_hue.iff"},
-	hues = { 16, 17, 18, 19, 20, 21, 22, 23 },
 	controlDeviceTemplate = "object/intangible/pet/kliknik_hue.iff",
 	lootGroups = {
 	 {

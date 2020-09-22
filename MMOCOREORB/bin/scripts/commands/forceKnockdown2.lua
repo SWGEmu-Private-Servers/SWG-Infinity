@@ -44,21 +44,28 @@
 ForceKnockdown2Command = {
 	name = "forceknockdown2",
 
-    damageMultiplier = 0,
-	speed = 4.0,
-	forceCost = 100,
+	speed = 1.5,
+	forceCost = 90,
 	visMod = 25,
-	accuracySkillMod = "forceknockdown_accuracy",
+	accuracyBonus = 135,
 	coneAngle = 40,
 	coneAction = true,
+
+	minDamage = 800,
+	maxDamage = 1000,
+
+	poolsToDamage = HEALTH_ATTRIBUTE + ACTION_ATTRIBUTE + MIND_ATTRIBUTE,
+
+	forceAttack = false,
+	damageType = STUN_DAMAGE,
 
 	stateEffects = {
 	  StateEffect(
 		KNOCKDOWN_EFFECT,
 		{ "knockdownRecovery", "lastKnockdown" },
+		{ "knockdown_defense" },
 		{},
-		{},
-		65,
+		100,
 		0,
 		0
 	  )
@@ -68,9 +75,7 @@ ForceKnockdown2Command = {
 
 	combatSpam = "forceknockdown2",
 
-	poolsToDamage = NO_ATTRIBUTE,
-
-	forceAttack = true,
+	poolsToDamage = RANDOM_ATTRIBUTE,
 
 	range = 32
 }
